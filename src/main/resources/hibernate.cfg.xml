@@ -1,0 +1,28 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- JDBC Database connection settings -->
+		<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3336/backoffice?serverTimezone=UTC</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">mysql</property>
+
+		<!-- Dialetto SQL del DB a cui ci colleghiamo -->
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+		<!-- Proprieta' che indica se stampare a console l'SQL generato -->
+		<property name="show_sql">true</property>
+
+		<!-- Scelta della modalita' di aggiornamento dello schema -->
+		<property name="hbm2ddl.auto">create</property>
+
+		<!-- mapping entita' -->
+		<mapping class="it.eforhum.bank.entity.BaseEntity" />
+		<mapping class="it.eforhum.bank.entity.UserGroups" />
+		<mapping class="it.eforhum.bank.entity.User" />
+
+	</session-factory>
+</hibernate-configuration>
