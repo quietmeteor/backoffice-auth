@@ -65,6 +65,14 @@ public class User extends BaseEntity {
 		this.isVerified = isVerified;
 	}
 
+	public UserGroups getUserGroup() {
+		return userGroup;
+	}
+
+	public void setUserGroup(UserGroups userGroup) {
+		this.userGroup = userGroup;
+	}
+
 	public String getUsername() {
 		return username;
 	}
