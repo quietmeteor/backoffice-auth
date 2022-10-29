@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import entity.BaseEntity;
-import entity.User;
+import exception.DaoException;
 import util.HibernateUtils;
 
 public class BaseDao<T extends BaseEntity> {
@@ -19,7 +19,7 @@ public class BaseDao<T extends BaseEntity> {
 		this.clazz = clazz;
 	}
 
-	public boolean testConnessione() {
+	public boolean testConnessione() throws DaoException{
 		log.debug("try to open session");
 
 		boolean result = false;
@@ -34,19 +34,19 @@ public class BaseDao<T extends BaseEntity> {
 		return result;
 	}
 
-	public T findById(int id) {
+	public T findById(int id) throws DaoException {
 		try (Session session = HibernateUtils.getSessionFactory().openSession()) {
 			return session.find(clazz, id);
 		}
 	}
 
-	public List<T> findAll() {
+	public List<T> findAll() throws DaoException {
 		try (Session session = HibernateUtils.getSessionFactory().openSession()) {
 			return session.createQuery("from " + clazz.getName(), clazz).getResultList();
 		}
 	}
 
-	public void save(T entity) {
+	public void save(T entity) throws DaoException {
 		log.debug("try to save entity {}", entity);
 		try (Session session = HibernateUtils.getSessionFactory().openSession()) {
 			Transaction tx = session.beginTransaction();
@@ -56,7 +56,7 @@ public class BaseDao<T extends BaseEntity> {
 		}
 	}
 
-	public void update(T entity) {
+	public void update(T entity) throws DaoException {
 		log.debug("try to update item {}", entity);
 		try (Session session = HibernateUtils.getSessionFactory().openSession()) {
 			Transaction tx = session.beginTransaction();
@@ -66,7 +66,7 @@ public class BaseDao<T extends BaseEntity> {
 		}
 	}
 
-	public void delete(T entity) {
+	public void delete(T entity) throws DaoException {
 		log.debug("try to delete item {}", entity);
 		try (Session session = HibernateUtils.getSessionFactory().openSession()) {
 			Transaction tx = session.beginTransaction();

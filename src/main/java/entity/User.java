@@ -32,7 +32,7 @@ public class User extends BaseEntity {
 	@Column(name = "lastName", nullable = false)
 	private String lastName;
 
-	@Column(name = "email", nullable = false)
+	@Column(name = "email", unique = true)
 	private String email;
 
 	@Column(name = "last_login", columnDefinition = "TIMESTAMP NOT NULL")
@@ -41,7 +41,6 @@ public class User extends BaseEntity {
 	@Column(name = "date_modified_pass", columnDefinition = "TIMESTAMP")
 	private LocalDateTime dateModifiedPass;
 
-	@ColumnDefault("false")
 	@Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private boolean isDeleted;
 

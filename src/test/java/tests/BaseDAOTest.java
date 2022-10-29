@@ -11,17 +11,9 @@ public class BaseDAOTest {
 	
 	@Test
 	void create(){
-		User user = new User();
-		user.setName("Andrii");
-		user.setLastName("D");
-		user.setEmail("andre");
-		user.setLastLogin(LocalDateTime.now());
-		user.setCreationTime(LocalDateTime.now());
-		user.setPassword("12321");
-		user.setUsername("aaaa");
-		user.setCreationUser("app-java");
 		
-		
-		UserDao.getInstance().save(user);
+
 	}
+
+	
 }
