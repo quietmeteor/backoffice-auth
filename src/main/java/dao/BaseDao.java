@@ -34,7 +34,7 @@ public class BaseDao<T extends BaseEntity> {
 		return result;
 	}
 
-	public T findById(int id) throws DaoException {
+	public T findById(long id) throws DaoException {
 		try (Session session = HibernateUtils.getSessionFactory().openSession()) {
 			return session.find(clazz, id);
 		}

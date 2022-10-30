@@ -17,7 +17,7 @@
 		<property name="show_sql">true</property>
 
 		<!-- Scelta della modalita' di aggiornamento dello schema -->
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create</property>
 
 		<!-- mapping entita' -->
 		<mapping class="entity.BaseEntity" />

@@ -26,7 +26,7 @@ public class UserGroups extends BaseEntity {
 	@Column(name = "visibility", nullable = false)
 	private String visibility; // TODO to understand
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user_groups")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userGroup")
 	private Set<User> users = new HashSet<>();
 	
 	public UserGroups() {
