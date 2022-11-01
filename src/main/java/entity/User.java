@@ -17,8 +17,8 @@ import org.hibernate.annotations.ColumnDefault;
 public class User extends BaseEntity {
 
 	@ManyToOne
-	@JoinColumn(name = "id", foreignKey = @ForeignKey(name = "FK_id_user"))
-	private UserGroups userGroup = new UserGroups();
+	@JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "FK_id_group"))
+	private UserGroups userGroup;
 
 	@Column(name = "username", nullable = false, length = 32)
 	private String username;
@@ -63,6 +63,14 @@ public class User extends BaseEntity {
 		this.dateModifiedPass = dateModifiedPass;
 		this.isDeleted = isDeleted;
 		this.isVerified = isVerified;
+	}
+
+	public UserGroups getUserGroup() {
+		return userGroup;
+	}
+
+	public void setUserGroup(UserGroups userGroup) {
+		this.userGroup = userGroup;
 	}
 
 	public String getUsername() {
@@ -136,6 +144,8 @@ public class User extends BaseEntity {
 	public void setVerified(boolean isVerified) {
 		this.isVerified = isVerified;
 	}
+	
+
 
 	@Override
 	public int hashCode() {
