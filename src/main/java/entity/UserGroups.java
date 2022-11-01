@@ -42,6 +42,14 @@ public class UserGroups extends BaseEntity {
 		this.users = users;
 	}
 
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
 	public String getRoles() {
 		return roles;
 	}
