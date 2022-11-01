@@ -17,11 +17,7 @@ import org.hibernate.annotations.ColumnDefault;
 public class User extends BaseEntity {
 
 	@ManyToOne
-
-	@JoinColumn(name = "id_group", foreignKey = @ForeignKey(name = "FK_id_group"))
-
-	@JoinColumn(name = "id", foreignKey = @ForeignKey(name = "FK_id_group"))
-
+	@JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "FK_id_group"))
 	private UserGroups userGroup;
 
 	@Column(name = "username", nullable = false, length = 32)

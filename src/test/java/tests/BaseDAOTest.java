@@ -1,13 +1,10 @@
 package tests;
 
-<<<<<<< HEAD
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-=======
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
->>>>>>> d2bf5256ae12c5ea65e8781b542d698ce5356ec8
 
 import java.time.LocalDateTime;
 
@@ -19,26 +16,23 @@ import dao.UserDao;
 import dao.UserGroupsDao;
 import entity.User;
 import entity.UserGroups;
-<<<<<<< HEAD
 import service.BackofficeService;
-=======
->>>>>>> d2bf5256ae12c5ea65e8781b542d698ce5356ec8
 
 public class BaseDAOTest {
 
 	protected static final Logger log = LogManager.getLogger(BaseDAOTest.class);
 
 	@Test
-<<<<<<< HEAD
+
 	public void testConnection() {
 		log.info("Test connessione");
 		assertDoesNotThrow(() -> {
 			UserDao.getInstance().testConnessione();
 		});
+	}
 
-=======
 	void create() {
-		
+
 		UserGroups userGroups = new UserGroups();
 		User user = new User();
 		userGroups.setCreationUser("test-user");
@@ -47,14 +41,14 @@ public class BaseDAOTest {
 		userGroups.setRoles("role");
 		userGroups.setPermissions("UPDATE");
 		userGroups.setVisibility("all");
-		
-		assertTrue(userGroups.getId() > 0);;
-		
+
+		assertTrue(userGroups.getId() > 0);
+		;
+
 		assertDoesNotThrow(() -> {
 			UserGroupsDao.getInstance().save(userGroups);
 		});
-		
-		
+
 		user.setCreationUser("test-user");
 		user.setName("test-name");
 		user.setLastName("test-last-name");
@@ -64,26 +58,26 @@ public class BaseDAOTest {
 		user.setPassword("test-psw");
 		user.setCreationTime(LocalDateTime.now());
 		user.setUserGroup(userGroups);
-		
+
 		assertTrue(user.getId() > 0);
-		
+
 		assertDoesNotThrow(() -> {
 			UserDao.getInstance().save(user);
 		});
-		
-		assertDoesNotThrow(()->{
+
+		assertDoesNotThrow(() -> {
 			UserDao.getInstance().delete(user);
 		});
-		
-		assertDoesNotThrow(()->{
+
+		assertDoesNotThrow(() -> {
 			UserGroupsDao.getInstance().delete(userGroups);
 		});
-		
+
 	}
+
 	@Test
 	void testConnectio() {
 		UserDao.getInstance().testConnessione();
->>>>>>> d2bf5256ae12c5ea65e8781b542d698ce5356ec8
 	}
 
 	@Test
@@ -260,7 +254,7 @@ public class BaseDAOTest {
 		assertDoesNotThrow(() -> {
 			BackofficeService.getInstance().createGroup(g);
 		});
-		
+
 		UserGroups g2 = new UserGroups();
 		g2.setCreationTime(LocalDateTime.now());
 		g2.setCreationUser("admin");
@@ -268,18 +262,16 @@ public class BaseDAOTest {
 		g2.setPermissions("READING, RESERVATION, EDITING");
 		g2.setVisibility("users_calendar");
 		g2.setRoles("USER, EDITOR");
-		
-		assertDoesNotThrow(()->{
+
+		assertDoesNotThrow(() -> {
 			BackofficeService.getInstance().updateGroup(g.getId(), g2);
 		});
-		
+
 		log.info("Group has been updated to {} ", BackofficeService.getInstance().findByIdGroup(g.getId()));
 
 		assertDoesNotThrow(() -> {
 			BackofficeService.getInstance().deleteGroup(g);
 		});
 	}
-	
-	
 
 }
