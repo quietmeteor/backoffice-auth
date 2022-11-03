@@ -10,12 +10,26 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @version 1.0
+ * @author First backoffice-auth team
+ * 
+ * @field [NOT NULL] {@link #roles} indicates user's current role, we will be assuming the following roles: Super-Admin (CRUD permissions), Admin (only read permissions)
+ * user (can only see it's own reservations)
+ * @field [NOT NULL] {@link #groupName}
+ * @field [NOT NULL] {@link #permissions} indicates permissions such as Create, Read, Update or Delete
+ * @field [NOT NULL] {@link #visibility} ?
+ * @field [Bidirectional mapping] {@link #users} contains all users belonging to the group.
+ * 
+ */
+
 @Entity
 @Table(name = "user_groups")
 public class UserGroups extends BaseEntity {
 
 	@Column(name = "roles", nullable = false)
-	private String roles; //Super-Admin (CRUD permissions), Admin base (has full read permissions), user (can only see it's own reservations)
+	private String roles; 
 
 	@Column(name = "group_name", nullable = false)
 	private String groupName;
@@ -28,9 +42,9 @@ public class UserGroups extends BaseEntity {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userGroup")
 	private Set<User> users = new HashSet<>();
-	
+
 	public UserGroups() {
-		
+
 	}
 
 	public UserGroups(String roles, String groupName, String permissions, String visibility, Set<User> users) {
