@@ -10,17 +10,24 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import enums.Roles;
+
 /**
  * 
  * @version 1.0
  * @author First backoffice-auth team
  * 
- * @field [NOT NULL] {@link #roles} indicates user's current role, we will be assuming the following roles: Super-Admin (CRUD permissions), Admin (only read permissions)
- * user (can only see it's own reservations)
- * @field [NOT NULL] {@link #groupName}
- * @field [NOT NULL] {@link #permissions} indicates permissions such as Create, Read, Update or Delete
- * @field [NOT NULL] {@link #visibility} ?
- * @field [Bidirectional mapping] {@link #users} contains all users belonging to the group.
+ * @field [NOT NULL] {@link #roles}
+ * @field [NOT NULL] {@link #groupName} indicates user's current role, we will
+ *        be assuming the following roles: Super-Admin (CRUD permissions on both
+ *        users and groups), Admin (CRUD permissions on users and reservations)
+ *        user (can only see it's own reservations), Moderator (Read only).
+ * @field [NOT NULL] {@link #permissions} indicates user's current permission
+ *        such as Create, Read, Update or Delete.
+ * @field [NOT NULL] {@link #visibility} indicates if the role has been
+ *        activated, non-activated roles can't use their permissions.
+ * @field [Bidirectional mapping] {@link #users} contains all users belonging to
+ *        the group.
  * 
  */
 
@@ -29,47 +36,22 @@ import javax.persistence.Table;
 public class UserGroups extends BaseEntity {
 
 	@Column(name = "roles", nullable = false)
-	private String roles; 
+	private String roles;
 
 	@Column(name = "group_name", nullable = false)
 	private String groupName;
 
 	@Column(name = "permissions", nullable = false)
-	private String permissions; // CRUD
+	private String permissions;
 
-	@Column(name = "visibility", nullable = false)
-	private String visibility; // TODO to understand
+	@Column(name = "enabled", nullable = false)
+	private boolean isEnabled;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userGroup")
 	private Set<User> users = new HashSet<>();
 
 	public UserGroups() {
 
-	}
-
-	public UserGroups(String roles, String groupName, String permissions, String visibility, Set<User> users) {
-		super();
-		this.roles = roles;
-		this.groupName = groupName;
-		this.permissions = permissions;
-		this.visibility = visibility;
-		this.users = users;
-	}
-
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
-	public String getRoles() {
-		return roles;
-	}
-
-	public void setRoles(String roles) {
-		this.roles = roles;
 	}
 
 	public String getGroupName() {
@@ -88,25 +70,35 @@ public class UserGroups extends BaseEntity {
 		this.permissions = permissions;
 	}
 
-	public String getVisibility() {
-		return visibility;
+	public boolean isEnabled() {
+		return isEnabled;
 	}
 
-	public void setVisibility(String visibility) {
-		this.visibility = visibility;
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 
-	@Override
-	public String toString() {
-		return "UserGroups [roles=" + roles + ", permits=" + ", groupName=" + groupName + ", permissions=" + permissions
-				+ ", visibility=" + visibility + "]";
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(groupName, permissions, roles, users, visibility);
+		result = prime * result + Objects.hash(groupName, isEnabled, permissions, roles, users);
 		return result;
 	}
 
@@ -119,9 +111,15 @@ public class UserGroups extends BaseEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		UserGroups other = (UserGroups) obj;
-		return Objects.equals(groupName, other.groupName) && Objects.equals(permissions, other.permissions)
-				&& Objects.equals(roles, other.roles) && Objects.equals(users, other.users)
-				&& Objects.equals(visibility, other.visibility);
+		return Objects.equals(groupName, other.groupName) && isEnabled == other.isEnabled
+				&& Objects.equals(permissions, other.permissions) && roles == other.roles
+				&& Objects.equals(users, other.users);
+	}
+
+	@Override
+	public String toString() {
+		return "UserGroups [roles=" + roles + ", groupName=" + groupName + ", permissions=" + permissions
+				+ ", isEnabled=" + isEnabled + ", users=" + users + "]";
 	}
 
 }

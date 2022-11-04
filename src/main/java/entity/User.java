@@ -42,7 +42,7 @@ public class User extends BaseEntity {
 	@JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "FK_id_group"))
 	private UserGroups userGroup;
 
-	@Column(name = "username", nullable = false, length = 32)
+	@Column(name = "username", unique = true, nullable = false, length = 32)
 	private String username;
 
 	@Column(name = "password", nullable = false, length = 32)

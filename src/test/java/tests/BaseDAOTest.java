@@ -1,10 +1,9 @@
 package tests;
 
 import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +15,7 @@ import dao.UserDao;
 import dao.UserGroupsDao;
 import entity.User;
 import entity.UserGroups;
+import enums.Roles;
 import service.BackofficeService;
 
 public class BaseDAOTest {
@@ -38,9 +38,9 @@ public class BaseDAOTest {
 		userGroups.setCreationUser("test-user");
 		userGroups.setCreationTime(LocalDateTime.now());
 		userGroups.setGroupName("TEST GROUP");
-		userGroups.setRoles("role");
+		userGroups.setRoles(Roles.MODERATOR);
 		userGroups.setPermissions("UPDATE");
-		userGroups.setVisibility("all");
+		userGroups.setEnabled(true);
 
 		assertTrue(userGroups.getId() > 0);
 		;
@@ -88,7 +88,7 @@ public class BaseDAOTest {
 		g.setCreationUser("admin");
 		g.setGroupName("GROUP_USERS");
 		g.setPermissions("READING, RESERVATION");
-		g.setVisibility("users_calendar");
+		g.setEnabled(true);
 		g.setRoles("USER");
 
 		User u = new User();
@@ -153,7 +153,7 @@ public class BaseDAOTest {
 		g.setCreationUser("admin");
 		g.setGroupName("GROUP_USERS");
 		g.setPermissions("READING, RESERVATION");
-		g.setVisibility("users_calendar");
+		g.setEnabled(true);
 		g.setRoles("USER");
 
 		User u = new User();
@@ -248,7 +248,7 @@ public class BaseDAOTest {
 		g.setCreationUser("admin");
 		g.setGroupName("GROUP_USERS");
 		g.setPermissions("READING, RESERVATION");
-		g.setVisibility("users_calendar");
+		g.setEnabled(true);
 		g.setRoles("USER");
 
 		assertDoesNotThrow(() -> {
@@ -260,7 +260,7 @@ public class BaseDAOTest {
 		g2.setCreationUser("admin");
 		g2.setGroupName("GROUP_USERS_TYPE2");
 		g2.setPermissions("READING, RESERVATION, EDITING");
-		g2.setVisibility("users_calendar");
+		g2.setEnabled(true);
 		g2.setRoles("USER, EDITOR");
 
 		assertDoesNotThrow(() -> {

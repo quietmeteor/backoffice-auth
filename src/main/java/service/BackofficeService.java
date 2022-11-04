@@ -1,15 +1,20 @@
 package service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import dao.UserDao;
 import dao.UserGroupsDao;
+import dto.UserDTO;
 import entity.User;
 import entity.UserGroups;
+import enums.Roles;
 import exception.DaoException;
 import exception.ServiceException;
 
@@ -130,42 +135,86 @@ public class BackofficeService {
 		Objects.requireNonNull(u);
 		log.info("Trying to update a user id:{} ", u.getId());
 		try {
-		u.setEmail(upd.getEmail());
-		u.setName(upd.getName());
-		u.setLastName(upd.getLastName());
-		u.setPassword(upd.getPassword());
-		// u.setDateModifiedPass(LocalDateTime.now()); revision
-		u.setUpdateTime(LocalDateTime.now());
-		u.setUpdateUser("java-app"); // revision
-		u.setUsername(upd.getUsername());
+			u.setEmail(upd.getEmail());
+			u.setName(upd.getName());
+			u.setLastName(upd.getLastName());
+			u.setPassword(upd.getPassword());
+			// u.setDateModifiedPass(LocalDateTime.now()); revision
+			u.setUpdateTime(LocalDateTime.now());
+			u.setUpdateUser("java-app"); // revision
+			u.setUsername(upd.getUsername());
 
-		userDao.getInstance().update(u);
-		}catch(DaoException dE) {
+			userDao.getInstance().update(u);
+		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while updating a user ", dE);
 		}
-		
 
 	}
-	
+
 	public void updateGroup(long id, UserGroups upd) {
-		UserGroups g=findByIdGroup(id);
+		UserGroups g = findByIdGroup(id);
 		Objects.requireNonNull(g);
 		log.info("Trying to update a group id:{}", g.getId());
 		try {
-			
+
 			g.setGroupName(upd.getGroupName());
 			g.setPermissions(upd.getPermissions());
 			g.setRoles(upd.getRoles());
-			g.setVisibility(upd.getVisibility());
+			g.setEnabled(upd.isEnabled());
 			g.setUpdateTime(LocalDateTime.now());
 			g.setUpdateUser("java-app");
-			
+
 			userGroupsDao.update(g);
 			log.info("Group id {} has been updated", g.getId());
-		}catch(DaoException dE) {
+		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while updating a group", dE);
 		}
-		
+
 	}
 
+	public void addUserToGroup(UserGroups group, User user) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(group);
+
+		try {
+			user = (User) userDao.findById(user.getId());
+			group = (UserGroups) userGroupsDao.findById(group.getId());
+
+			log.info("User and group was succesfully found | user - {} group - {}", user.getId(), group.getId());
+		} catch (DaoException e) {
+			throw new ServiceException("Something went wrong when finding user and group", e);
+		}
+
+		Set<User> userSet = group.getUsers();
+		userSet.add(user);
+
+		user.setUserGroup(group);
+		group.setUsers(userSet);
+	}
+
+	public UserDTO login(String username, String password, String email) {
+		UserDTO uDTO = new UserDTO();
+		User user = userDao.findByUsername(username);
+		UserGroups ug = user.getUserGroup();
+		List<Roles> roleList = new ArrayList<>();
+
+		if (user.getPassword().equals(password) && user.getEmail().equals(email)) {
+			uDTO.setEmail(user.getEmail());
+			uDTO.setGroup(user.getUserGroup());
+			uDTO.setLastName(user.getLastName());
+
+			for (String role : ug.getRoles().split(";")) {
+				roleList.add(Roles.valueOf(role));
+			}
+
+			uDTO.setListRoles(roleList);
+			uDTO.setName(user.getName());
+			
+		} else {
+			log.error("Wrong credentials");
+		}
+
+		return null;
+
+	}
 }
