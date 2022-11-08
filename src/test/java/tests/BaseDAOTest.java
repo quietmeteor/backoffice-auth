@@ -276,6 +276,15 @@ public class BaseDAOTest {
 
 	@Test
 	public void addUserToGroupTest() {
+		
+		UserGroups defaultGroup = new UserGroups();
+		defaultGroup.setCreationTime(LocalDateTime.now());
+		defaultGroup.setCreationUser("admin");
+		defaultGroup.setGroupName("GROUP_DEFAULT");
+		defaultGroup.setPermissions("READING");
+		defaultGroup.setEnabled(true);
+		defaultGroup.setRoles(Roles.USER.toString());
+		
 		UserGroups g = new UserGroups();
 		g.setCreationTime(LocalDateTime.now());
 		g.setCreationUser("admin");
@@ -295,28 +304,39 @@ public class BaseDAOTest {
 		u.setLastName("World");
 		u.setPassword("qwerty");
 		u.setUsername("1a2b3c");
+//		u.setUserGroup(defaultGroup);
+		
+//		assertDoesNotThrow(() -> {
+//			BackofficeService.getInstance().createGroup(defaultGroup);
+//		});
 
-		assertDoesNotThrow(() -> {
-			BackofficeService.getInstance().createGroup(g);
-		});
+//		assertDoesNotThrow(() -> {
+//			BackofficeService.getInstance().createGroup(g);
+//		});
+		
+		User us = BackofficeService.getInstance().findByIdUser(3);
+		UserGroups defaultg = BackofficeService.getInstance().findByIdGroup(16);
 
-		assertDoesNotThrow(() -> {
-			BackofficeService.getInstance().createUser(u);
-		});
-		
-		assertDoesNotThrow(()->{
-			
-			BackofficeService.getInstance().addUserToGroup(g, u);
-			
-		});
-		
-		log.info("User added to group {} ", u.getUserGroup());
-		
 		
 //		assertDoesNotThrow(() -> {
 //			BackofficeService.getInstance().createUser(u);
 //		});
-//
+		
+		assertDoesNotThrow(()->{
+			
+			BackofficeService.getInstance().addUserToGroup(defaultg, us);
+			
+		});
+		
+		log.info("Group {}", defaultg);
+		log.info("User {}", us);
+		log.info("User added to group {} ", us.getUserGroup());
+		
+		
+//		assertDoesNotThrow(() -> {
+//			BackofficeService.getInstance().deleteUser(us);
+//		});
+
 //		assertDoesNotThrow(() -> {
 //			BackofficeService.getInstance().deleteGroup(g);
 //		});

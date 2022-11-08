@@ -188,12 +188,18 @@ public class BackofficeService {
 		}
 		
 		try(Session s=HibernateUtils.getSessionFactory().openSession()){
+			
 			s.refresh(group);	
-		Set<User> userSet = group.getUsers();
-		userSet.add(user);
-
-		user.setUserGroup(group);
-		group.setUsers(userSet);
+			s.refresh(user);
+			
+			log.info("Group {}", group.getId());
+			user.setUserGroup(group);
+			Set<User> userSet = group.getUsers();
+			userSet.add(user);
+			
+			
+			user.setUserGroup(group);
+			group.setUsers(userSet);
 		}
 	}
 
