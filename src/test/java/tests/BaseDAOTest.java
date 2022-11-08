@@ -31,38 +31,38 @@ public class BaseDAOTest {
 		});
 	}
 
+	@Test
 	void create() {
 
 		UserGroups userGroups = new UserGroups();
 		User user = new User();
 		userGroups.setCreationUser("test-user");
 		userGroups.setCreationTime(LocalDateTime.now());
-		userGroups.setGroupName("TEST GROUP");
-		userGroups.setRoles(Roles.MODERATOR);
+		userGroups.setGroupName("TEST GROUP4");
+		userGroups.setRoles("MODERATOR");
 		userGroups.setPermissions("UPDATE");
 		userGroups.setEnabled(true);
 
-		assertTrue(userGroups.getId() > 0);
-		;
+//		assertTrue(userGroups.getId() > 0);
 
 		assertDoesNotThrow(() -> {
-			UserGroupsDao.getInstance().save(userGroups);
+			BackofficeService.getInstance().createGroup(userGroups);
 		});
 
 		user.setCreationUser("test-user");
 		user.setName("test-name");
 		user.setLastName("test-last-name");
 		user.setLastLogin(LocalDateTime.now());
-		user.setEmail("test-mail");
-		user.setUsername("test-user");
+		user.setEmail("test-mail3");
+		user.setUsername("test-user1");
 		user.setPassword("test-psw");
 		user.setCreationTime(LocalDateTime.now());
 		user.setUserGroup(userGroups);
 
-		assertTrue(user.getId() > 0);
+//		assertTrue(user.getId() > 0);
 
 		assertDoesNotThrow(() -> {
-			UserDao.getInstance().save(user);
+			BackofficeService.getInstance().createUser(user);
 		});
 
 		assertDoesNotThrow(() -> {
@@ -89,7 +89,7 @@ public class BaseDAOTest {
 		g.setGroupName("GROUP_USERS");
 		g.setPermissions("READING, RESERVATION");
 		g.setEnabled(true);
-		g.setRoles("USER");
+		g.setRoles(Roles.USER.toString());
 
 		User u = new User();
 		u.setCreationTime(LocalDateTime.now());
@@ -154,14 +154,14 @@ public class BaseDAOTest {
 		g.setGroupName("GROUP_USERS");
 		g.setPermissions("READING, RESERVATION");
 		g.setEnabled(true);
-		g.setRoles("USER");
+		g.setRoles(Roles.USER.toString());
 
 		User u = new User();
 		u.setCreationTime(LocalDateTime.now());
 		u.setCreationUser("java-app");
 		u.setDeleted(false);
 		u.setVerified(true);
-		u.setEmail("hello3@gmail.com");
+		u.setEmail("hell555@gmail.com");
 		u.setName("Hello");
 		u.setLastLogin(LocalDateTime.now());
 		u.setLastName("World");
@@ -205,7 +205,7 @@ public class BaseDAOTest {
 		u.setCreationUser("java-app");
 		u.setDeleted(false);
 		u.setVerified(true);
-		u.setEmail("hello4@gmail.com");
+		u.setEmail("hello45555@gmail.com");
 		u.setName("Hello");
 		u.setLastLogin(LocalDateTime.now());
 		u.setLastName("World");
@@ -224,7 +224,7 @@ public class BaseDAOTest {
 
 //		u2.setDeleted(false);
 //		u2.setVerified(true);
-		u2.setEmail("theHelloWord@gmail.com");
+		u2.setEmail("theHelloWord11@gmail.com");
 		u2.setName("Pryvit");
 		u2.setLastLogin(LocalDateTime.now());
 		u2.setLastName("Svit");
@@ -261,7 +261,7 @@ public class BaseDAOTest {
 		g2.setGroupName("GROUP_USERS_TYPE2");
 		g2.setPermissions("READING, RESERVATION, EDITING");
 		g2.setEnabled(true);
-		g2.setRoles("USER, EDITOR");
+		g2.setRoles(Roles.ROLE_UPDATE_SLOT.toString());
 
 		assertDoesNotThrow(() -> {
 			BackofficeService.getInstance().updateGroup(g.getId(), g2);
@@ -272,6 +272,55 @@ public class BaseDAOTest {
 		assertDoesNotThrow(() -> {
 			BackofficeService.getInstance().deleteGroup(g);
 		});
+	}
+
+	@Test
+	public void addUserToGroupTest() {
+		UserGroups g = new UserGroups();
+		g.setCreationTime(LocalDateTime.now());
+		g.setCreationUser("admin");
+		g.setGroupName("GROUP_MODERS_3");
+		g.setPermissions("READING, RESERVATION");
+		g.setEnabled(true);
+		g.setRoles(Roles.MODERATOR.toString());
+
+		User u = new User();
+		u.setCreationTime(LocalDateTime.now());
+		u.setCreationUser("java-app");
+		u.setDeleted(false);
+		u.setVerified(true);
+		u.setEmail("onenen3@gmail.com");
+		u.setName("Camon");
+		u.setLastLogin(LocalDateTime.now());
+		u.setLastName("World");
+		u.setPassword("qwerty");
+		u.setUsername("1a2b3c");
+
+		assertDoesNotThrow(() -> {
+			BackofficeService.getInstance().createGroup(g);
+		});
+
+		assertDoesNotThrow(() -> {
+			BackofficeService.getInstance().createUser(u);
+		});
+		
+		assertDoesNotThrow(()->{
+			
+			BackofficeService.getInstance().addUserToGroup(g, u);
+			
+		});
+		
+		log.info("User added to group {} ", u.getUserGroup());
+		
+		
+//		assertDoesNotThrow(() -> {
+//			BackofficeService.getInstance().createUser(u);
+//		});
+//
+//		assertDoesNotThrow(() -> {
+//			BackofficeService.getInstance().deleteGroup(g);
+//		});
+
 	}
 
 }

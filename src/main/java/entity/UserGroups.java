@@ -24,7 +24,7 @@ import enums.Roles;
  *        user (can only see it's own reservations), Moderator (Read only).
  * @field [NOT NULL] {@link #permissions} indicates user's current permission
  *        such as Create, Read, Update or Delete.
- * @field [NOT NULL] {@link #visibility} indicates if the role has been
+ * @field [NOT NULL] {@link #enabled} indicates if the role has been
  *        activated, non-activated roles can't use their permissions.
  * @field [Bidirectional mapping] {@link #users} contains all users belonging to
  *        the group.

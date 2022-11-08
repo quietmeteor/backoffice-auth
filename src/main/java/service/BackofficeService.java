@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
 
 import dao.UserDao;
 import dao.UserGroupsDao;
@@ -17,6 +18,7 @@ import entity.UserGroups;
 import enums.Roles;
 import exception.DaoException;
 import exception.ServiceException;
+import util.HibernateUtils;
 
 public class BackofficeService {
 	protected static final Logger log = LogManager.getLogger(BackofficeService.class);
@@ -184,12 +186,15 @@ public class BackofficeService {
 		} catch (DaoException e) {
 			throw new ServiceException("Something went wrong when finding user and group", e);
 		}
-
+		
+		try(Session s=HibernateUtils.getSessionFactory().openSession()){
+			s.refresh(group);	
 		Set<User> userSet = group.getUsers();
 		userSet.add(user);
 
 		user.setUserGroup(group);
 		group.setUsers(userSet);
+		}
 	}
 
 	public UserDTO login(String username, String password, String email) {
