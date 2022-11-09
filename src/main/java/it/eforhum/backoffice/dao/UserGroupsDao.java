@@ -1,8 +1,9 @@
-package dao;
+package it.eforhum.backoffice.dao;
 
-import entity.UserGroups;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import it.eforhum.backoffice.entity.UserGroups;
 
 public class UserGroupsDao extends BaseDao {
 	protected static final Logger log = LogManager.getLogger(BaseDao.class);

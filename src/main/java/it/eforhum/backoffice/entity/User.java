@@ -1,4 +1,4 @@
-package entity;
+package it.eforhum.backoffice.entity;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

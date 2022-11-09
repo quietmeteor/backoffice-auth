@@ -1,4 +1,4 @@
-package enums;
+package it.eforhum.backoffice.enums;
 
 public enum Roles {
 	ROLE_CREATE_RISORSE,

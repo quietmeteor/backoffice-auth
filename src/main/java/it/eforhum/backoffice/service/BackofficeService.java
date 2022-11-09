@@ -1,4 +1,4 @@
-package service;
+package it.eforhum.backoffice.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,15 +10,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 
-import dao.UserDao;
-import dao.UserGroupsDao;
-import dto.UserDTO;
-import entity.User;
-import entity.UserGroups;
-import enums.Roles;
-import exception.DaoException;
-import exception.ServiceException;
-import util.HibernateUtils;
+import it.eforhum.backoffice.dao.UserDao;
+import it.eforhum.backoffice.dao.UserGroupsDao;
+import it.eforhum.backoffice.dto.UserDTO;
+import it.eforhum.backoffice.entity.User;
+import it.eforhum.backoffice.entity.UserGroups;
+import it.eforhum.backoffice.enums.Roles;
+import it.eforhum.backoffice.exception.DaoException;
+import it.eforhum.backoffice.exception.ServiceException;
+import it.eforhum.backoffice.util.HibernateUtils;
 
 public class BackofficeService {
 	protected static final Logger log = LogManager.getLogger(BackofficeService.class);

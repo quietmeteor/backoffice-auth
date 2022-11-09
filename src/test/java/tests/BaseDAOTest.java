@@ -1,7 +1,6 @@
 package tests;
 
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -11,12 +10,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
-import dao.UserDao;
-import dao.UserGroupsDao;
-import entity.User;
-import entity.UserGroups;
-import enums.Roles;
-import service.BackofficeService;
+import it.eforhum.backoffice.dao.UserDao;
+import it.eforhum.backoffice.dao.UserGroupsDao;
+import it.eforhum.backoffice.entity.User;
+import it.eforhum.backoffice.entity.UserGroups;
+import it.eforhum.backoffice.enums.Roles;
+import it.eforhum.backoffice.service.BackofficeService;
 
 public class BaseDAOTest {
 
@@ -73,11 +72,6 @@ public class BaseDAOTest {
 			UserGroupsDao.getInstance().delete(userGroups);
 		});
 
-	}
-
-	@Test
-	void testConnectio() {
-		UserDao.getInstance().testConnessione();
 	}
 
 	@Test

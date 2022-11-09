@@ -1,4 +1,4 @@
-package entity;
+package it.eforhum.backoffice.entity;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,7 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import enums.Roles;
+import it.eforhum.backoffice.enums.Roles;
 
 /**
  * 

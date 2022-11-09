@@ -1,12 +1,12 @@
-package dao;
+package it.eforhum.backoffice.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 
-import entity.User;
-import util.HibernateUtils;
+import it.eforhum.backoffice.entity.User;
+import it.eforhum.backoffice.util.HibernateUtils;
 
 public class UserDao extends BaseDao {
 	protected static final Logger log = LogManager.getLogger(BaseDao.class);

@@ -1,4 +1,4 @@
-package dao;
+package it.eforhum.backoffice.dao;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import entity.BaseEntity;
-import exception.DaoException;
-import util.HibernateUtils;
+import it.eforhum.backoffice.entity.BaseEntity;
+import it.eforhum.backoffice.exception.DaoException;
+import it.eforhum.backoffice.util.HibernateUtils;
 
 public class BaseDao<T extends BaseEntity> {
 	protected static final Logger log = LogManager.getLogger(BaseDao.class);

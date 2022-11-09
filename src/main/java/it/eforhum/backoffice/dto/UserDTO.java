@@ -1,9 +1,9 @@
-package dto;
+package it.eforhum.backoffice.dto;
 
 import java.util.List;
 
-import entity.UserGroups;
-import enums.Roles;
+import it.eforhum.backoffice.entity.UserGroups;
+import it.eforhum.backoffice.enums.Roles;
 
 public class UserDTO {
 	String username;
