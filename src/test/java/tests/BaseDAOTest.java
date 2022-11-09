@@ -269,72 +269,23 @@ public class BaseDAOTest {
 	}
 
 	@Test
-	public void addUserToGroupTest() {
+	void addUserToGroupTest() {
+		User user = assertDoesNotThrow(() -> BackofficeService.getInstance().findByIdUser(3));
+		UserGroups userGroup = assertDoesNotThrow(() -> BackofficeService.getInstance().findByIdGroup(15)); //15 = default user group
 		
-		UserGroups defaultGroup = new UserGroups();
-		defaultGroup.setCreationTime(LocalDateTime.now());
-		defaultGroup.setCreationUser("admin");
-		defaultGroup.setGroupName("GROUP_DEFAULT");
-		defaultGroup.setPermissions("READING");
-		defaultGroup.setEnabled(true);
-		defaultGroup.setRoles(Roles.USER.toString());
+		assertNotNull(user);
+		assertNotNull(userGroup);
 		
-		UserGroups g = new UserGroups();
-		g.setCreationTime(LocalDateTime.now());
-		g.setCreationUser("admin");
-		g.setGroupName("GROUP_MODERS_3");
-		g.setPermissions("READING, RESERVATION");
-		g.setEnabled(true);
-		g.setRoles(Roles.MODERATOR.toString());
-
-		User u = new User();
-		u.setCreationTime(LocalDateTime.now());
-		u.setCreationUser("java-app");
-		u.setDeleted(false);
-		u.setVerified(true);
-		u.setEmail("onenen3@gmail.com");
-		u.setName("Camon");
-		u.setLastLogin(LocalDateTime.now());
-		u.setLastName("World");
-		u.setPassword("qwerty");
-		u.setUsername("1a2b3c");
-//		u.setUserGroup(defaultGroup);
-		
-//		assertDoesNotThrow(() -> {
-//			BackofficeService.getInstance().createGroup(defaultGroup);
-//		});
-
-//		assertDoesNotThrow(() -> {
-//			BackofficeService.getInstance().createGroup(g);
-//		});
-		
-		User us = BackofficeService.getInstance().findByIdUser(3);
-		UserGroups defaultg = BackofficeService.getInstance().findByIdGroup(16);
-
-		
-//		assertDoesNotThrow(() -> {
-//			BackofficeService.getInstance().createUser(u);
-//		});
-		
-		assertDoesNotThrow(()->{
-			
-			BackofficeService.getInstance().addUserToGroup(defaultg, us);
-			
-		});
-		
-		log.info("Group {}", defaultg);
-		log.info("User {}", us);
-		log.info("User added to group {} ", us.getUserGroup());
+		log.info("Found user - {}", user.getId());
+		log.info("Found group - {}", userGroup.getId());
 		
 		
-//		assertDoesNotThrow(() -> {
-//			BackofficeService.getInstance().deleteUser(us);
-//		});
-
-//		assertDoesNotThrow(() -> {
-//			BackofficeService.getInstance().deleteGroup(g);
-//		});
-
+		log.info("Attempting to add user {} to group {}", user.getUsername(), userGroup.getGroupName());
+		assertDoesNotThrow(() -> BackofficeService.getInstance().addUserToGroup(userGroup, user));
+		
+		log.info("Succesfully added user {} to group {}", user.getUsername(), userGroup.getGroupName());
+		
+		
 	}
 
 }

@@ -177,30 +177,16 @@ public class BackofficeService {
 	public void addUserToGroup(UserGroups group, User user) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(group);
-
+		
+		user.setUserGroup(group);
+		
 		try {
-			user = (User) userDao.findById(user.getId());
-			group = (UserGroups) userGroupsDao.findById(group.getId());
-
-			log.info("User and group was succesfully found | user - {} group - {}", user.getId(), group.getId());
+			UserDao.getInstance().update(user);
 		} catch (DaoException e) {
-			throw new ServiceException("Something went wrong when finding user and group", e);
+			throw new ServiceException("Something went wrong when adding user to group", e);
 		}
 		
-		try(Session s=HibernateUtils.getSessionFactory().openSession()){
-			
-			s.refresh(group);	
-			s.refresh(user);
-			
-			log.info("Group {}", group.getId());
-			user.setUserGroup(group);
-			Set<User> userSet = group.getUsers();
-			userSet.add(user);
-			
-			
-			user.setUserGroup(group);
-			group.setUsers(userSet);
-		}
+		
 	}
 
 	public UserDTO login(String username, String password, String email) {
