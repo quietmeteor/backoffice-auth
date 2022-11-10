@@ -15,7 +15,8 @@ import it.eforhum.backoffice.dao.UserGroupsDao;
 import it.eforhum.backoffice.entity.User;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
-import it.eforhum.backoffice.service.BackofficeService;
+import it.eforhum.backoffice.service.GroupService;
+
 
 public class BaseDAOTest {
 
@@ -45,7 +46,7 @@ public class BaseDAOTest {
 //		assertTrue(userGroups.getId() > 0);
 
 		assertDoesNotThrow(() -> {
-			BackofficeService.getInstance().createGroup(userGroups);
+			GroupService.getInstance().createGroup(userGroups);
 		});
 
 		user.setCreationUser("test-user");
@@ -61,7 +62,7 @@ public class BaseDAOTest {
 //		assertTrue(user.getId() > 0);
 
 		assertDoesNotThrow(() -> {
-			BackofficeService.getInstance().createUser(user);
+			UserService.getInstance().createUser(user);
 		});
 
 		assertDoesNotThrow(() -> {
@@ -284,8 +285,6 @@ public class BaseDAOTest {
 		assertDoesNotThrow(() -> BackofficeService.getInstance().addUserToGroup(userGroup, user));
 		
 		log.info("Succesfully added user {} to group {}", user.getUsername(), userGroup.getGroupName());
-		
-		
 	}
 
 }

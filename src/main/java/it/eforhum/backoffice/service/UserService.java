@@ -4,54 +4,33 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
 
 import it.eforhum.backoffice.dao.UserDao;
-import it.eforhum.backoffice.dao.UserGroupsDao;
 import it.eforhum.backoffice.dto.UserDTO;
 import it.eforhum.backoffice.entity.User;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.exception.DaoException;
 import it.eforhum.backoffice.exception.ServiceException;
-import it.eforhum.backoffice.util.HibernateUtils;
 
-public class BackofficeService {
-	protected static final Logger log = LogManager.getLogger(BackofficeService.class);
+public class UserService {
+	protected static final Logger log = LogManager.getLogger(UserService.class);
 
 	private static UserDao userDao = UserDao.getInstance();
-	private static UserGroupsDao userGroupsDao = UserGroupsDao.getInstance();
+	
+	private static UserService instance = null;
 
-	private static BackofficeService instance = null;
-
-	public static BackofficeService getInstance() {
+	public static UserService getInstance() {
 		if (instance == null) {
-			instance = new BackofficeService();
+			instance = new UserService();
 		}
 
 		return instance;
 	}
-
-	public void createGroup(UserGroups group) {
-		Objects.requireNonNull(group);
-
-		try {
-
-//			group.setCreationTime(LocalDateTime.now()); ask front-end group
-//			group.setCreationUser("app-java");
-
-			userGroupsDao.save(group);
-		} catch (DaoException dE) {
-			throw new ServiceException("Something went wrong while trying to save a group ", dE);
-		}
-
-		log.info("Group has been created {} ", group.getId());
-	}
-
+	
 	public void createUser(User user) {
 		Objects.requireNonNull(user);
 		try {
@@ -87,18 +66,6 @@ public class BackofficeService {
 		log.info("User has been deleted {}", userToDelete.getId());
 	}
 
-	public void deleteGroup(UserGroups group) {
-		Objects.requireNonNull(group);
-		try {
-			log.info("Attempting group with {} id removal", group.getId());
-			userGroupsDao.delete(group);
-		} catch (DaoException dE) {
-			throw new ServiceException("Something went wrong while trying to delete a group", dE);
-		}
-
-		log.info("Group id {} removed", group.getId());
-	}
-
 	public void deleteUserCompletely(User u) {
 		Objects.requireNonNull(u);
 		try {
@@ -122,54 +89,37 @@ public class BackofficeService {
 
 	}
 
-	public UserGroups findByIdGroup(long id) {
-		if (id > 0) {
-			return (UserGroups) userGroupsDao.getInstance().findById(id);
-		} else {
-			log.info("Id must be bigger than 0");
-			return null;
+	public User findByUsername(User user) {
+		Objects.requireNonNull(user);
+		log.info("Try to find user by username {} ", user.getUsername());
+		try {
+			user = userDao.findByUsername(user.getUsername());
+		} catch (ServiceException e) {
+			throw new ServiceException("Something went wrong when try to find user by username", e);
 		}
-
+		return user;
 	}
 
-	public void updateUser(long id, User upd) { // to rewiev
-		User u = findByIdUser(id);
-		Objects.requireNonNull(u);
-		log.info("Trying to update a user id:{} ", u.getId());
+	public void updateUser(long id, User updatedUser) {
+		User oldUser = findByIdUser(id);
+		Objects.requireNonNull(oldUser);
+		log.info("Trying to update a user id:{} ", oldUser.getId());
 		try {
-			u.setEmail(upd.getEmail());
-			u.setName(upd.getName());
-			u.setLastName(upd.getLastName());
-			u.setPassword(upd.getPassword());
-			// u.setDateModifiedPass(LocalDateTime.now()); revision
-			u.setUpdateTime(LocalDateTime.now());
-			u.setUpdateUser("java-app"); // revision
-			u.setUsername(upd.getUsername());
+			if (!updatedUser.getPassword().equals(oldUser.getPassword())) {
+				oldUser.setDateModifiedPass(LocalDateTime.now());
+			}
+			oldUser.setEmail(updatedUser.getEmail());
+			oldUser.setName(updatedUser.getName());
+			oldUser.setLastName(updatedUser.getLastName());
+			oldUser.setPassword(updatedUser.getPassword());
 
-			userDao.getInstance().update(u);
+			oldUser.setUpdateTime(LocalDateTime.now());
+			oldUser.setUpdateUser("java-app"); // revision
+			oldUser.setUsername(updatedUser.getUsername());
+
+			userDao.getInstance().update(oldUser);
 		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while updating a user ", dE);
-		}
-
-	}
-
-	public void updateGroup(long id, UserGroups upd) {
-		UserGroups g = findByIdGroup(id);
-		Objects.requireNonNull(g);
-		log.info("Trying to update a group id:{}", g.getId());
-		try {
-
-			g.setGroupName(upd.getGroupName());
-			g.setPermissions(upd.getPermissions());
-			g.setRoles(upd.getRoles());
-			g.setEnabled(upd.isEnabled());
-			g.setUpdateTime(LocalDateTime.now());
-			g.setUpdateUser("java-app");
-
-			userGroupsDao.update(g);
-			log.info("Group id {} has been updated", g.getId());
-		} catch (DaoException dE) {
-			throw new ServiceException("Something went wrong while updating a group", dE);
 		}
 
 	}
@@ -177,16 +127,14 @@ public class BackofficeService {
 	public void addUserToGroup(UserGroups group, User user) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(group);
-		
+
 		user.setUserGroup(group);
-		
+
 		try {
 			UserDao.getInstance().update(user);
 		} catch (DaoException e) {
 			throw new ServiceException("Something went wrong when adding user to group", e);
 		}
-		
-		
 	}
 
 	public UserDTO login(String username, String password, String email) {
@@ -206,12 +154,12 @@ public class BackofficeService {
 
 			uDTO.setListRoles(roleList);
 			uDTO.setName(user.getName());
-			
+
 		} else {
 			log.error("Wrong credentials");
 		}
 
 		return null;
-
 	}
+
 }
