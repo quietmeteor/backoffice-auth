@@ -123,13 +123,13 @@ public class BaseDAOTest {
 		assertDoesNotThrow(() -> {
 			ServiceFactory.getGroupService().getInstance().createGroup(userGroup);
 		});
+		log.info("UserGroup with id {} was created", userGroup.getId());
 
 		assertDoesNotThrow(() -> {
 			ServiceFactory.getUserService().getInstance().createUser(user);
 		});
 
 		log.info("User with id {} was created", user.getId());
-		log.info("UserGroup with id {} was created", userGroup.getId());
 
 		assertNotNull(DaoFactory.getUserDao().getInstance().findById(user.getId()));
 		assertNotNull(DaoFactory.getUserGroupDao().getInstance().findById(userGroup.getId()));
@@ -144,8 +144,8 @@ public class BaseDAOTest {
 		assertDoesNotThrow(() -> {
 			ServiceFactory.getGroupService().getInstance().deleteGroup(userGroup);
 		});
-		log.info("User deleted");
-		log.info("UserGroup deleted");
+		log.info("User deleted with success");
+		log.info("UserGroup deleted with success");
 
 	}
 
@@ -205,6 +205,7 @@ public class BaseDAOTest {
 		assertDoesNotThrow(() -> {
 			ServiceFactory.getGroupService().getInstance().createGroup(userGroup);
 		});
+		log.info("Group created is {} ", userGroup);
 
 		UserGroups updatedGroup = new UserGroups();
 		updatedGroup.setCreationTime(LocalDateTime.now());
@@ -229,18 +230,18 @@ public class BaseDAOTest {
 	@Test
 	void addUserToGroupTest() {
 		User user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findByIdUser(1));
-		UserGroups userGroup = assertDoesNotThrow(() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(15)); //15 = default user group
-		
+		UserGroups userGroup = assertDoesNotThrow(
+				() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(15)); // 15 = default user group
+
 		assertNotNull(user);
 		assertNotNull(userGroup);
-		
+
 		log.info("Found user - {}", user.getId());
 		log.info("Found group - {}", userGroup.getId());
-		
-		
+
 		log.info("Attempting to add user {} to group {}", user.getUsername(), userGroup.getGroupName());
 		assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().addUserToGroup(userGroup, user));
-		
+
 		log.info("Succesfully added user {} to group {}", user.getUsername(), userGroup.getGroupName());
 	}
 

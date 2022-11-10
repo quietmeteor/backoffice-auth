@@ -1,5 +1,13 @@
 package it.eforhum.backoffice.enums;
-
+/**
+ * @version 1.0
+ * @author First backoffice-auth team
+ *
+ * @enum {@link #SUPER_USER} permit to CREATE/READ/UPDATE/DELETE all entities =>[USER|GROUP|SLOT|RISORSE]
+ * @enum {@link #ADMIN} permit to READ/DELETE =>[USER|GROUP], permit CREATE/READ/UPDATE/DELETE =>[SLOT|RISORSE]
+ * @enum {@link #MODERATOR} permit to READ all entities =>[USER|GROUP|SLOT|RISORSE]
+ * @enum {@link #USER} permit to READ only own reservations
+ */
 public enum Roles {
 	ROLE_CREATE_RISORSE,
 	ROLE_CREATE_USER,
@@ -22,8 +30,8 @@ public enum Roles {
 	ROLE_DELETE_GROUP,
 	
 	SUPER_USER,
+	ADMIN,
 	MODERATOR,
 	USER,
-	ADMIN,
 	
 }
