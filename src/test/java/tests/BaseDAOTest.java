@@ -15,6 +15,7 @@ import it.eforhum.backoffice.dao.UserGroupsDao;
 import it.eforhum.backoffice.entity.User;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
+import it.eforhum.backoffice.service.RolesService;
 import it.eforhum.backoffice.util.DaoFactory;
 import it.eforhum.backoffice.util.ServiceFactory;
 
@@ -216,7 +217,7 @@ public class BaseDAOTest {
 		updatedGroup.setRoles(Roles.ROLE_UPDATE_SLOT.toString());
 
 		assertDoesNotThrow(() -> {
-			ServiceFactory.getGroupService().getInstance().updateGroup(userGroup.getId(), updatedGroup);
+			ServiceFactory.getGroupService().getInstance().updateGroup(updatedGroup);
 		});
 
 		log.info("Group has been updated to {} ",
@@ -230,7 +231,8 @@ public class BaseDAOTest {
 	@Test
 	void addUserToGroupTest() {
 		User user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findByIdUser(3));
-		UserGroups userGroup = assertDoesNotThrow(() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(15)); // 15 = default user group
+		UserGroups userGroup = assertDoesNotThrow(
+				() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(15)); // 15 = default user group
 
 		assertNotNull(user);
 		assertNotNull(userGroup);
@@ -251,4 +253,75 @@ public class BaseDAOTest {
 		log.info("Found user {} with id {}", user.getUsername(), user.getId());
 	}
 
+	@Test
+	public void findRolesTest() {
+		UserGroups group = new UserGroups();
+		group.setCreationTime(LocalDateTime.now());
+		group.setCreationUser("admin");
+		group.setGroupName("GROUP_ADMIN_TEST_ROLES");
+		group.setPermissions("READING, RESERVATION, EATING");
+		group.setEnabled(true);
+		group.setRoles(Roles.ROLE_CREATE_USER.toString() + ", " + Roles.ROLE_CREATE_RISORSE.toString() + ", "
+				+ Roles.ROLE_CREATE_GROUP.toString());
+
+		assertDoesNotThrow(() -> {
+			ServiceFactory.getGroupService().getInstance().createGroup(group);
+
+			RolesService.getInstance().getRolesList(group);
+
+		});
+
+	}
+
+	@Test
+	public void deleteRolesTest() {
+		UserGroups group = new UserGroups();
+		group.setCreationTime(LocalDateTime.now());
+		group.setCreationUser("admin");
+		group.setGroupName("GROUP_ADMIN_TEST_ROLES");
+		group.setPermissions("READING, RESERVATION, EATING");
+		group.setEnabled(true);
+		group.setRoles(Roles.ROLE_CREATE_USER.toString() + ", " + Roles.ROLE_CREATE_RISORSE.toString() + ", "
+				+ Roles.ROLE_CREATE_GROUP.toString());
+
+		assertDoesNotThrow(() -> {
+			ServiceFactory.getGroupService().getInstance().createGroup(group);
+
+		});
+		
+		String role=Roles.ROLE_CREATE_USER.toString();
+		
+		ServiceFactory.getRolesService().deleteRole(role,  group);
+		
+		log.info("Test Role deleting; Updated roles: ", group.getRoles());
+
+	}
+	
+	@Test
+	public void addRolesTest() {
+		UserGroups group = new UserGroups();
+		group.setCreationTime(LocalDateTime.now());
+		group.setCreationUser("admin");
+		group.setGroupName("GROUP_ADMIN_TEST_ROLES");
+		group.setPermissions("READING, RESERVATION, EATING");
+		group.setEnabled(true);
+		group.setRoles(Roles.ROLE_CREATE_USER.toString() + ", " + Roles.ROLE_CREATE_RISORSE.toString() + ", "
+				+ Roles.ROLE_CREATE_GROUP.toString());
+
+		assertDoesNotThrow(() -> {
+			ServiceFactory.getGroupService().getInstance().createGroup(group);
+
+		});
+		
+		String role=Roles.ROLE_READ_USER.toString();
+		
+		ServiceFactory.getRolesService().addRole(role,  group);
+		
+		log.info("Test Role adding Updated roles: ", group.getRoles());
+
+	}
+	
+	
+	
+	
 }
