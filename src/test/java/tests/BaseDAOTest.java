@@ -229,9 +229,8 @@ public class BaseDAOTest {
 
 	@Test
 	void addUserToGroupTest() {
-		User user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findByIdUser(1));
-		UserGroups userGroup = assertDoesNotThrow(
-				() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(15)); // 15 = default user group
+		User user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findByIdUser(3));
+		UserGroups userGroup = assertDoesNotThrow(() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(15)); // 15 = default user group
 
 		assertNotNull(user);
 		assertNotNull(userGroup);
@@ -243,6 +242,13 @@ public class BaseDAOTest {
 		assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().addUserToGroup(userGroup, user));
 
 		log.info("Succesfully added user {} to group {}", user.getUsername(), userGroup.getGroupName());
+	}
+
+	@Test
+	void findUserByUsernameTest() {
+		User user = ServiceFactory.getUserService().findByUsername("1a2b3c");
+
+		log.info("Found user {} with id {}", user.getUsername(), user.getId());
 	}
 
 }

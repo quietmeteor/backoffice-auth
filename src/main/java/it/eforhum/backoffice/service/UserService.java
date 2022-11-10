@@ -15,6 +15,7 @@ import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.exception.DaoException;
 import it.eforhum.backoffice.exception.ServiceException;
+import it.eforhum.backoffice.util.DaoFactory;
 
 public class UserService {
 	protected static final Logger log = LogManager.getLogger(UserService.class);
@@ -89,13 +90,13 @@ public class UserService {
 
 	}
 
-	public User findByUsername(User user) {
-		Objects.requireNonNull(user);
-		log.info("Try to find user by username {} ", user.getUsername());
+	public User findByUsername(String username) {
+		log.info("Try to find user by username {} ", username);
+		User user = new User();
 		try {
-			user = userDao.findByUsername(user.getUsername());
+			user = userDao.findByUsername(username);
 		} catch (ServiceException e) {
-			throw new ServiceException("Something went wrong when try to find user by username", e);
+			throw new ServiceException("Something went wrong when trying to find user by username", e);
 		}
 		return user;
 	}

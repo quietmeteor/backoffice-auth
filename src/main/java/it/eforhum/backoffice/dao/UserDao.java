@@ -3,7 +3,7 @@ package it.eforhum.backoffice.dao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 
 import it.eforhum.backoffice.entity.User;
 import it.eforhum.backoffice.util.HibernateUtils;
@@ -26,11 +26,10 @@ public class UserDao extends BaseDao {
 	}
 
 	public User findByUsername(String username) {
-		try (Session sessione = HibernateUtils.getSessionFactory().openSession()) {
-//			NativeQuery query = sessione.createNativeQuery("SELECT * FROM user WHERE username = " + username, UserDao.class);
-			log.info("Attempting to find user by username {}", username);
-
-			return sessione.find(User.class, username);
+		try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+			Query query = session.createQuery("from User where username=:username");
+			query.setParameter("username", username);
+			return (User) query.uniqueResult();
 		}
 
 	}
