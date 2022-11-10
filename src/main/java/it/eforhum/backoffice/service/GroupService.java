@@ -64,8 +64,8 @@ public class GroupService {
 
 	}
 	
-	public void updateGroup(long id, UserGroups upd) {
-		UserGroups g = findByIdGroup(id);
+	public void updateGroup(UserGroups upd) {
+		UserGroups g = findByIdGroup(upd.getId());
 		Objects.requireNonNull(g);
 		log.info("Trying to update a group id:{}", g.getId());
 		try {

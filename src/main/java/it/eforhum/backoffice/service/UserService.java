@@ -149,7 +149,7 @@ public class UserService {
 			uDTO.setGroup(user.getUserGroup());
 			uDTO.setLastName(user.getLastName());
 
-			for (String role : ug.getRoles().split(";")) {
+			for (String role : ug.getRoles().split(",")) {
 				roleList.add(Roles.valueOf(role));
 			}
 
