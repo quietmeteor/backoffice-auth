@@ -1,5 +1,4 @@
-####### BACKOFFICE AUTORIZZAZIONE ########
-
+# BACKOFFICE AUTORIZZAZIONE
 - Operazioni CRUD Entity Utente 
 - Operazioni CRUD Entity GruppoUtente 
 - Associazione degli utenti al gruppo utente 
