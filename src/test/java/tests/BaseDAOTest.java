@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,9 +35,15 @@ public class BaseDAOTest {
 	
 	@Test
 	void finUserById() {
-		User user = ServiceFactory.getUserService().findByIdUser(88901L);
+		User user = ServiceFactory.getUserService().findByIdUser(1);
 
 		log.info("Found user {} with id {}", user.getUsername(), user.getId());
+	}
+	@Test
+	void findAllUsersTest() {
+		List<User> users = ServiceFactory.getUserService().findAll();
+		
+		log.info("Found users {}", users);
 	}
 	
 	@Test

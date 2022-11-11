@@ -213,9 +213,6 @@ body {
 
 									<tr>
 
-
-
-
 										<td><c:out value=""></c:out></td>
 
 
