@@ -20,7 +20,7 @@ import it.eforhum.backoffice.util.DaoFactory;
 public class UserService {
 	protected static final Logger log = LogManager.getLogger(UserService.class);
 
-	private static UserDao userDao = UserDao.getInstance();
+	private static UserDao userDao = DaoFactory.getUserDao().getInstance();
 	
 	private static UserService instance = null;
 
@@ -162,5 +162,8 @@ public class UserService {
 
 		return null;
 	}
-
+	
+	public List<User> findAll() {
+	    return this.userDao.findAll();
+	  }
 }

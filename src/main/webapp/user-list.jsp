@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <!-- saved from url=(0051)http://localhost:8080/prenotazioni-web/list/risorse -->
 <html lang="en">
@@ -216,7 +216,7 @@ body {
 
 
 
-										<td><c:out value=""></c:out> </td>
+										<td><c:out value=""></c:out></td>
 
 
 
@@ -251,6 +251,7 @@ body {
 										<td>No</td>
 
 
+										<td></td>
 										<td>
 											<button type="button" class="btn btn-primary"
 												onclick="detail(4)">

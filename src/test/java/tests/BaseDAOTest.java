@@ -31,7 +31,14 @@ public class BaseDAOTest {
 			DaoFactory.getUserDao().getInstance().testConnessione();
 		});
 	}
+	
+	@Test
+	void finUserById() {
+		User user = ServiceFactory.getUserService().findByIdUser(88901L);
 
+		log.info("Found user {} with id {}", user.getUsername(), user.getId());
+	}
+	
 	@Test
 	void createUserAndGroupTest() {
 
