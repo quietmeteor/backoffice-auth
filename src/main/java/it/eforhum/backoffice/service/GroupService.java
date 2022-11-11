@@ -1,6 +1,7 @@
 package it.eforhum.backoffice.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,11 +14,11 @@ import it.eforhum.backoffice.exception.ServiceException;
 
 public class GroupService {
 	protected static final Logger log = LogManager.getLogger(GroupService.class);
-	
+
 	private static UserGroupsDao userGroupsDao = UserGroupsDao.getInstance();
-	
+
 	private static GroupService instance = null;
-	
+
 	public static GroupService getInstance() {
 		if (instance == null) {
 			instance = new GroupService();
@@ -25,7 +26,7 @@ public class GroupService {
 
 		return instance;
 	}
-	
+
 	public void createGroup(UserGroups group) {
 		Objects.requireNonNull(group);
 
@@ -41,7 +42,7 @@ public class GroupService {
 
 		log.info("Group has been created {} ", group.getId());
 	}
-	
+
 	public void deleteGroup(UserGroups group) {
 		Objects.requireNonNull(group);
 		try {
@@ -53,7 +54,7 @@ public class GroupService {
 
 		log.info("Group id {} removed", group.getId());
 	}
-	
+
 	public UserGroups findByIdGroup(long id) {
 		if (id > 0) {
 			return (UserGroups) userGroupsDao.getInstance().findById(id);
@@ -63,7 +64,7 @@ public class GroupService {
 		}
 
 	}
-	
+
 	public void updateGroup(UserGroups upd) {
 		UserGroups g = findByIdGroup(upd.getId());
 		Objects.requireNonNull(g);
@@ -84,4 +85,11 @@ public class GroupService {
 		}
 
 	}
+
+	public List<UserGroups> getAllGroups() {
+
+		return UserGroupsDao.getInstance().findAll();
+
+	}
+
 }
