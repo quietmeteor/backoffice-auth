@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import it.eforhum.backoffice.dao.UserGroupsDao;
 import it.eforhum.backoffice.entity.UserGroups;
-import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.exception.DaoException;
 import it.eforhum.backoffice.exception.ServiceException;
 
