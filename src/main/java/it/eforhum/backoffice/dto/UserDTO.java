@@ -6,13 +6,24 @@ import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
 
 public class UserDTO {
+	long id;
 	String username;
-	String pasword;
+	String password;
 	String email;
 	String name;
 	String lastName;
 	UserGroups group;
+	boolean verified;
+	boolean deleted;
 	List<Roles> listRoles;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getUsername() {
 		return username;
@@ -22,12 +33,12 @@ public class UserDTO {
 		this.username = username;
 	}
 
-	public String getPasword() {
-		return pasword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasword(String pasword) {
-		this.pasword = pasword;
+	public void setPassword(String pasword) {
+		this.password = pasword;
 	}
 
 	public String getEmail() {
@@ -62,6 +73,22 @@ public class UserDTO {
 		this.group = group;
 	}
 
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public List<Roles> getListRoles() {
 		return listRoles;
 	}
@@ -69,6 +96,5 @@ public class UserDTO {
 	public void setListRoles(List<Roles> listRoles) {
 		this.listRoles = listRoles;
 	}
-	
 
 }

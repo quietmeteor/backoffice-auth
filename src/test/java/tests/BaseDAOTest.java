@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 
 import it.eforhum.backoffice.dao.UserDao;
 import it.eforhum.backoffice.dao.UserGroupsDao;
+import it.eforhum.backoffice.dto.UserDTO;
 import it.eforhum.backoffice.entity.User;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
-import it.eforhum.backoffice.service.RolesService;
 import it.eforhum.backoffice.util.DaoFactory;
 import it.eforhum.backoffice.util.ServiceFactory;
 
@@ -57,11 +57,11 @@ public class BaseDAOTest {
 		user.setUserGroup(userGroup);
 
 		assertDoesNotThrow(() -> {
-			ServiceFactory.getGroupService().getInstance().createGroup(userGroup);
+			ServiceFactory.getGroupService().createGroup(userGroup);
 		});
 
 		assertDoesNotThrow(() -> {
-			ServiceFactory.getUserService().getInstance().createUser(user);
+			ServiceFactory.getUserService().createUser(user);
 		});
 
 		log.info("User with id {} was created", user.getId());
@@ -184,9 +184,9 @@ public class BaseDAOTest {
 		updatedUser.setUsername("1a2b3c");
 
 		assertDoesNotThrow(() -> {
-			ServiceFactory.getUserService().getInstance().updateUser(user.getId(), updatedUser);
+			ServiceFactory.getUserService().getInstance().updateUser(updatedUser);
 		});
-		log.info("Updated user is {} ", ServiceFactory.getUserService().getInstance().findByIdUser(user.getId()));
+		log.info("Updated user is {} ", ServiceFactory.getUserService().getInstance().findById(user.getId()));
 
 		assertDoesNotThrow(() -> {
 			ServiceFactory.getUserService().getInstance().deleteUserCompletely(user);
@@ -230,7 +230,7 @@ public class BaseDAOTest {
 
 	@Test
 	void addUserToGroupTest() {
-		User user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findByIdUser(3));
+		UserDTO user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findById(3));
 		UserGroups userGroup = assertDoesNotThrow(
 				() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(15)); // 15 = default user group
 
@@ -248,7 +248,7 @@ public class BaseDAOTest {
 
 	@Test
 	void findUserByUsernameTest() {
-		User user = ServiceFactory.getUserService().findByUsername("1a2b3c");
+		UserDTO user = ServiceFactory.getUserService().findByUsername("1a2b3c");
 
 		log.info("Found user {} with id {}", user.getUsername(), user.getId());
 	}
@@ -267,7 +267,7 @@ public class BaseDAOTest {
 		assertDoesNotThrow(() -> {
 			ServiceFactory.getGroupService().getInstance().createGroup(group);
 
-			RolesService.getInstance().getRolesList(group);
+			ServiceFactory.getRolesService().getRolesList(group);
 
 		});
 
@@ -320,8 +320,6 @@ public class BaseDAOTest {
 		log.info("Test Role adding Updated roles: ", group.getRoles());
 
 	}
-	
-	
 	
 	
 }
