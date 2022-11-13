@@ -1,4 +1,4 @@
-package exception;
+package it.eforhum.backoffice.exception;
 
 public class DaoException extends RuntimeException {
 

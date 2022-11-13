@@ -20,9 +20,9 @@
 		<property name="hbm2ddl.auto">update</property>
 
 		<!-- mapping entita' -->
-		<mapping class="entity.BaseEntity" />
-		<mapping class="entity.UserGroups" />
-		<mapping class="entity.User" />
+		<mapping class="it.eforhum.backoffice.entity.BaseEntity" />
+		<mapping class="it.eforhum.backoffice.entity.UserGroups" />
+		<mapping class="it.eforhum.backoffice.entity.User" />
 
 	</session-factory>
 </hibernate-configuration>

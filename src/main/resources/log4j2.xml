@@ -14,7 +14,7 @@
 		</Root>
 
 		<Logger name="org.hibernate" level="debug">
-			<AppenderRed ref="console" />
+			<AppenderRef ref="console" />
 		</Logger>
 	</Loggers>
 </Configuration>

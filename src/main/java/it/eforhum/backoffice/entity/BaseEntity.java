@@ -1,4 +1,4 @@
-package entity;
+package it.eforhum.backoffice.entity;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,6 +8,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+/**
+ * Base entity that's inherited by any other entity saved in a database
+ * 
+ * @version 1.0
+ * @author first backoffice-auth team
+ * 
+ * @field [AI] {@link #id}
+ * @field [NOT NULL] {@link #creationUser}
+ * @field {@link #updateUser}
+ * @field [NOT NULL] {@link #creationUser}
+ * @field {@link #updateTime}
+ * 
+ */
 
 @MappedSuperclass
 public class BaseEntity {

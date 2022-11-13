@@ -1,4 +1,4 @@
-package entity;
+package it.eforhum.backoffice.entity;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -12,15 +12,37 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
+/**
+ * Entity that represents information of a user, has an One-to-Many relationship with {@link #UserGroups}
+ * 
+ * @version 1.0
+ * @author First backoffice-auth team
+ * 
+ * @field [FK] {@link #userGroup}
+ * @field [NOT NULL] {@link #username}
+ * @field [NOT NULL] {@link #password}
+ * @field [NOT NULL] {@link #name}
+ * @field [NOT NULL] {@link #lastName}
+ * @field [NOT NULL] [UNIQUE] {@link #email} 
+ * @field {@link #lastLogin}
+ * @field {@link #dateModifiedPass} indicates the last time the user's password has been modified
+ * @field {@link #isDeleted} indicates if the user's account has been deleted and deactivated without it's record being removed from the database
+ * @field {@link #isVerified} indicates if the user has activated his account via link sent him during the registration
+ * 
+ * @see BaseEntity
+ * @see UserGroups
+ * 
+ */
+
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity {
 
 	@ManyToOne
-	@JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "FK_id_group"))
+	@JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "FK_group_id"))
 	private UserGroups userGroup;
 
-	@Column(name = "username", nullable = false, length = 32)
+	@Column(name = "username", unique = true, nullable = false, length = 32)
 	private String username;
 
 	@Column(name = "password", nullable = false, length = 32)
