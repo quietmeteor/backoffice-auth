@@ -72,8 +72,8 @@
 						<c:out value="${error_message}" />
 					</div>
 					<div class="form-group row">
-						<label for="groupName" class="col-sm-2 col-form-label">Group
-							Name</label>
+						<label for="groupName" class="col-sm-2 col-form-label">Nome
+							Gruppo</label>
 						<div class="col-sm-10">
 							<input type="text" id="groupName" name="groupName"
 								value="${group.groupName}"></br>
@@ -81,15 +81,14 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="roles" class="col-sm-2 col-form-label">Roles</label>
+						<label for="roles" class="col-sm-2 col-form-label">Ruoli</label>
 						<div class="col-sm-10">
-							<input type="text" id="roles" name="roles"
-								class="col-sm-2 col-form-label" value="${group.roles}"></br>
+							<input type="text" id="roles" name="roles" value="${group.roles}"></br>
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label for="permissions" class="col-sm-2 col-form-label">Permissions</label>
+						<label for="permissions" class="col-sm-2 col-form-label">Permessi</label>
 						<div class="col-sm-10">
 							<input type="text" id="permission" name="permissions"
 								value="${group.permissions}"></br>
@@ -97,7 +96,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="enabled" class="col-sm-2 col-form-label">Enabled</label>
+						<label for="enabled" class="col-sm-2 col-form-label">Attivo</label>
 						<div class="col-sm-10">
 							<input type="text" id="enabled" name="enabled"
 								value="${group.enabled}"></br>
@@ -105,28 +104,32 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="creationTime" class="col-sm-2 col-form-label">Creation Time</label>
+						<label for="creationTime" class="col-sm-2 col-form-label">Data Creazione
+							</label>
 						<div class="col-sm-10">
 							<input type="datetime-local" id="creationTime"
 								name="creationTime" value="${group.creationTime}"></br>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="creationUser" class="col-sm-2 col-form-label">Creation User</label>
+						<label for="creationUser" class="col-sm-2 col-form-label">User Creazione
+							</label>
 						<div class="col-sm-10">
 							<input type="text" id="creationUser" name="creationUser"
 								value="${group.creationUser}"></br>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="updateTime" class="col-sm-2 col-form-label">Update Time</label>
+						<label for="updateTime" class="col-sm-2 col-form-label">Data Aggiornamento
+							</label>
 						<div class="col-sm-10">
 							<input type="datetime-local" id="updateTime" name="updateTime"
 								value="${group.updateTime}"></br>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="updateUser" class="col-sm-2 col-form-label">Update User</label>
+						<label for="updateUser" class="col-sm-2 col-form-label">User Aggiornamento
+							</label>
 						<div class="col-sm-10">
 							<input type="text" id="updateUser" name="updateUser"
 								value="${group.updateUser}"></br>
