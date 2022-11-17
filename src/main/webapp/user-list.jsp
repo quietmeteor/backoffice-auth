@@ -152,15 +152,15 @@ body {
 				<div class="sidebar-sticky">
 					<ul class="nav flex-column">
 						<li class="nav-item"><a
-							href="http://localhost:8080/prenotazioni-web/home"
+							href="http://localhost:8080/Backoffice/slot-prenotazioni"
 							class="nav-link "> <span></span> Prenotazioni
 						</a></li>
 						<li class="nav-item"><a
-							href="http://localhost:8080/prenotazioni-web/list/risorse"
+							href="http://localhost:8080/Backoffice/user-list"
 							class="nav-link active"> <span></span> Lista utenti
 						</a></li>
 						<li class="nav-item"><a
-							href="http://localhost:8080/prenotazioni-web/list/slot-prenotazioni"
+							href="http://localhost:8080/Backoffice/group-list"
 							class="nav-link "> <span></span> Lista gruppi
 						</a></li>
 
@@ -172,7 +172,7 @@ body {
 
 
 				<form id="form1"
-					action="http://localhost:8080/prenotazioni-web/delete/risorsa"
+					action="http://localhost:8080/Backoffice/delete/risorsa"
 					method="POST">
 					<input type="hidden" id="id" name="id">
 				</form>
@@ -216,7 +216,7 @@ body {
 
 
 
-										<td><c:out value=""></c:out> </td>
+										<td><c:out value=""></c:out></td>
 
 
 

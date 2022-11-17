@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html>
 <!-- saved from url=(0051)http://localhost:8080/prenotazioni-web/list/risorse -->
@@ -15,8 +16,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/x-icon"
 	href="http://localhost:8080/favicon.ico">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
 <link rel='stylesheet'
 	href='https://use.fontawesome.com/releases/v5.3.1/css/all.css'>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -24,6 +28,8 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 </head>
+
+
 <body>
 
 	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
@@ -50,7 +56,7 @@
 							class="nav-link active"> <span></span> Lista utenti
 						</a></li>
 						<li class="nav-item"><a
-							href="http://localhost:8080/prenotazioni-web/list/slot-prenotazioni"
+							href="http://localhost:8080//Backoffice/group-list"
 							class="nav-link "> <span></span> Lista gruppi
 						</a></li>
 
@@ -58,38 +64,38 @@
 				</div>
 			</nav>
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-	
-	
 
 
-	
+
+
+
 				<div class="container">
+								<button type="button" class="btn btn-success" onclick="create()">Create
+					Group</button>
 					<div class="row">
-						<div class="col-12">
-							<button type="button" class="btn btn-success" onclick="create()">
-								<i class="fas fa-plus"></i>
-							</button>
-							<table class="table table-bordered">
+
+						<div class="col-4 text-center">
+							<table class="table table-bordered table-hover table-striped table-sm">
 								<thead>
 									<tr>
 
-										<th scope="col">Id</th>
+										<th scope="col" class="align-text-top">Id</th>
 
-										<th scope="col">Group Name</th>
+										<th scope="col" class="align-text-top">Group Name</th>
 
-										<th scope="col">Roles</th>
+										<th scope="col" class="align-text-top">Roles</th>
 
-										<th scope="col">Permissions</th>
+										<th scope="col" class="align-text-top">Permissions</th>
 
-										<th scope="col">Enabled</th>
+										<th scope="col" class="align-text-top">Enabled</th>
 
-										<th scope="col">Creation User</</th>
+										<th scope="col" class="align-text-top">Creation User</</th>
 
-										<th scope="col">Creation Time</th>
+										<th scope="col" class="align-text-top">Creation Time</th>
 
-										<th scope="col">Update User</th>
+										<th scope="col" class="align-text-top">Update User</th>
 
-										<th scope="col">Update Time</th>
+										<th scope="col" class="align-text-top">Update Time</th>
 
 										<td>&nbsp;</td>
 									</tr>
@@ -98,27 +104,27 @@
 
 									<c:forEach items="${groupList}" var="group">
 										<tr>
-											<td><c:out value="${group.id}" /></td>
-											<td><c:out value="${group.groupName}" /></td>
-											<td><c:out value="${group.roles}" /></td>
-											<td><c:out value="${group.permissions}" /></td>
-											<td><c:out value="${group.enabled}" /></td>
-											<td><c:out value="${group.creationUser}" /></td>
-											<td><c:out value="${group.creationTime}" /></td>
-											<td><c:out value="${group.updateUser}" /></td>
-											<td><c:out value="${group.updateTime}" /></td>
+											<td><c:out value="${fn:trim(group.id)}" /></td>
+											<td><c:out value="${fn:trim(group.groupName)}" /></td>
+											<td><c:out value="${fn:trim(group.roles)}" /></td>
+											<td><c:out value="${fn:trim(group.permissions)}" /></td>
+											<td><c:out value="${fn:trim(group.enabled)}" /></td>
+											<td><c:out value="${fn:trim(group.creationUser)}" /></td>
+											<td><c:out value="${fn:trim(group.creationTime)}" /></td>
+											<td><c:out value="${fn:trim(group.updateUser)}" /></td>
+											<td><c:out value="${fn:trim(group.updateTime)}" /></td>
 
 											<td>
 												<button type="button" class="btn btn-primary"
-													onclick="detail(4)">
+													onclick="detail(${group.id})">
 													<i class="far fa-eye"></i>
 												</button>
 												<button type="button" class="btn btn-success"
-													onclick="edit(4)">
+													onclick="edit(${group.id})">
 													<i class="fas fa-edit"></i>
 												</button>
 												<button type="button" class="btn btn-danger"
-													onclick="deleteEntity(4)">
+													onclick="deleteEntity(${group.id})">
 													<i class="far fa-trash-alt"></i>
 												</button>
 											</td>
@@ -133,7 +139,7 @@
 					</div>
 				</div>
 
-				
+
 
 
 
@@ -141,6 +147,24 @@
 		</div>
 	</div>
 
+
+	<script type="text/javascript">
+		function detail(id){
+			window.location.href="/Backoffice/group-detail?id="+id;
+		}
+	
+		function edit(id) {
+
+		}
+
+		function create() {
+
+		}
+
+		function deleteEntity() {
+
+		}
+	</script>
 
 </body>
 </html>
