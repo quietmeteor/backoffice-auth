@@ -47,7 +47,7 @@ public class UserGroups extends BaseEntity {
 	@Column(name = "enabled", nullable = false)
 	private boolean isEnabled;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userGroup")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "userGroup")
 	private Set<User> users = new HashSet<>();
 
 	public UserGroups() {

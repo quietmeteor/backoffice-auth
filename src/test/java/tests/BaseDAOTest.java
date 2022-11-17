@@ -244,9 +244,9 @@ public class BaseDAOTest {
 
 	@Test
 	void addUserToGroupTest() {
-		User user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findByIdUser(3));
+		User user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findByIdUser(1));
 		UserGroups userGroup = assertDoesNotThrow(
-				() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(15)); // 15 = default user group
+				() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(1)); // 15 = default user group
 
 		assertNotNull(user);
 		assertNotNull(userGroup);

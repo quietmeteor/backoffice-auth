@@ -27,12 +27,13 @@ public class UserListController extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		List<User> list = ServiceFactory.getUserService().findAll();
 		
-		request.setAttribute("itemList", list);
+		List<User> userList = ServiceFactory.getUserService().findAll();
+		log.info("Lista utenti: ", userList.toString());
 		
-		request.getRequestDispatcher("item-list.jsp").forward(request, response);
+		request.setAttribute("userList", userList);
+		
+		request.getRequestDispatcher("user-list.jsp").forward(request, response);
 	}
 
 }

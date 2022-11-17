@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
+
 <!DOCTYPE html>
 <!-- saved from url=(0051)http://localhost:8080/prenotazioni-web/list/risorse -->
 <html lang="en">
@@ -8,7 +9,7 @@
 <meta http-equiv="Content-Type"
 	content="text/html; charset=windows-1252">
 
-<title>Lista Utenti</title>
+<title>Lista Gruppi</title>
 <!--<base href="/">-->
 <base href=".">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,61 +22,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-<style>
-.bd-placeholder-img {
-	font-size: 1.125rem;
-	text-anchor: middle;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	user-select: none;
-}
-
-@media ( min-width : 768px) {
-	.bd-placeholder-img-lg {
-		font-size: 3.5rem;
-	}
-}
-
-.b-example-divider {
-	height: 3rem;
-	background-color: rgba(0, 0, 0, .1);
-	border: solid rgba(0, 0, 0, .15);
-	border-width: 1px 0;
-	box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em
-		rgba(0, 0, 0, .15);
-}
-
-.b-example-vr {
-	flex-shrink: 0;
-	width: 1.5rem;
-	height: 100vh;
-}
-
-.bi {
-	vertical-align: -.125em;
-	fill: currentColor;
-}
-
-.nav-scroller {
-	position: relative;
-	z-index: 2;
-	height: 2.75rem;
-	overflow-y: hidden;
-}
-
-.nav-scroller .nav {
-	display: flex;
-	flex-wrap: nowrap;
-	padding-bottom: 1rem;
-	margin-top: -1px;
-	overflow-x: auto;
-	text-align: center;
-	white-space: nowrap;
-	-webkit-overflow-scrolling: touch;
-}
-</style>
-
 
 </head>
 <body>
@@ -100,7 +46,7 @@
 							class="nav-link "> <span></span> Prenotazioni
 						</a></li>
 						<li class="nav-item"><a
-							href="http://localhost:8080/prenotazioni-web/list/risorse"
+							href="http://localhost:8080/Backoffice/user-list"
 							class="nav-link active"> <span></span> Lista utenti
 						</a></li>
 						<li class="nav-item"><a
@@ -115,61 +61,52 @@
 
 
 
-				<form id="form1"
-					action="http://localhost:8080/prenotazioni-web/delete/risorsa"
-					method="POST">
-					<input type="hidden" id="id" name="id">
-				</form>
+
+
 				<div class="container">
 					<div class="row">
-						<div class="col-11">
+						<div class="col-12">
 							<button type="button" class="btn btn-success" onclick="create()">
 								<i class="fas fa-plus"></i>
 							</button>
 							<table class="table table-bordered">
 								<thead>
 									<tr>
-										<th scope="col">ID</th>
 
-										<th scope="col">EMAIL</th>
+										<th scope="col">Id</th>
 
-										<th scope="col">NOME</th>
+										<th scope="col">Group Name</th>
 
-										<th scope="col">COGNOME</th>
+										<th scope="col">Roles</th>
 
-										<th scope="col">USERNAME</th>
+										<th scope="col">Permissions</th>
 
-										<th scope="col">PASSWORD</th>
+										<th scope="col">Enabled</th>
 
-										<th scope="col">GROUP</th>
+										<th scope="col">Creation User</th>
 
-										<th scope="col">LAST LOGIN</th>
+										<th scope="col">Creation Time</th>
 
-										<th scope="col">DATE MIDIFIED PASSWORD</th>
+										<th scope="col">Update User</th>
 
-										<th scope="col">VERIFIED?</th>
-
-										<th scope="col">DELETED?</th>
+										<th scope="col">Update Time</th>
 
 										<td>&nbsp;</td>
 									</tr>
 								</thead>
 								<tbody>
 
-
-									<c:forEach items="${userList}" var="user">
+									<c:forEach items="${groupList}" var="group">
 										<tr>
-											<td><c:out value="${user.id}"></c:out></td>
-											<td><c:out value="${user.email}"></c:out></td>
-											<td><c:out value="${user.name}"></c:out></td>
-											<td><c:out value="${user.lastName}"></c:out></td>
-											<td><c:out value="${user.username}"></c:out></td>
-											<td><c:out value="${user.password}"></c:out></td>
-											<td><c:out value="${user.userGroup}"></c:out></td>
-											<td><c:out value="${user.lastLogin}"></c:out></td>
-											<td><c:out value="${user.dateModifiedPass}"></c:out></td>
-											<!--  <td><c:out value="${user.isVerified}"></c:out></td>
-											<td><c:out value="${user.isDeleted}"></c:out></td>-->
+											<td><c:out value="${group.id}" /></td>
+											<td><c:out value="${group.groupName}" /></td>
+											<td><c:out value="${group.roles}" /></td>
+											<td><c:out value="${group.permissions}" /></td>
+											<td><c:out value="${group.enabled}" /></td>
+											<td><c:out value="${group.creationUser}" /></td>
+											<td><c:out value="${group.creationTime}" /></td>
+											<td><c:out value="${group.updateUser}" /></td>
+											<td><c:out value="${group.updateTime}" /></td>
 
 											<td>
 												<button type="button" class="btn btn-primary"
@@ -188,34 +125,15 @@
 										</tr>
 									</c:forEach>
 
+
+
 								</tbody>
 							</table>
-
 						</div>
 					</div>
 				</div>
 
-				<script>
-					function detail(id) {
 
-						window.location.href = "http://localhost:8080/prenotazioni-web/detail/risorsa/"
-								+ id;
-					}
-					function edit(id) {
-
-						window.location.href = "http://localhost:8080/prenotazioni-web/edit/risorsa/"
-								+ id;
-					}
-					function create() {
-						window.location.href = "http://localhost:8080/prenotazioni-web/edit/risorsa/0";
-					}
-
-					function deleteEntity(id) {
-
-						$('#id').val(id);
-						$('#form1').submit();
-					}
-				</script>
 
 
 
