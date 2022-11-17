@@ -1,6 +1,7 @@
 package it.eforhum.backoffice.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +11,7 @@ import it.eforhum.backoffice.dao.UserGroupsDao;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.exception.DaoException;
 import it.eforhum.backoffice.exception.ServiceException;
+import it.eforhum.backoffice.util.DaoFactory;
 
 public class GroupService {
 	protected static final Logger log = LogManager.getLogger(GroupService.class);
@@ -83,5 +85,8 @@ public class GroupService {
 			throw new ServiceException("Something went wrong while updating a group", dE);
 		}
 
+	}
+	public List<UserGroups> getAllGroups(){
+		return DaoFactory.getUserDao().findAll();
 	}
 }
