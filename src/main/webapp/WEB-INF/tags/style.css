@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+
+:root {
+    --card-active: lightblue;
+    --card-busy: lightcoral;
+    --card-border-radius: 15px;
+}
+
+body {
+    overflow-y: hidden;
+    font-family: 'Kanit', sans-serif;
+}
+
+.overflow-scroll {
+    overflow-x: hidden !important;
+}
+
+.tr-style {
+    height: calc(80vh / 5) !important;
+}
+
+.th-style-calendar {
+    width: calc(80vw / 7) !important;
+}
+
+.card {
+    padding: 0px;
+
+}
+
+.card-style {
+    height: 22px !important;
+    padding: 0px 0px 0px 0px !important;
+    margin: 3px 10px 0px 10px !important;
+    text-align: justify;
+    font-size: 13px;
+}
+
+.li-style-card {
+    padding: 0px 6px 6px 6px !important;
+}
+
+.card-active {
+    background-color: var(--card-active) !important;
+}
+
+.card-busy {
+    background-color: var(--card-busy) !important;
+}
+
+.hour {
+    opacity: 35%;
+}
+
+.dropdown-style {
+    margin: 8px 0px 0px 8px;
+    content: none;
+    text-decoration: none;
+    color: black;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+#weekend {
+    background-color: rgb(128, 128, 128, 0.1) !important;
+}
+
+.th-style-day {
+    width: 5rem;
+    border-right: var(--bs-table-border-color) solid 1px;
+}
+
+.event-day-start {
+    border-top-left-radius: var(--card-border-radius);
+    border-top-right-radius: var(--card-border-radius);
+}
+
+.event-day-end {
+    border-bottom-left-radius: var(--card-border-radius);
+    border-bottom-right-radius: var(--card-border-radius);
+
+}
+
+#event-day-middle {
+    border-bottom: 0px !important;
+}
+
+@media (max-width: 768px) {
+    #sideBar {
+        display: none !important;
+    }
+
+    .th-style-calendar {
+        width: 95vh !important;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: black !important;
+        color: white !important
+    }
+
+    .table {
+        color: white !important
+    }
+
+    .card-active,
+    .card-busy {
+        color: black !important;
+    }
+
+    .dropdown-menu {
+        background-color: black !important;
+        border-color: white !important;
+    }
+
+    .modal-content {
+        background-color: black !important;
+        border-color: white !important;
+    }
+
+    .btn-close {
+        background-color: white !important;
+    }
+}
