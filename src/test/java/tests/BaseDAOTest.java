@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +17,7 @@ import it.eforhum.backoffice.dto.UserDTO;
 import it.eforhum.backoffice.entity.User;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
+import it.eforhum.backoffice.service.impl.UserServiceImpl;
 import it.eforhum.backoffice.util.DaoFactory;
 import it.eforhum.backoffice.util.ServiceFactory;
 
@@ -24,7 +26,6 @@ public class BaseDAOTest {
 	protected static final Logger log = LogManager.getLogger(BaseDAOTest.class);
 
 	@Test
-
 	public void testConnection() {
 		log.info("Test connessione");
 		assertDoesNotThrow(() -> {
@@ -33,50 +34,12 @@ public class BaseDAOTest {
 	}
 
 	@Test
-	void createUserAndGroupTest() {
-
-		UserGroups userGroup = new UserGroups();
-		userGroup.setCreationTime(LocalDateTime.now());
-		userGroup.setCreationUser("admin");
-		userGroup.setGroupName("GROUP_USERS");
-		userGroup.setPermissions("READING, RESERVATION");
-		userGroup.setEnabled(true);
-		userGroup.setRoles(Roles.USER.toString());
-
-		User user = new User();
-		user.setCreationTime(LocalDateTime.now());
-		user.setCreationUser("java-app");
-		user.setDeleted(false);
-		user.setVerified(true);
-		user.setEmail("hello1@gmail.com");
-		user.setName("Hello");
-		user.setLastLogin(LocalDateTime.now());
-		user.setLastName("World");
-		user.setPassword("qwerty");
-		user.setUsername("1a2b3c");
-		user.setUserGroup(userGroup);
-
+	public void findAllUsersTest() {
 		assertDoesNotThrow(() -> {
-			ServiceFactory.getGroupService().createGroup(userGroup);
+			List<UserDTO> userDtoList = UserServiceImpl.getInstance().getAllUsers();
+			log.info(userDtoList);
 		});
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getUserService().createUser(user);
-		});
-
-		log.info("User with id {} was created", user.getId());
-		log.info("UserGroup with id {} was created", userGroup.getId());
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getUserService().getInstance().deleteUserCompletely(user);
-		});
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getGroupService().getInstance().deleteGroup(userGroup);
-		});
-		log.info("User deleted");
-		log.info("UserGroup deleted");
-
+	
 	}
 
 	@Test
@@ -98,102 +61,6 @@ public class BaseDAOTest {
 	}
 
 	@Test
-	public void notNullFindUserAndGroupTest() {
-
-		UserGroups userGroup = new UserGroups();
-		userGroup.setCreationTime(LocalDateTime.now());
-		userGroup.setCreationUser("admin");
-		userGroup.setGroupName("GROUP_USERS");
-		userGroup.setPermissions("READING, RESERVATION");
-		userGroup.setEnabled(true);
-		userGroup.setRoles(Roles.USER.toString());
-
-		User user = new User();
-		user.setCreationTime(LocalDateTime.now());
-		user.setCreationUser("java-app");
-		user.setDeleted(false);
-		user.setVerified(true);
-		user.setEmail("hell555@gmail.com");
-		user.setName("Hello");
-		user.setLastLogin(LocalDateTime.now());
-		user.setLastName("World");
-		user.setPassword("qwerty");
-		user.setUsername("1a2b3c");
-		user.setUserGroup(userGroup);
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getGroupService().getInstance().createGroup(userGroup);
-		});
-		log.info("UserGroup with id {} was created", userGroup.getId());
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getUserService().getInstance().createUser(user);
-		});
-
-		log.info("User with id {} was created", user.getId());
-
-		assertNotNull(DaoFactory.getUserDao().getInstance().findById(user.getId()));
-		assertNotNull(DaoFactory.getUserGroupDao().getInstance().findById(userGroup.getId()));
-
-		log.info("User found is {}", DaoFactory.getUserDao().getInstance().findById(user.getId()));
-		log.info("Group found is {}", DaoFactory.getUserGroupDao().getInstance().findById(userGroup.getId()));
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getUserService().getInstance().deleteUserCompletely(user);
-		});
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getGroupService().getInstance().deleteGroup(userGroup);
-		});
-		log.info("User deleted with success");
-		log.info("UserGroup deleted with success");
-
-	}
-
-	@Test
-	public void updateUserTest() {
-
-		User user = new User();
-		user.setCreationTime(LocalDateTime.now());
-		user.setCreationUser("java-app");
-		user.setDeleted(false);
-		user.setVerified(true);
-		user.setEmail("hello45555@gmail.com");
-		user.setName("Hello");
-		user.setLastLogin(LocalDateTime.now());
-		user.setLastName("World");
-		user.setPassword("qwerty");
-		user.setUsername("1a2b3c");
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getUserService().getInstance().createUser(user);
-		});
-
-		log.info("User created is {} ", user);
-
-		User updatedUser = new User();
-		updatedUser.setUpdateTime(LocalDateTime.now());
-		updatedUser.setUpdateUser("java-app");
-		updatedUser.setDeleted(false);
-		updatedUser.setVerified(true);
-		updatedUser.setEmail("theHelloWord11@gmail.com");
-		updatedUser.setName("Pryvit");
-		updatedUser.setLastLogin(LocalDateTime.now());
-		updatedUser.setLastName("Svit");
-		updatedUser.setPassword("qwerty");
-		updatedUser.setUsername("1a2b3c");
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getUserService().getInstance().updateUser(updatedUser);
-		});
-		log.info("Updated user is {} ", ServiceFactory.getUserService().getInstance().findById(user.getId()));
-
-		assertDoesNotThrow(() -> {
-			ServiceFactory.getUserService().getInstance().deleteUserCompletely(user);
-		});
-
-	}
-
 	public void updateGroupTest() {
 		UserGroups userGroup = new UserGroups();
 		userGroup.setCreationTime(LocalDateTime.now());

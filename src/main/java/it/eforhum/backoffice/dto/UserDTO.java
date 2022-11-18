@@ -1,21 +1,23 @@
 package it.eforhum.backoffice.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
-import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
 
 public class UserDTO {
-	long id;
-	String username;
-	String password;
-	String email;
-	String name;
-	String lastName;
-	UserGroups group;
-	boolean verified;
-	boolean deleted;
-	List<Roles> listRoles;
+	private long id;
+	private String username;
+	private String password;
+	private String email;
+	private String name;
+	private String lastName;
+	private String groupName;
+	private LocalDateTime lastLogin;
+	private LocalDateTime dateModifiedPass;
+	private boolean verified;
+	private boolean deleted;
 
 	public long getId() {
 		return id;
@@ -65,14 +67,6 @@ public class UserDTO {
 		this.lastName = lastName;
 	}
 
-	public UserGroups getGroup() {
-		return group;
-	}
-
-	public void setGroup(UserGroups group) {
-		this.group = group;
-	}
-
 	public boolean isVerified() {
 		return verified;
 	}
@@ -89,12 +83,58 @@ public class UserDTO {
 		this.deleted = deleted;
 	}
 
-	public List<Roles> getListRoles() {
-		return listRoles;
+	public String getGroupName() {
+		return groupName;
 	}
 
-	public void setListRoles(List<Roles> listRoles) {
-		this.listRoles = listRoles;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public LocalDateTime getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(LocalDateTime lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public LocalDateTime getDateModifiedPass() {
+		return dateModifiedPass;
+	}
+
+	public void setDateModifiedPass(LocalDateTime dateModifiedPass) {
+		this.dateModifiedPass = dateModifiedPass;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", name=" + name + ", lastName=" + lastName + ", groupName=" + groupName + ", lastLogin=" + lastLogin
+				+ ", dateModifiedPass=" + dateModifiedPass + ", verified=" + verified + ", deleted=" + deleted
+				+ ", listRoles=" + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateModifiedPass, deleted, email, groupName, id, lastLogin, lastName, name, password,
+				username, verified);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDTO other = (UserDTO) obj;
+		return Objects.equals(dateModifiedPass, other.dateModifiedPass) && deleted == other.deleted
+				&& Objects.equals(email, other.email) && Objects.equals(groupName, other.groupName) && id == other.id
+				&& Objects.equals(lastLogin, other.lastLogin) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(name, other.name) && Objects.equals(password, other.password)
+				&& Objects.equals(username, other.username) && verified == other.verified;
 	}
 
 }

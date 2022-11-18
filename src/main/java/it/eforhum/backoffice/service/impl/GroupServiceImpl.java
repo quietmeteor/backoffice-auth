@@ -5,20 +5,24 @@ import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 
 import it.eforhum.backoffice.dao.UserGroupsDao;
+import it.eforhum.backoffice.dto.GroupDTO;
 import it.eforhum.backoffice.entity.UserGroups;
+import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.exception.DaoException;
 import it.eforhum.backoffice.exception.ServiceException;
 import it.eforhum.backoffice.service.GroupService;
 
-public class GroupServiceImpl implements GroupService{
+public class GroupServiceImpl implements GroupService {
 	protected static final Logger log = LogManager.getLogger(GroupServiceImpl.class);
-	
+
 	private static UserGroupsDao userGroupsDao = UserGroupsDao.getInstance();
-	
+
 	private static GroupServiceImpl instance = null;
-	
+
 	public static GroupServiceImpl getInstance() {
 		if (instance == null) {
 			instance = new GroupServiceImpl();
@@ -26,23 +30,24 @@ public class GroupServiceImpl implements GroupService{
 
 		return instance;
 	}
-	
-	public void createGroup(UserGroups group) {
+
+	@Override
+	public void createGroup(GroupDTO group) {
 		Objects.requireNonNull(group);
 
 		try {
 
-			group.setCreationTime(LocalDateTime.now());
-			group.setCreationUser("app-java");
-
-			userGroupsDao.save(group);
+			UserGroups userToCreate = new UserGroups();
+			
+			userGroupsDao.save(userToCreate);
 		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while trying to save a group ", dE);
 		}
 
 		log.info("Group has been created {} ", group.getId());
 	}
-	
+
+	@Override
 	public void deleteGroup(UserGroups group) {
 		Objects.requireNonNull(group);
 		try {
@@ -54,32 +59,43 @@ public class GroupServiceImpl implements GroupService{
 
 		log.info("Group id {} removed", group.getId());
 	}
-	
-	public UserGroups findByIdGroup(long id) {
-		if (id > 0) {
-			return (UserGroups) userGroupsDao.getInstance().findById(id);
-		} else {
-			log.info("Id must be bigger than 0");
-			return null;
-		}
+
+	@Override
+	public GroupDTO findByIdGroup(long id) {
+
+		UserGroups group = (UserGroups) userGroupsDao.findById(id);
+		ModelMapper mp = new ModelMapper();
+
+		return mp.map(group, new TypeToken<GroupDTO>() {}.getType());
 
 	}
-	
-	public void updateGroup(UserGroups upd) {
-		UserGroups g = findByIdGroup(upd.getId());
-		Objects.requireNonNull(g);
-		log.info("Trying to update a group id:{}", g.getId());
+
+	@Override
+	public void updateGroup(GroupDTO updatedGroup) {
+		UserGroups groupToUpdate = (UserGroups) userGroupsDao.findById(updatedGroup.getId());
+
+		log.info("Trying to update a group id:{}", groupToUpdate.getId());
 		try {
 
-			g.setGroupName(upd.getGroupName());
-			g.setPermissions(upd.getPermissions());
-			g.setRoles(upd.getRoles());
-			g.setEnabled(upd.isEnabled());
-			g.setUpdateTime(LocalDateTime.now());
-			g.setUpdateUser("java-app");
+			groupToUpdate.setGroupName(updatedGroup.getGroupName());
+			groupToUpdate.setPermissions(updatedGroup.getPermissions());
 
-			userGroupsDao.update(g);
-			log.info("Group id {} has been updated", g.getId());
+			StringBuilder sb = new StringBuilder();
+			String sep = "";
+			for (Roles r : updatedGroup.getRoles()) {
+				sb.append(sep);
+				sb.append(r.toString());
+				sep = ", ";
+
+			}
+
+			groupToUpdate.setRoles(sb.toString());
+			groupToUpdate.setEnabled(updatedGroup.isEnabled());
+			groupToUpdate.setUpdateTime(LocalDateTime.now());
+			groupToUpdate.setUpdateUser("java-app");
+
+			userGroupsDao.update(groupToUpdate);
+			log.info("Group id {} has been updated", groupToUpdate.getId());
 		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while updating a group", dE);
 		}
