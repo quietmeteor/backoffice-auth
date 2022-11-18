@@ -27,6 +27,13 @@ body {
 	font-family: 'Kanit', sans-serif;
 }
 
+.link
+{
+   color:aqua;
+   text-decoration: none; 
+   background-color: none;
+}
+
 .overflow-scroll {
 	overflow-x: hidden !important;
 }
@@ -131,6 +138,8 @@ body {
 		background-color: white !important;
 	}
 }
+
+
 </style>
 </head>
 <body>
@@ -186,7 +195,7 @@ body {
 							</p>
 						</li>
 						
-						<li class="nav-item" href="http://localhost:8080//Backoffice/group-list">
+						<li class="nav-item" >
 							<p>
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 									fill="currentColor" class="bi bi-calendar-check"
@@ -196,7 +205,7 @@ body {
                     <path
 										d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                   </svg>
-								Lista Gruppi
+							<a href="http://localhost:8080//Backoffice/group-list">Lista Gruppi</a>	
 							</p>
 						</li>
 						
@@ -210,7 +219,7 @@ body {
                     <path
 										d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                   </svg>
-								Lista Utenti
+								<a href="http://localhost:8080//Backoffice/user-list">Lista Utenti</a>
 							</p>
 						</li>
 						
