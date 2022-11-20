@@ -132,7 +132,7 @@
 		}
 
 		function create() {
-
+			window.location.href="/Backoffice/group-list?action=create";
 		}
 
 

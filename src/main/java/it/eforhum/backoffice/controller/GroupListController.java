@@ -29,77 +29,31 @@ public class GroupListController extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if (action != null && action.equalsIgnoreCase("detail")) {
-			log.info("");
 			log.info("doGet Request for /group-detail recieved");
 
-			String idPar = req.getParameter("id");
-			if (idPar == null) {
-				log.warn("Id parameter is null");
-				req.setAttribute("error_message", "Id nullo");
-				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			}
-
-			int id = -1;
-
-			try {
-				id = Integer.parseInt(idPar);
-			} catch (NumberFormatException e) {
-				log.error("Id parameter must be a number");
-				req.setAttribute("error_message", "Formato id sbagliato");
-				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			}
-
-			UserGroups group = ServiceFactory.getGroupService().findByIdGroup(id);
-
-			if (group == null) {
-				log.warn("The group with id {} is null", id);
-				req.setAttribute("error_message", "Gruppo inesistente");
-				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			}
-			log.info("Group {} was succesfully found ", group);
+			UserGroups group = findGroup(req, resp);
 
 			req.setAttribute("group", group);
 			req.getRequestDispatcher("group-detail.jsp").forward(req, resp);
 
 		}
 
-		if (action != null && action.equalsIgnoreCase("deleteEntity")) {
+		else if (action != null && action.equalsIgnoreCase("deleteEntity")) {
 
 			log.info("");
-			log.info("doPost Request recieved, action delete");
+			log.info("Request recieved, action delete");
 
-			String idPar = req.getParameter("id");
-			if (idPar == null) {
-				log.warn("Id parameter is null");
-				req.setAttribute("error_message", "Id nullo");
-				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			}
-
-			int id = -1;
-
-			try {
-				id = Integer.parseInt(idPar);
-			} catch (NumberFormatException e) {
-				log.error("Id parameter must be a number");
-				req.setAttribute("error_message", "Formato id sbagliato");
-				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			}
-
-			UserGroups group = ServiceFactory.getGroupService().findByIdGroup(id);
-
-			if (group == null) {
-				log.warn("The group with id {} is null", id);
-				req.setAttribute("error_message", "Gruppo inesistente");
-				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			}
-			log.info("Group {} was succesfully found ", group);
-
+			UserGroups group = findGroup(req, resp);
 			ServiceFactory.getGroupService().deleteGroup(group);
 
 			log.info("Group was succesfully deleted");
 
-//			req.getRequestDispatcher("group-list.jsp").forward(req, resp);
 			resp.sendRedirect("group-list");
+
+		} else if (action != null && action.equalsIgnoreCase("create")) {
+			log.info("Request Recieved, action create");
+
+			req.getRequestDispatcher("group-create.jsp").forward(req, resp);
 
 		}
 
@@ -114,6 +68,40 @@ public class GroupListController extends HttpServlet {
 
 		String action = req.getParameter("action");
 
+	}
+
+	public UserGroups findGroup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+		log.info("");
+		log.info("doGet Request for /group-detail recieved");
+
+		String idPar = req.getParameter("id");
+		if (idPar == null) {
+			log.warn("Id parameter is null");
+			req.setAttribute("error_message", "Id nullo");
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		}
+
+		int id = -1;
+
+		try {
+			id = Integer.parseInt(idPar);
+		} catch (NumberFormatException e) {
+			log.error("Id parameter must be a number");
+			req.setAttribute("error_message", "Formato id sbagliato");
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		}
+
+		UserGroups group = ServiceFactory.getGroupService().findByIdGroup(id);
+
+		if (group == null) {
+			log.warn("The group with id {} is null", id);
+			req.setAttribute("error_message", "Gruppo inesistente");
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		}
+		log.info("Group {} was succesfully found ", group);
+
+		return group;
 	}
 
 }

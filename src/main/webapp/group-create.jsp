@@ -34,10 +34,11 @@
 									<c:out value="${error_message}" />
 								</div>
 								<div class="form-group row">
-									<label for="groupName"  class="col-sm-2 col-form-label" >Nome Gruppo</label>
+									<label for="groupName" class="col-sm-2 col-form-label">Nome
+										Gruppo</label>
 									<div class="col-sm-10">
-										<input type="text"  id="groupName" name="groupName" 
-											value="${group.groupName}" disabled readonly></br>
+										<input type="text" id="groupName" name="groupName"
+											placeholder="Inserire nome gruppo"></br>
 									</div>
 								</div>
 
@@ -45,7 +46,8 @@
 									<label for="roles" class="col-sm-2 col-form-label">Ruoli</label>
 									<div class="col-sm-10">
 										<textarea type="text" id="roles" name="roles"
-											value="${group.roles}" disabled readonly>"${group.roles}"</textarea> </br>
+											placeholder="Sciegliere ruoli"></textarea>
+										</br>
 									</div>
 								</div>
 
@@ -53,51 +55,29 @@
 									<label for="permissions" class="col-sm-2 col-form-label">Permessi</label>
 									<div class="col-sm-10">
 										<textarea type="text" id="permission" name="permissions"
-											value="${group.permissions}" disabled readonly>"${group.permissions}"</textarea></br>
+											placeholder="Sciegliere permessi"></textarea>
+										</br>
 									</div>
 								</div>
 
 								<div class="form-group row">
 									<label for="enabled" class="col-sm-2 col-form-label">Attivo</label>
 									<div class="col-sm-10">
-										<input type="text" id="enabled" name="enabled"
-											value="${group.enabled}" disabled readonly></br>
+										<input class="form-check-input" type="checkbox" id="enabled"
+											name="enabled"></br>
 									</div>
 								</div>
 
-								<div class="form-group row">
-									<label for="creationTime" class="col-sm-2 col-form-label">Data
-										Creazione </label>
-									<div class="col-sm-10">
-										<input type="datetime-local" id="creationTime"
-											name="creationTime" value="${group.creationTime}" disabled readonly></br>
-									</div>
-								</div>
 								<div class="form-group row">
 									<label for="creationUser" class="col-sm-2 col-form-label">User
 										Creazione </label>
 									<div class="col-sm-10">
 										<input type="text" id="creationUser" name="creationUser"
-											value="${group.creationUser}" disabled readonly></br>
+											placeholder="User creazione"></br>
 									</div>
 								</div>
-								<div class="form-group row">
-									<label for="updateTime" class="col-sm-2 col-form-label">Data
-										Aggiornamento </label>
-									<div class="col-sm-10">
-										<input type="datetime-local" id="updateTime" name="updateTime"
-											value="${group.updateTime}" disabled readonly></br>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="updateUser" class="col-sm-2 col-form-label">User
-										Aggiornamento </label>
-									<div class="col-sm-10">
-										<input type="text" id="updateUser" name="updateUser"
-											value="${group.updateUser}" disabled readonly></br>
-									</div>
-								</div>
-								<input class="btn btn-primary" type="submit" value="modifica"></br>
+
+								<input class="btn btn-primary" type="submit" value="Crea"></br>
 							</form>
 
 
@@ -109,21 +89,7 @@
 
 
 				<script type="text/javascript">
-					function view(id) {
-	
-					}
-
-					function edit(id) {
-
-					}
-
-					function create() {
-
-					}
-
-					function deleteEntity() {
-
-					}
+					
 				</script>
 
 			</body>
