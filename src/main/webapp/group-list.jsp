@@ -49,7 +49,7 @@
 
 						<div class="col-4 text-center">
 
-							<table class="table table-bordered table-hover table-striped">
+							<table class="table table-bordered table-hover">
 								<thead>
 									<tr>
 
