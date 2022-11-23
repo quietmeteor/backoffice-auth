@@ -8,18 +8,21 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
 import it.eforhum.backoffice.dao.UserGroupsDao;
 import it.eforhum.backoffice.dto.GroupDTO;
 import it.eforhum.backoffice.dto.UserDTO;
+import it.eforhum.backoffice.entity.User;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.exception.DaoException;
 import it.eforhum.backoffice.exception.ServiceException;
 import it.eforhum.backoffice.service.GroupService;
 import it.eforhum.backoffice.util.DaoFactory;
+import it.eforhum.backoffice.util.HibernateUtils;
 import it.eforhum.backoffice.util.ServiceFactory;
 
 public class GroupServiceImpl implements GroupService {
@@ -135,4 +138,38 @@ public class GroupServiceImpl implements GroupService {
 		}
 
 	}
+
+	@Override
+	public List<GroupDTO> getAllGroups() {
+		try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+			
+			List<UserGroups> groupList = userGroupsDao.findAll();
+			ModelMapper mp = new ModelMapper();
+			List<GroupDTO> groupListDTO = mp.map(groupList, new TypeToken<List<GroupDTO>>(){}.getType());
+			
+			for(GroupDTO groupDTO : groupListDTO) {
+				
+				List<String> rolesStringList = ServiceFactory.getRolesService().getRolesList(groupDTO);
+				
+				List<Roles> rolesEnumList = new ArrayList<>();
+				
+				for(String role : rolesStringList) {
+					
+					log.info("Trying to format role: {} ", role);
+					
+					role = role.toUpperCase().trim();
+					role = role.replaceAll("[\\[\\]\\(\\)]", "");
+					
+					log.info("Trying to add role {} after formatting", role);
+					rolesEnumList.add(Roles.valueOf(role));
+				}
+				
+				groupDTO.setRoles(rolesEnumList);
+			}
+			
+			return groupListDTO;
+			
+		}
+	}
+	
 }

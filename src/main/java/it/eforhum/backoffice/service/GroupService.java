@@ -1,7 +1,8 @@
 package it.eforhum.backoffice.service;
 
+import java.util.List;
+
 import it.eforhum.backoffice.dto.GroupDTO;
-import it.eforhum.backoffice.entity.UserGroups;
 
 public interface GroupService {
 	
@@ -12,5 +13,7 @@ public interface GroupService {
 	public GroupDTO findGroupById(long id);
 	
 	public void updateGroup(GroupDTO upd);
+	
+	public List<GroupDTO> getAllGroups();
 	
 }

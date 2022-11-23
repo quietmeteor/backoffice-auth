@@ -13,8 +13,11 @@ import org.junit.jupiter.api.Test;
 
 import it.eforhum.backoffice.dao.UserGroupsDao;
 import it.eforhum.backoffice.dto.GroupDTO;
+import it.eforhum.backoffice.dto.UserDTO;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
+import it.eforhum.backoffice.service.impl.GroupServiceImpl;
+import it.eforhum.backoffice.service.impl.UserServiceImpl;
 import it.eforhum.backoffice.util.DaoFactory;
 import it.eforhum.backoffice.util.ServiceFactory;
 
@@ -84,6 +87,14 @@ public class GroupTest {
 		UserGroups user = (UserGroups) UserGroupsDao.getInstance().findById(1000);
 		log.info("Non existing group search");
 		assertNull(user);
+	}
+	
+	@Test
+	public void getAllGroupsTest() {
+		assertDoesNotThrow(() -> {
+			List<GroupDTO> groupDtoList = GroupServiceImpl.getInstance().getAllGroups();
+			log.info(groupDtoList);
+		});
 	}
 	
 	
