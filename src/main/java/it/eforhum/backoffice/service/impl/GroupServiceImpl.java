@@ -1,7 +1,10 @@
 package it.eforhum.backoffice.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,11 +13,14 @@ import org.modelmapper.TypeToken;
 
 import it.eforhum.backoffice.dao.UserGroupsDao;
 import it.eforhum.backoffice.dto.GroupDTO;
+import it.eforhum.backoffice.dto.UserDTO;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.exception.DaoException;
 import it.eforhum.backoffice.exception.ServiceException;
 import it.eforhum.backoffice.service.GroupService;
+import it.eforhum.backoffice.util.DaoFactory;
+import it.eforhum.backoffice.util.ServiceFactory;
 
 public class GroupServiceImpl implements GroupService {
 	protected static final Logger log = LogManager.getLogger(GroupServiceImpl.class);
@@ -32,41 +38,69 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public void createGroup(GroupDTO group) {
-		Objects.requireNonNull(group);
+	public void createGroup(GroupDTO groupDTO) {
+		Objects.requireNonNull(groupDTO);
 
 		try {
-
-			UserGroups userToCreate = new UserGroups();
 			
-			userGroupsDao.save(userToCreate);
+			ModelMapper mp = new ModelMapper();
+			UserGroups newGroup = mp.map(groupDTO, new TypeToken<UserGroups>(){}.getType());
+			
+			String roles = groupDTO.getRoles().stream()
+					.map(n -> String.valueOf(n))
+					.collect(Collectors.joining(",", "", ""));
+			
+			newGroup.setRoles(roles);
+			
+			userGroupsDao.save(newGroup);
+			log.info("Group has been created {} ", newGroup.getId());
 		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while trying to save a group ", dE);
 		}
 
-		log.info("Group has been created {} ", group.getId());
 	}
 
 	@Override
-	public void deleteGroup(UserGroups group) {
+	public void deleteGroup(GroupDTO group) {
 		Objects.requireNonNull(group);
+		
 		try {
-			log.info("Attempting group with {} id removal", group.getId());
-			userGroupsDao.delete(group);
+			UserGroups groupToDelete = (UserGroups) DaoFactory.getUserGroupDao().findById(group.getId());
+			
+			log.info("Attempting to delete group with id: {}", group.getId());
+			userGroupsDao.delete(groupToDelete);
 		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while trying to delete a group", dE);
 		}
 
-		log.info("Group id {} removed", group.getId());
+		log.info("Group with id {} removed", group.getId());
 	}
 
 	@Override
-	public GroupDTO findByIdGroup(long id) {
+	public GroupDTO findGroupById(long id) {
 
 		UserGroups group = (UserGroups) userGroupsDao.findById(id);
 		ModelMapper mp = new ModelMapper();
+		
+		GroupDTO groupDTO = mp.map(group, new TypeToken<GroupDTO>() {}.getType());
+		List<String> rolesStringList = ServiceFactory.getRolesService().getRolesList(groupDTO);
+		
+		List<Roles> rolesEnumList = new ArrayList<>();
+		
+		for(String role : rolesStringList) {
+			
+			log.info("Trying to format role: {} ", role);
+			
+			role = role.toUpperCase().trim();
+			role = role.replaceAll("[\\[\\]\\(\\)]", "");
+			
+			log.info("Trying to add role {} after formatting", role);
+			rolesEnumList.add(Roles.valueOf(role));
+		}
+		
+		groupDTO.setRoles(rolesEnumList);
 
-		return mp.map(group, new TypeToken<GroupDTO>() {}.getType());
+		return groupDTO;
 
 	}
 

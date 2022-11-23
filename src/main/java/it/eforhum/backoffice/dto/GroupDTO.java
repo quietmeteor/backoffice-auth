@@ -11,10 +11,10 @@ public class GroupDTO {
 	private String groupName;
 	private String permissions;
 	private boolean enabled;
-	private String creation_user;
-	private String creation_time;
-	private String update_user;
-	private LocalDateTime update_time;
+	private String creationUser;
+	private LocalDateTime creationTime;
+	private String updateUser;
+	private LocalDateTime updateTime;
 	private List<Roles> roles;
 
 	public long getId() {
@@ -41,38 +41,6 @@ public class GroupDTO {
 		this.enabled = enabled;
 	}
 
-	public String getCreation_user() {
-		return creation_user;
-	}
-
-	public void setCreation_user(String creation_user) {
-		this.creation_user = creation_user;
-	}
-
-	public String getCreation_time() {
-		return creation_time;
-	}
-
-	public void setCreation_time(String creation_time) {
-		this.creation_time = creation_time;
-	}
-
-	public String getUpdate_user() {
-		return update_user;
-	}
-
-	public void setUpdate_user(String update_user) {
-		this.update_user = update_user;
-	}
-
-	public LocalDateTime getUpdate_time() {
-		return update_time;
-	}
-
-	public void setUpdate_time(LocalDateTime update_time) {
-		this.update_time = update_time;
-	}
-
 	public List<Roles> getRoles() {
 		return roles;
 	}
@@ -89,10 +57,42 @@ public class GroupDTO {
 		this.groupName = groupName;
 	}
 
+	public String getCreationUser() {
+		return creationUser;
+	}
+
+	public void setCreationUser(String creationUser) {
+		this.creationUser = creationUser;
+	}
+
+	public LocalDateTime getCreationTime() {
+		return creationTime;
+	}
+
+	public void setCreationTime(LocalDateTime creationTime) {
+		this.creationTime = creationTime;
+	}
+
+	public String getUpdateUser() {
+		return updateUser;
+	}
+
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
+
+	public LocalDateTime getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(LocalDateTime updateTime) {
+		this.updateTime = updateTime;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(creation_time, creation_user, enabled, groupName, id, permissions, roles, update_time,
-				update_user);
+		return Objects.hash(creationTime, creationUser, enabled, groupName, id, permissions, roles, updateTime,
+				updateUser);
 	}
 
 	@Override
@@ -104,18 +104,17 @@ public class GroupDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		GroupDTO other = (GroupDTO) obj;
-		return Objects.equals(creation_time, other.creation_time) && Objects.equals(creation_user, other.creation_user)
+		return Objects.equals(creationTime, other.creationTime) && Objects.equals(creationUser, other.creationUser)
 				&& enabled == other.enabled && Objects.equals(groupName, other.groupName) && id == other.id
 				&& Objects.equals(permissions, other.permissions) && Objects.equals(roles, other.roles)
-				&& Objects.equals(update_time, other.update_time) && Objects.equals(update_user, other.update_user);
+				&& Objects.equals(updateTime, other.updateTime) && Objects.equals(updateUser, other.updateUser);
 	}
 
 	@Override
 	public String toString() {
 		return "GroupDTO [id=" + id + ", groupName=" + groupName + ", permissions=" + permissions + ", enabled="
-				+ enabled + ", creation_user=" + creation_user + ", creation_time=" + creation_time + ", update_user="
-				+ update_user + ", update_time=" + update_time + ", roles=" + roles + "]";
+				+ enabled + ", creationUser=" + creationUser + ", creationTime=" + creationTime + ", updateUser="
+				+ updateUser + ", updateTime=" + updateTime + ", roles=" + roles + "]";
 	}
-
 
 }

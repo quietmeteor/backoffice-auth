@@ -8,7 +8,10 @@ import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 
+import it.eforhum.backoffice.dto.GroupDTO;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.exception.ServiceException;
@@ -29,7 +32,12 @@ public class RolesServiceImpl implements RolesService {
 		return instance;
 	}
 
-	public List<String> getRolesList(UserGroups group) {
+	public List<String> getRolesList(GroupDTO groupDTO) {
+		
+		ModelMapper mp = new ModelMapper();
+
+		UserGroups group = mp.map(groupDTO, new TypeToken<UserGroups>() {}.getType());
+		
 		String rolesString = DaoFactory.getUserGroupDao().getAllRoles(group);
 		log.info("Roles String: {} ", rolesString);
 
@@ -43,24 +51,26 @@ public class RolesServiceImpl implements RolesService {
 
 	}
 
-	public void deleteRole(String role, UserGroups group) {
+	public void deleteRole(String role, GroupDTO groupDTO) {
 
 		try {
-			List<String> rolesList = getRolesList(group);
+			
 			log.info("Attempting to delete a role: ", role);
 
-			if (rolesList.contains(role)) {
+			List<Roles> rolesList = groupDTO.getRoles();
+			
+			if (rolesList.contains(Roles.valueOf(role))) {
+				
+				rolesList.remove(Roles.valueOf(role));
+						
+				groupDTO.setRoles(rolesList);
+				
+				ServiceFactory.getGroupService().updateGroup(groupDTO);
 
-				rolesList.remove(role);
-				log.info("Roles before deleting: ", rolesList);
-
-				group.setRoles(StringUtils.join(rolesList, ","));
-				ServiceFactory.getGroupService().updateGroup(group);
-
-				log.info("Roles after deleting: ", group.getRoles());
+				log.info("Roles after deleting: {}", groupDTO.getRoles());
 
 			} else {
-				throw new ServiceException("Deleting a non existing role");
+				throw new ServiceException("Cannot delete a non existing role");
 			}
 
 		} catch (ServiceException ex) {
@@ -70,18 +80,23 @@ public class RolesServiceImpl implements RolesService {
 
 	}
 
-	public void addRole(String role, UserGroups group) {
+	public void addRole(String role, GroupDTO groupDTO) {
 		try {
-			List<String> rolesList = getRolesList(group);
-			log.info("Attempting to add a role: ", role);
+			
+			log.info("Attempting to add a role: {}", role);
+			
+			List<Roles> rolesList = groupDTO.getRoles();
 
 			if (EnumUtils.isValidEnum(Roles.class, role)) {
+				
+				log.info(Roles.valueOf(role));
+				log.info(rolesList);
+				
+				rolesList.add(Roles.valueOf(role));
+				groupDTO.setRoles(rolesList);
 
-				rolesList.add(role);
-				group.setRoles(StringUtils.join(rolesList, ","));
-
-				ServiceFactory.getGroupService().updateGroup(group);
-				log.info("Updated Roles List: ", group.getRoles());
+				ServiceFactory.getGroupService().updateGroup(groupDTO);
+				log.info("Updated Roles List: ", groupDTO.getRoles());
 
 			} else {
 				throw new ServiceException("Attempted to add a non valid role");

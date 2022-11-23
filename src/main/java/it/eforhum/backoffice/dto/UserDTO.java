@@ -108,14 +108,6 @@ public class UserDTO {
 	}
 
 	@Override
-	public String toString() {
-		return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
-				+ ", name=" + name + ", lastName=" + lastName + ", groupName=" + groupName + ", lastLogin=" + lastLogin
-				+ ", dateModifiedPass=" + dateModifiedPass + ", verified=" + verified + ", deleted=" + deleted
-				+ ", listRoles=" + "]";
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(dateModifiedPass, deleted, email, groupName, id, lastLogin, lastName, name, password,
 				username, verified);
@@ -135,6 +127,13 @@ public class UserDTO {
 				&& Objects.equals(lastLogin, other.lastLogin) && Objects.equals(lastName, other.lastName)
 				&& Objects.equals(name, other.name) && Objects.equals(password, other.password)
 				&& Objects.equals(username, other.username) && verified == other.verified;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", name=" + name + ", lastName=" + lastName + ", groupName=" + groupName + ", lastLogin=" + lastLogin
+				+ ", dateModifiedPass=" + dateModifiedPass + ", verified=" + verified + ", deleted=" + deleted + "]";
 	}
 
 }

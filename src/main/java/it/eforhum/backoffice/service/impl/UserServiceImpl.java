@@ -5,17 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.transaction.Transactional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
 import it.eforhum.backoffice.dao.UserDao;
 import it.eforhum.backoffice.dao.UserGroupsDao;
+import it.eforhum.backoffice.dto.GroupDTO;
 import it.eforhum.backoffice.dto.UserDTO;
 import it.eforhum.backoffice.entity.User;
 import it.eforhum.backoffice.entity.UserGroups;
@@ -31,6 +29,8 @@ public class UserServiceImpl implements UserService {
 	private static UserDao userDao = UserDao.getInstance();
 
 	private static UserServiceImpl instance = null;
+	
+	private UserServiceImpl() {}
 
 	public static UserServiceImpl getInstance() {
 		if (instance == null) {
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 			user.setEmail(userDTO.getEmail());
 			user.setVerified(userDTO.isVerified());
 			user.setDeleted(userDTO.isDeleted());
-//			user.setUserGroup(userDTO.getGroup());
+//			user.setUserGroup(userDTO.getGroupName());
 			user.setLastLogin(LocalDateTime.now());
 			user.setCreationTime(LocalDateTime.now());
 			user.setCreationUser("admin");
@@ -80,11 +80,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(UserDTO userToDelete) {
-		User user = new User();
+		User user = (User) userDao.findById(userToDelete.getId());
 		Objects.requireNonNull(userToDelete);
 
 		try {
-			user.setId(userToDelete.getId());
+			
 			user.setName(userToDelete.getName());
 			user.setLastName(userToDelete.getLastName());
 			user.setUsername("");
@@ -95,6 +95,8 @@ public class UserServiceImpl implements UserService {
 			user.setDeleted(true);
 			user.setVerified(false);
 			user.setCreationUser("admin");
+			
+			userDao.update(user);
 		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while trying to delete a user", dE);
 		}
@@ -103,7 +105,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUserCompletely(UserDTO user) {
 		Objects.requireNonNull(user);
-		User userToDelete = (User) userDao.getInstance().findById(user.getId());
+		User userToDelete = (User) userDao.getInstance().findByUsername(user.getUsername());
 
 		try {
 			log.info("Attempting to delete user with id {} ", user.getId());
@@ -112,49 +114,33 @@ public class UserServiceImpl implements UserService {
 			throw new ServiceException("Something went wrong while trying to delete a user", dE);
 		}
 
-		log.info("Group id {} removed", userToDelete.getId());
+		log.info("User with id {} has been permanently removed", userToDelete.getId());
 	}
 
 	@Override
 	public UserDTO findById(long id) {
-		UserDTO userDTO = new UserDTO();
-
-		if (id > 0) {
-			try {
-				User user = (User) UserDao.getInstance().findById(id);
-				userDTO.setEmail(user.getEmail());
-//				userDTO.setGroup(user.getUserGroup());
-				userDTO.setLastName(user.getLastName());
-				userDTO.setName(user.getName());
-				userDTO.setPassword(user.getPassword());
-				userDTO.setUsername(user.getUsername());
-
-				return userDTO;
-			} catch (DaoException dE) {
-				throw new ServiceException("Something went wrong when trying to find user by id", dE);
-			}
-
-		} else {
-			log.info("Id must be higher than 0");
-			return null;
-		}
-
+	
+		User user = (User) userDao.findById(id);
+		ModelMapper mp = new ModelMapper();
+		
+		UserDTO userDTO = mp.map(user, new TypeToken<UserDTO>() {}.getType());
+		
+		return userDTO;
 	}
 
 	@Override
 	public UserDTO findByUsername(String username) {
-		log.info("Try to find user by username {} ", username);
+		log.info("Attempting to find user by username {} ", username);
+		
 		UserDTO userDTO = new UserDTO();
 
 		try {
 
-			User user = userDao.findByUsername(username);
-			userDTO.setEmail(user.getEmail());
-//			userDTO.setGroup(user.getUserGroup());
-			userDTO.setLastName(user.getLastName());
-			userDTO.setName(user.getName());
-			userDTO.setPassword(user.getPassword());
-			userDTO.setUsername(user.getUsername());
+			User user = (User) userDao.findByUsername(username);
+			ModelMapper mp = new ModelMapper();
+			
+			userDTO = mp.map(user, new TypeToken<UserDTO>() {}.getType());
+			
 
 		} catch (ServiceException e) {
 			throw new ServiceException("Something went wrong when trying to find user by username", e);
@@ -191,24 +177,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void addUserToGroup(UserGroups group, UserDTO userDTO) {
+	public void addUserToGroup(GroupDTO group, UserDTO userDTO) {
 		Objects.requireNonNull(userDTO);
 		Objects.requireNonNull(group);
-		User user = new User();
 		
 		try {
-			user = (User) userDao.getInstance().findById(user.getId());
+			
+			User user = (User) userDao.getInstance().findById(userDTO.getId());
+			UserGroups userGroup = (UserGroups) UserGroupsDao.getInstance().findById(group.getId());
+			
+			user.setUserGroup(userGroup);
+			userDao.getInstance().update(user);
+			
 		} catch (DaoException dE){
 			throw new ServiceException("Something went wrong when adding user to group", dE);
 		}
 		
-		user.setUserGroup(group);
-
-		try {
-			UserDao.getInstance().update(user);
-		} catch (DaoException dE) {
-			throw new ServiceException("Something went wrong when adding user to group", dE);
-		}
 	}
 	
 	public List<UserDTO> getAllUsers() {

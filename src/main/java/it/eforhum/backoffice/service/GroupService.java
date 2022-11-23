@@ -7,9 +7,9 @@ public interface GroupService {
 	
 	public void createGroup(GroupDTO group);
 	
-	public void deleteGroup(UserGroups group);
+	public void deleteGroup(GroupDTO group);
 	
-	public GroupDTO findByIdGroup(long id);
+	public GroupDTO findGroupById(long id);
 	
 	public void updateGroup(GroupDTO upd);
 	
