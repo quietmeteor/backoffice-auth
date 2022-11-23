@@ -113,7 +113,7 @@
 												<td><c:out value="${fn:trim(user.lastName)}"></c:out></td>
 												<td><c:out value="${fn:trim(user.username)}"></c:out></td>
 												<td><c:out value="${fn:trim(user.password)}"></c:out></td>
-												<td><c:out value="${fn:trim(user.userGroup)}"></c:out></td>
+												<td><c:out value="${fn:trim(user.groupName)}"></c:out></td>
 												<td><c:out value="${fn:trim(user.lastLogin)}"></c:out></td>
 												<td><c:out value="${fn:trim(user.dateModifiedPass)}"></c:out></td>
 												<td><c:out value="${fn:trim(user.verified)}"></c:out></td>
