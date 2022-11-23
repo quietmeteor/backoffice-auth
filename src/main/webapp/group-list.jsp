@@ -124,7 +124,7 @@
 
 	<script type="text/javascript">
 		function detail(id){
-			window.location.href="/Backoffice/group-list?action=detail&id="+id;
+			window.location.href="./group-list?action=detail&id="+id;
 		}
 	
 		function edit(id) {
@@ -132,14 +132,14 @@
 		}
 
 		function create() {
-			window.location.href="/Backoffice/group-list?action=create";
+			window.location.href="./group-list?action=create";
 		}
 
 
 		
 		function deleteEntity(id) {
 			
-			window.location.href="/Backoffice/group-list?action=deleteEntity&id="+id;
+			window.location.href="./group-list?action=deleteEntity&id="+id;
 			
 		}
 	</script>

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import it.eforhum.backoffice.dto.GroupDTO;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.util.ServiceFactory;
 import jakarta.servlet.ServletException;
@@ -21,8 +22,8 @@ public class GroupListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		List<UserGroups> groupList = ServiceFactory.getGroupService().getAllGroups();
-		log.info("La lista di gruppi e': ", groupList);
+		List<GroupDTO> groupList = ServiceFactory.getGroupService().getAllGroups();
+		log.info("Ricerca dei gruppi effetuata");
 
 		req.setAttribute("groupList", groupList);
 
@@ -31,7 +32,7 @@ public class GroupListController extends HttpServlet {
 		if (action != null && action.equalsIgnoreCase("detail")) {
 			log.info("doGet Request for /group-detail recieved");
 
-			UserGroups group = findGroup(req, resp);
+			GroupDTO group = findGroup(req, resp);
 
 			req.setAttribute("group", group);
 			req.getRequestDispatcher("group-detail.jsp").forward(req, resp);
@@ -43,7 +44,7 @@ public class GroupListController extends HttpServlet {
 			log.info("");
 			log.info("Request recieved, action delete");
 
-			UserGroups group = findGroup(req, resp);
+			GroupDTO group = findGroup(req, resp);
 			ServiceFactory.getGroupService().deleteGroup(group);
 
 			log.info("Group was succesfully deleted");
@@ -70,7 +71,7 @@ public class GroupListController extends HttpServlet {
 
 	}
 
-	public UserGroups findGroup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public GroupDTO findGroup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 		log.info("");
 		log.info("doGet Request for /group-detail recieved");
@@ -92,7 +93,7 @@ public class GroupListController extends HttpServlet {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
 
-		UserGroups group = ServiceFactory.getGroupService().findByIdGroup(id);
+		GroupDTO group = ServiceFactory.getGroupService().findGroupById(id);
 
 		if (group == null) {
 			log.warn("The group with id {} is null", id);

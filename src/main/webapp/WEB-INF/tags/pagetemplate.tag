@@ -110,7 +110,7 @@ body {
 
 @media ( prefers-color-scheme : dark) {
 	body {
-		background-color: black !important;
+		background-color: white !important;
 		color: white !important
 	}
 	.table {
