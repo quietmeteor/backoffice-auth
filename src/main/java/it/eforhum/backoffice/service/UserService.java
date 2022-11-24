@@ -1,5 +1,7 @@
 package it.eforhum.backoffice.service;
 
+import java.util.List;
+
 import it.eforhum.backoffice.dto.GroupDTO;
 import it.eforhum.backoffice.dto.UserDTO;
 
@@ -18,6 +20,8 @@ public interface UserService {
 	public void updateUser(UserDTO updatedUser);
 
 	public void addUserToGroup(GroupDTO group, UserDTO user);
+	
+	public List<UserDTO> getUsersFromAGroup(GroupDTO groupDTO);
 
 	public UserDTO login(String username, String password, String email);
 	

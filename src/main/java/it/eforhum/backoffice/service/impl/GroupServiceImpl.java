@@ -66,10 +66,11 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public void deleteGroup(GroupDTO group) {
 		Objects.requireNonNull(group);
+		ModelMapper mp = new ModelMapper();
 		
 		try {
-			UserGroups groupToDelete = (UserGroups) DaoFactory.getUserGroupDao().findById(group.getId());
-			
+			UserGroups groupToDelete = (UserGroups) DaoFactory.getUserGroupDao().findById(group.getId());				
+					
 			log.info("Attempting to delete group with id: {}", group.getId());
 			userGroupsDao.delete(groupToDelete);
 		} catch (DaoException dE) {

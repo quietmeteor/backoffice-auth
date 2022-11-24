@@ -232,5 +232,15 @@ public class UserServiceImpl implements UserService {
 
 		return null;
 	}
+	
+	@Override
+	public List<UserDTO> getUsersFromAGroup(GroupDTO groupDTO){
+		
+		List<User> userList = userDao.findAllUsersInAGroup(groupDTO.getId());
+		
+		ModelMapper mp = new ModelMapper();
+		return mp.map(userList, new TypeToken<List<UserDTO>>(){}.getType());
+		
+	}
 
 }

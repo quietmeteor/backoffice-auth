@@ -41,8 +41,6 @@ public class RolesServiceImpl implements RolesService {
 		String rolesString = DaoFactory.getUserGroupDao().getAllRoles(group);
 		log.info("Roles String: {} ", rolesString);
 
-//		List<String> rolesList = Arrays.asList(rolesString.split(","));
-
 		List<String> rolesList = new LinkedList<>(Arrays.asList(rolesString.split(",")));
 
 		log.info("Roles list: {} ", rolesList);

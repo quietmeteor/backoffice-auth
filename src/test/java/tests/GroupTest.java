@@ -55,7 +55,7 @@ public class GroupTest {
 	@Test
 	public void deleteGroup() {
 		
-		GroupDTO groupDTO = ServiceFactory.getGroupService().findGroupById(21);
+		GroupDTO groupDTO = ServiceFactory.getGroupService().findGroupById(19);
 		
 		assertDoesNotThrow(() -> {	
 			ServiceFactory.getGroupService().deleteGroup(groupDTO);

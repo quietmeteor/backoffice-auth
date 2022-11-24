@@ -108,5 +108,15 @@ public class UserTest {
 		log.info(user);
 	}
 
+	@Test
+	void findAllUserInGroupTest() {
+		GroupDTO groupDTO = ServiceFactory.getGroupService().findGroupById(19);
+			
+		List<UserDTO> userList = ServiceFactory.getUserService().getUsersFromAGroup(groupDTO);
+		
+		assertNotNull(userList);
+		log.info(userList);
+		
+	}
 	
-}
+} 
