@@ -40,7 +40,7 @@
 				<div class="container">
 					<button type="button" class="btn btn-success" onclick="create()">Create
 						Group</button>
-
+			</br>
 					<div class="row">
 
 						<div class="text-danger">
@@ -128,7 +128,7 @@
 		}
 	
 		function edit(id) {
-
+			window.location.href="./group-list?action=edit&id="+id;
 		}
 
 		function create() {

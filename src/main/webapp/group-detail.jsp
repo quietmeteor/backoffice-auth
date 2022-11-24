@@ -17,6 +17,7 @@
 
 
 <pt:page>
+<div class="overflow-scroll" style="height: 100vh">
 	<div class="row mb-3">
 		<div class="col-1 d-flex flex-row">
 
@@ -28,7 +29,7 @@
 						<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
 
-							<form action="group-detail" method="POST">
+							<form action="group-detail" method="GET">
 
 								<div class="text-danger">
 									<c:out value="${error_message}" />
@@ -94,15 +95,12 @@
 										Aggiornamento </label>
 									<div class="col-sm-10">
 										<input type="text" id="updateUser" name="updateUser"
-											value="${group.updateUser}" disabled readonly></br>
+											value="${group.updateUser}" disabled readonly>${group.updateUser}</br>
 									</div>
 								</div>
-								<input class="btn btn-primary" type="submit" value="modifica"></br>
 								
 								
 							</form>
-
-
 
 
 						</main>
@@ -118,5 +116,6 @@
 
 
 		</div>
+	</div>
 	</div>
 </pt:page>

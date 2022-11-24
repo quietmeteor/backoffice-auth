@@ -1,6 +1,8 @@
 package it.eforhum.backoffice.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -8,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import it.eforhum.backoffice.dto.GroupDTO;
 import it.eforhum.backoffice.entity.UserGroups;
+import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.util.ServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,7 +33,7 @@ public class GroupListController extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if (action != null && action.equalsIgnoreCase("detail")) {
-			log.info("doGet Request for /group-detail recieved");
+			log.info("doGet Request per /group-detail ricevuta");
 
 			GroupDTO group = findGroup(req, resp);
 
@@ -47,16 +50,21 @@ public class GroupListController extends HttpServlet {
 			GroupDTO group = findGroup(req, resp);
 			ServiceFactory.getGroupService().deleteGroup(group);
 
-			log.info("Group was succesfully deleted");
+			log.info("Gruppo e' stato eliminato");
 
 			resp.sendRedirect("group-list");
 
-		} 
-			else if (action != null && action.equalsIgnoreCase("create")) {
+		} else if (action != null && action.equalsIgnoreCase("create")) {
 			log.info("Request Recieved, action create");
 
-			resp.sendRedirect("group-edit");
+			req.getRequestDispatcher("group-create.jsp").forward(req, resp);
 
+		} else if (action != null && action.equalsIgnoreCase("edit")) {
+			log.info("Request Recieved, action edit");
+			GroupDTO group = findGroup(req, resp);
+			req.setAttribute("group", group);
+			log.info("Richiesta modifica di gruppo id {} ", group.getId());
+			req.getRequestDispatcher("group-edit.jsp").forward(req, resp);
 		}
 
 		else {
@@ -65,17 +73,110 @@ public class GroupListController extends HttpServlet {
 
 	}
 
-//	@Override
-//	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//
-//
-//	}
-	
-	
-	
-	
-	
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		String action = req.getParameter("action");
+
+		if (action != null && action.equalsIgnoreCase("create")) {
+			log.info("Richeiesta crea ricevuta");
+			GroupDTO newGroup = new GroupDTO();
+
+			if (req.getParameter("groupName") == null) {
+				log.warn("Nome gruppo nullo");
+				req.setAttribute("errorMessage", "Nome deve essere valorizzato!");
+				return;
+			}
+
+			newGroup.setGroupName(req.getParameter("groupName"));
+
+			if (req.getParameter("roles") == null) {
+				log.warn("Ruoli gruppo nulli");
+				req.setAttribute("errorMessage", "Ruoli devono essere valorizzati");
+			}
+
+			List<Roles> roles = new ArrayList<>();
+			roles.add(Roles.USER);
+			newGroup.setRoles(roles);
+
+			if (req.getParameter("permissions") == null) {
+				log.warn("Permessi nulli");
+				req.setAttribute("errorMessage", "Permessi devono essere valorizzati");
+			}
+
+			if (req.getParameter("creationUser") == null) {
+				log.warn("User creazione nullo");
+				req.setAttribute("errorMessage", "User creazione deve essere valorizzato");
+			}
+
+			newGroup.setCreationUser(req.getParameter("creationUser"));
+			newGroup.setPermissions("BASE_PERMISSIONS");
+
+			newGroup.setEnabled(true);
+
+			newGroup.setCreationTime(LocalDateTime.now());
+
+			ServiceFactory.getGroupService().createGroup(newGroup);
+			log.info("Gruppo id {} e' stato creato ", newGroup);
+
+			resp.sendRedirect("group-list");
+
+		} else if (action != null && action.equalsIgnoreCase("edit")) {
+
+			log.info("Richeiesta edit ricevuta");
+			GroupDTO groupUpd = new GroupDTO();
+
+			if (req.getParameter("groupName") == null) {
+				log.warn("Nome gruppo nullo");
+				req.setAttribute("errorMessage", "Nome deve essere valorizzato!");
+				return;
+			}
+
+			groupUpd.setGroupName(req.getParameter("groupName"));
+
+			if (req.getParameter("roles") == null) {
+				log.warn("Ruoli gruppo nulli");
+				req.setAttribute("errorMessage", "Ruoli devono essere valorizzati");
+			}
+
+			List<Roles> roles = new ArrayList<>();
+			roles.add(Roles.ROLE_CREATE_RISORSE);
+			groupUpd.setRoles(roles);
+
+			if (req.getParameter("permissions") == null) {
+				log.warn("Permessi nulli");
+				req.setAttribute("errorMessage", "Permessi devono essere valorizzati");
+			}
+
+			groupUpd.setPermissions("CREATE RISORSE");
+
+			if (req.getParameter("creationUser") == null) {
+				log.warn("User creazione nullo");
+				req.setAttribute("errorMessage", "User creazione deve essere valorizzato");
+			}
+
+			groupUpd.setCreationUser(req.getParameter("creationUser"));
+
+			if (req.getParameter("updateUser") == null) {
+				log.warn("User aggiornamento nullo");
+				req.setAttribute("errorMessage", "User aggiornamento deve essere valorizzato");
+			}
+
+			groupUpd.setUpdateUser(req.getParameter("updateUser"));
+
+			groupUpd.setEnabled(true);
+
+			groupUpd.setCreationTime(LocalDateTime.parse(req.getParameter("creationTime")));
+
+			groupUpd.setUpdateTime(LocalDateTime.now());
+
+			ServiceFactory.getGroupService().updateGroup(groupUpd);
+
+			resp.sendRedirect("group-list");
+			
+		}
+
+	}
 
 	public GroupDTO findGroup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
