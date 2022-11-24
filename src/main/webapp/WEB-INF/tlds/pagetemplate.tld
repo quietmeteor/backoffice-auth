@@ -1,0 +1,11 @@
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+	<tlib-version>1.0</tlib-version>
+	<short-name>pt</short-name>
+	<tag-file>
+		<name>page</name>
+		<path>/WEB-INF/tags/pagetemplate.tag</path>
+	</tag-file>
+</taglib>
