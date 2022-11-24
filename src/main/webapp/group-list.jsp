@@ -28,7 +28,7 @@
 </head>
 
 <pt:page>
-
+<div class="overflow-scroll" style="height: 100vh">
 	<div class="container-fluid">
 		<div class="row">
 
@@ -55,21 +55,21 @@
 
 										<th scope="col" class="align-text-top">Id</th>
 
-										<th scope="col" class="align-text-top">Group Name</th>
+										<th scope="col" class="align-text-top">Nome Gruppo</th>
 
-										<th scope="col" class="align-text-top">Roles</th>
+										<th scope="col" class="align-text-top">Ruoli</th>
 
-										<th scope="col" class="align-text-top">Permissions</th>
+										<th scope="col" class="align-text-top">Permessi</th>
 
-										<th scope="col" class="align-text-top">Enabled</th>
+										<th scope="col" class="align-text-top">Attivo?</th>
 
-										<th scope="col" class="align-text-top">Creation User</</th>
+										<th scope="col" class="align-text-top">User creazione</</th>
 
-										<th scope="col" class="align-text-top">Creation Time</th>
+										<th scope="col" class="align-text-top">Data creazione</th>
 
-										<th scope="col" class="align-text-top">Update User</th>
+										<th scope="col" class="align-text-top">Aggiornamento user</th>
 
-										<th scope="col" class="align-text-top">Update Time</th>
+										<th scope="col" class="align-text-top">Data aggiornamento</th>
 
 										<td>&nbsp;</td>
 									</tr>
@@ -121,7 +121,7 @@
 
 	</div>
 
-
+</div>
 	<script type="text/javascript">
 		function detail(id){
 			window.location.href="./group-list?action=detail&id="+id;

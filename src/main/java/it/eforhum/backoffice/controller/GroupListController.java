@@ -51,10 +51,11 @@ public class GroupListController extends HttpServlet {
 
 			resp.sendRedirect("group-list");
 
-		} else if (action != null && action.equalsIgnoreCase("create")) {
+		} 
+			else if (action != null && action.equalsIgnoreCase("create")) {
 			log.info("Request Recieved, action create");
 
-			req.getRequestDispatcher("group-create.jsp").forward(req, resp);
+			resp.sendRedirect("group-edit");
 
 		}
 
@@ -64,12 +65,17 @@ public class GroupListController extends HttpServlet {
 
 	}
 
-	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		String action = req.getParameter("action");
-
-	}
+//	@Override
+//	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//
+//
+//	}
+	
+	
+	
+	
+	
 
 	public GroupDTO findGroup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 

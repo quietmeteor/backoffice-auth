@@ -98,6 +98,8 @@
 									</div>
 								</div>
 								<input class="btn btn-primary" type="submit" value="modifica"></br>
+								
+								
 							</form>
 
 
@@ -109,21 +111,7 @@
 
 
 				<script type="text/javascript">
-					function view(id) {
-	
-					}
 
-					function edit(id) {
-
-					}
-
-					function create() {
-
-					}
-
-					function deleteEntity() {
-
-					}
 				</script>
 
 			</body>

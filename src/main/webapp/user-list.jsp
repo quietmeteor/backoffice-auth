@@ -117,8 +117,7 @@
 				<script>
 					function detail(id) {
 
-						window.location.href = "http://localhost:8080/prenotazioni-web/detail/risorsa/"
-								+ id;
+						window.location.href="./user-list?action=detail&id="+id;
 					}
 					function edit(id) {
 

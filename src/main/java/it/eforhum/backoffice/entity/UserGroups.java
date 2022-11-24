@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
-
-import it.eforhum.backoffice.enums.Roles;
 
 /**
  * 
@@ -47,13 +47,18 @@ public class UserGroups extends BaseEntity {
 	@Column(name = "enabled", nullable = false)
 	private boolean isEnabled;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userGroup")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userGroup", cascade= {CascadeType.PERSIST})
 	private Set<User> users = new HashSet<>();
 
 	public UserGroups() {
 
 	}
-
+	
+	@PreRemove
+	private void preRemove() {
+		users.forEach(child->child.setUserGroup(null));
+	}
+	
 	public String getGroupName() {
 		return groupName;
 	}

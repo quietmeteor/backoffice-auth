@@ -28,7 +28,7 @@
 						<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
 
-							<form action="group-detail" method="POST">
+							<form action="group-edit" method="POST">
 
 								<div class="text-danger">
 									<c:out value="${error_message}" />
@@ -78,6 +78,7 @@
 								</div>
 
 								<input class="btn btn-primary" type="submit" value="Crea"></br>
+								
 							</form>
 
 
