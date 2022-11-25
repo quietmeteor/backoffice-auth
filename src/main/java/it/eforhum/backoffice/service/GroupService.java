@@ -8,11 +8,11 @@ public interface GroupService {
 	
 	public void createGroup(GroupDTO group);
 	
-	public void deleteGroup(GroupDTO group);
+	public void deleteGroup(long id);
 	
 	public GroupDTO findGroupById(long id);
 	
-	public void updateGroup(GroupDTO upd);
+	public void updateGroup(long id, GroupDTO upd);
 	
 	public List<GroupDTO> getAllGroups();
 	

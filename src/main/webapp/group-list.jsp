@@ -35,8 +35,6 @@
 
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
-
-
 				<div class="container">
 					<button type="button" class="btn btn-success" onclick="create()">Create
 						Group</button>
