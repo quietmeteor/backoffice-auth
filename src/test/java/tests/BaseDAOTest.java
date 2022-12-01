@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +32,20 @@ public class BaseDAOTest {
 			DaoFactory.getUserDao().getInstance().testConnessione();
 		});
 	}
+	
+	@Test
+	void finUserById() {
+		User user = ServiceFactory.getUserService().findByIdUser(1);
 
+		log.info("Found user {} with id {}", user.getUsername(), user.getId());
+	}
+	@Test
+	void findAllUsersTest() {
+		List<User> users = ServiceFactory.getUserService().findAll();
+		
+		log.info("Found users {}", users);
+	}
+	
 	@Test
 	void createUserAndGroupTest() {
 
@@ -230,9 +244,9 @@ public class BaseDAOTest {
 
 	@Test
 	void addUserToGroupTest() {
-		User user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findByIdUser(3));
+		User user = assertDoesNotThrow(() -> ServiceFactory.getUserService().getInstance().findByIdUser(1));
 		UserGroups userGroup = assertDoesNotThrow(
-				() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(15)); // 15 = default user group
+				() -> ServiceFactory.getGroupService().getInstance().findByIdGroup(1)); // 15 = default user group
 
 		assertNotNull(user);
 		assertNotNull(userGroup);

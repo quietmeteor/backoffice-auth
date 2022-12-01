@@ -63,18 +63,32 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void deleteGroup(long id) {
 		
 		try {
 			UserGroups groupToDelete = (UserGroups) DaoFactory.getUserGroupDao().findById(id);
 			
 			log.info("Attempting to delete group with id: {}", id);
+=======
+	public void deleteGroup(GroupDTO group) {
+		Objects.requireNonNull(group);
+		
+		try {
+			UserGroups groupToDelete = (UserGroups) DaoFactory.getUserGroupDao().findById(group.getId());
+			
+			log.info("Attempting to delete group with id: {}", group.getId());
+>>>>>>> master-web-userList
 			userGroupsDao.delete(groupToDelete);
 		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while trying to delete a group", dE);
 		}
 
+<<<<<<< HEAD
 		log.info("Group with id {} removed", id);
+=======
+		log.info("Group with id {} removed", group.getId());
+>>>>>>> master-web-userList
 	}
 
 	@Override
@@ -106,8 +120,13 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void updateGroup(long id, GroupDTO updatedGroup) {
 		UserGroups groupToUpdate = (UserGroups) userGroupsDao.findById(id);
+=======
+	public void updateGroup(GroupDTO updatedGroup) {
+		UserGroups groupToUpdate = (UserGroups) userGroupsDao.findById(updatedGroup.getId());
+>>>>>>> master-web-userList
 
 		log.info("Trying to update a group id:{}", groupToUpdate.getId());
 		try {

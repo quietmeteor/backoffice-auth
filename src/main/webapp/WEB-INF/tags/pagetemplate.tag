@@ -134,7 +134,11 @@ body {
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 		<div class="overflow-auto">
+=======
+	<div class="overflow-auto">
+>>>>>>> master-web-userList
 		<div class="container-fluid">
 			<div class="row flex-nowrap">
 				<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark"
@@ -197,8 +201,12 @@ body {
                     <path
 											d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                   </svg>
+<<<<<<< HEAD
 									<a href="./group-list">Lista
 										Gruppi</a>
+=======
+									<a href="./group-list">Lista Gruppi</a>
+>>>>>>> master-web-userList
 								</p>
 							</li>
 
@@ -213,8 +221,12 @@ body {
                     <path
 											d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                   </svg>
+<<<<<<< HEAD
 									<a href="./user-list">Lista
 										Utenti</a>
+=======
+									<a href="./user-list">Lista Utenti</a>
+>>>>>>> master-web-userList
 								</p>
 							</li>
 
@@ -276,8 +288,13 @@ body {
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 		</div>
 	
+=======
+	</div>
+
+>>>>>>> master-web-userList
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
