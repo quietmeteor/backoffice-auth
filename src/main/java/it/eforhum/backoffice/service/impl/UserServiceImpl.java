@@ -103,12 +103,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUserCompletely(UserDTO user) {
-		Objects.requireNonNull(user);
-		User userToDelete = (User) userDao.getInstance().findByUsername(user.getUsername());
+	public void deleteUserCompletely(long id) {
+		User userToDelete = (User) userDao.getInstance().findById(id);
 
 		try {
-			log.info("Attempting to delete user with id {} ", user.getId());
+			log.info("Attempting to delete user with id {} ", id);
 			userDao.delete(userToDelete);
 		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while trying to delete a user", dE);

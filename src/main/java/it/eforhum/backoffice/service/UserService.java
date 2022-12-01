@@ -9,7 +9,7 @@ public interface UserService {
 
 	public void deleteUser(UserDTO user);
 
-	public void deleteUserCompletely(UserDTO user);
+	public void deleteUserCompletely(long id);
 
 	public UserDTO findByUsername(String username);
 	

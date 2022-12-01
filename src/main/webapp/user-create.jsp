@@ -30,7 +30,8 @@
 
 
 								<form action="user-list" method="POST">
-
+									<div class="invisible">
+									<input type="text" id="action" name="action" value="create"></input> </div>
 									<div class="text-danger">
 										<c:out value="${error_message}" />
 									</div>
@@ -73,13 +74,12 @@
 									<div class="form-user row">
 										<label for="creationTime" class="col-sm-2 col-form-label">Gruppo</label>
 										<div class="col-sm-10">
-											<input type="text" id="groupName" name="groupName"></input></br> <select
-												class="form-select" aria-label="Default select example">
+											<select id="groupName" name="groupName" class="form-select"
+												aria-label="Default select example">
+ 											<c:forEach items="${groupList}" var="group">											
+												<option>${group.groupName}</option>
+											</c:forEach>
 												
-												<option selected>Default group</option>
-												<option value="1">One</option>
-												<option value="2">Two</option>
-												<option value="3">Three</option>
 											</select>
 										</div>
 									</div>
