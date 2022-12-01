@@ -30,7 +30,7 @@ public class UserListController extends HttpServlet {
 			throws ServletException, IOException {
 
 		List<UserDTO> userList = ServiceFactory.getUserService().getAllUsers();
-		log.info("Lista utenti: ", userList.toString());
+		log.info("received GET for all users");
 		
 		request.setAttribute("userList", userList);
 		
