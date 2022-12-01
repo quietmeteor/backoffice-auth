@@ -65,7 +65,7 @@ public class RolesServiceImpl implements RolesService {
 						
 				groupDTO.setRoles(rolesList);
 				
-				ServiceFactory.getGroupService().updateGroup(groupDTO);
+				ServiceFactory.getGroupService().updateGroup(groupDTO.getId(), groupDTO);
 
 				log.info("Roles after deleting: {}", groupDTO.getRoles());
 
@@ -95,7 +95,7 @@ public class RolesServiceImpl implements RolesService {
 				rolesList.add(Roles.valueOf(role));
 				groupDTO.setRoles(rolesList);
 
-				ServiceFactory.getGroupService().updateGroup(groupDTO);
+				ServiceFactory.getGroupService().updateGroup(groupDTO.getId(), groupDTO);
 				log.info("Updated Roles List: ", groupDTO.getRoles());
 
 			} else {

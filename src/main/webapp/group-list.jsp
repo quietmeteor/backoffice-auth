@@ -36,11 +36,15 @@
 		<div class="row">
 
 
+<<<<<<< HEAD
 			<main role="main" class=" col-lg-10 ">
 			
 			<div class="container pb-3">
 				<button type="button" class="btn btn-success" onclick="create()">Create Group</button> 
 			</div>
+=======
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+>>>>>>> b5c1448251409b276c4010b1f4b9005b7cb2f229
 
 				<div class="container">
 					
