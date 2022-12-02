@@ -7,7 +7,9 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 
+import it.eforhum.backoffice.entity.User;
 import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.util.HibernateUtils;
 

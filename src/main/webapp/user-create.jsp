@@ -17,110 +17,97 @@
 
 
 <pt:page>
-	<div class="oveflow-scroll" style="height: 100vh">
-		<div class="row mb-3">
-			<div class="col-1 d-flex flex-row">
 
-				<body>
-
-					<div class="container-fluid">
-						<div class="row">
-
-							<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
-
-								<form action="user-list" method="POST">
-									<div class="invisible">
-									<input type="text" id="action" name="action" value="create"></input> </div>
-									<div class="text-danger">
-										<c:out value="${error_message}" />
-									</div>
-									<div class="form-user row">
-										<label for="userName" class="col-sm-2 col-form-label">Nome
-											Utente</label>
-										<div class="col-sm-10">
-											<input type="text" id="userName" name="userName"></input> </br>
-										</div>
-									</div>
-
-									<div class="form-user row">
-										<label for="roles" class="col-sm-2 col-form-label">Cognome</label>
-										<div class="col-sm-10">
-											<input type="text" id="lastName" name="lastName"></input> </br>
-										</div>
-									</div>
-
-									<div class="form-user row">
-										<label for="permissions" class="col-sm-2 col-form-label">Email</label>
-										<div class="col-sm-10">
-											<input type="text" id="email" name="email"></input></br>
-										</div>
-									</div>
-
-									<div class="form-user row">
-										<label for="enabled" class="col-sm-2 col-form-label">Username</label>
-										<div class="col-sm-10">
-											<input type="text" id="username" name="username"></input></br>
-										</div>
-									</div>
-
-									<div class="form-user row">
-										<label for="enabled" class="col-sm-2 col-form-label">Password</label>
-										<div class="col-sm-10">
-											<input type="text" id="password" name="password"></input></br>
-										</div>
-									</div>
-
-									<div class="form-user row">
-										<label for="creationTime" class="col-sm-2 col-form-label">Gruppo</label>
-										<div class="col-sm-10">
-											<select id="groupName" name="groupName" class="form-select"
-												aria-label="Default select example">
- 											<c:forEach items="${groupList}" var="group">											
-												<option>${group.groupName}</option>
-											</c:forEach>
-												
-											</select>
-										</div>
-									</div>
-
-
-									<div>
-										<button type="submit" class="btn btn-success">Aggiungi
-											utente</button>
-									</div>
-								</form>
-
-
-
-
-							</main>
-						</div>
-					</div>
-
-
-					<script type="text/javascript">
-						function view(id) {
-
-						}
-
-						function edit(id) {
-
-						}
-
-						function create() {
-
-						}
-
-						function deleteEntity() {
-
-						}
-					</script>
-
-				</body>
-
-
+	<form action="user-list" method="POST">
+		<div class="invisible">
+			<input type="hidden" id="action" name="action" value="create"></input>
+			
+		</div>
+		<div class="text-danger">
+			<c:out value="${errorMessage}" />
+		</div>
+		<div class="form-user row">
+			<label for="Nome Utente" class="col-sm-2 col-form-label">Nome
+				Utente</label>
+			<div class="col-sm-10">
+				<input type="text" id="userName" name="userName" value="${userName}"></input> <br />
 			</div>
 		</div>
-	</div>
+
+		<div class="form-user row">
+			<label for="Cognome" class="col-sm-2 col-form-label">Cognome</label>
+			<div class="col-sm-10">
+				<input type="text" id="lastName" name="lastName" value="${lastName}"></input> <br />
+			</div>
+		</div>
+
+		<div class="form-user row">
+			<label for="Email" class="col-sm-2 col-form-label">Email</label>
+			<div class="col-sm-10">
+				<input type="text" id="email" name="email" value="${email}"></input><br />
+			</div>
+		</div>
+
+		<div class="form-user row">
+			<label for="Username" class="col-sm-2 col-form-label">Username</label>
+			<div class="col-sm-10">
+				<input type="text" id="username" name="username" value="${username}"></input><br />
+			</div>
+		</div>
+
+		<div class="form-user row">
+			<label for="Password" class="col-sm-2 col-form-label">Password</label>
+			<div class="col-sm-10">
+				<input type="text" id="password" name="password" value="${password}"></input><br />
+			</div>
+		</div>
+
+		<div class="form-user row">
+			<label for="Gruppo" class="col-sm-2 col-form-label">Gruppo</label>
+			<div class="col-sm-10" style="width: 222.500px">
+				<select id="groupName" name="groupName" class="form-select"
+					aria-label="Default select example">
+					<c:forEach items="${groupList}" var="group">
+						<option value="${group.id}">${group.groupName}</option>
+					</c:forEach>
+
+				</select>
+			</div>
+		</div>
+
+
+		<div>
+			<button type="submit" class="btn btn-success">Aggiungi
+				utente</button>
+		</div>
+	</form>
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		function view(id) {
+
+		}
+
+		function edit(id) {
+
+		}
+
+		function create() {
+
+		}
+
+		function deleteEntity() {
+
+		}
+	</script>
+
+	</body>
+
+
+
 </pt:page>

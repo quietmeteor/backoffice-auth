@@ -14,6 +14,7 @@ public class UserDTO {
 	private String name;
 	private String lastName;
 	private String groupName;
+	private long groupId;
 	private LocalDateTime lastLogin;
 	private LocalDateTime dateModifiedPass;
 	private boolean verified;
@@ -107,10 +108,18 @@ public class UserDTO {
 		this.dateModifiedPass = dateModifiedPass;
 	}
 
+	public long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		this.groupId = groupId;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateModifiedPass, deleted, email, groupName, id, lastLogin, lastName, name, password,
-				username, verified);
+		return Objects.hash(dateModifiedPass, deleted, email, groupId, groupName, id, lastLogin, lastName, name,
+				password, username, verified);
 	}
 
 	@Override
@@ -123,7 +132,8 @@ public class UserDTO {
 			return false;
 		UserDTO other = (UserDTO) obj;
 		return Objects.equals(dateModifiedPass, other.dateModifiedPass) && deleted == other.deleted
-				&& Objects.equals(email, other.email) && Objects.equals(groupName, other.groupName) && id == other.id
+				&& Objects.equals(email, other.email) && groupId == other.groupId
+				&& Objects.equals(groupName, other.groupName) && id == other.id
 				&& Objects.equals(lastLogin, other.lastLogin) && Objects.equals(lastName, other.lastName)
 				&& Objects.equals(name, other.name) && Objects.equals(password, other.password)
 				&& Objects.equals(username, other.username) && verified == other.verified;
@@ -132,8 +142,9 @@ public class UserDTO {
 	@Override
 	public String toString() {
 		return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
-				+ ", name=" + name + ", lastName=" + lastName + ", groupName=" + groupName + ", lastLogin=" + lastLogin
-				+ ", dateModifiedPass=" + dateModifiedPass + ", verified=" + verified + ", deleted=" + deleted + "]";
+				+ ", name=" + name + ", lastName=" + lastName + ", groupName=" + groupName + ", groupId=" + groupId
+				+ ", lastLogin=" + lastLogin + ", dateModifiedPass=" + dateModifiedPass + ", verified=" + verified
+				+ ", deleted=" + deleted + "]";
 	}
 
 }

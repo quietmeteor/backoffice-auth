@@ -38,7 +38,7 @@ public class UserGroups extends BaseEntity {
 	@Column(name = "roles", nullable = false)
 	private String roles;
 
-	@Column(name = "group_name", nullable = false)
+	@Column(name = "group_name",unique = true, nullable = false)
 	private String groupName;
 
 	@Column(name = "permissions", nullable = false)

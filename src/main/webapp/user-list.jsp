@@ -21,38 +21,45 @@
 	crossorigin="anonymous">
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+	integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
 
 </head>
 
 <pt:page>
-<div class="oveflow-scroll" style="height: 100vh">
-	<div class="container-fluid">
-		<div class="row">
+	<div class="overflow-scroll" style="height: 96vh">
+		<div class="container-fluid">
+			<div class="row">
 
 
-			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+					<div class="container pb-3">
+						<button type="button" class="btn btn-success" onclick="create()">Create
+							new User</button>
+					</div>
+
+					<div class="container">
 
 
+						<div class="row">
 
-				<div class="container">
-					<button type="button" class="btn btn-success" onclick="create()">Create new
-						user</button>
+							<div class="text-danger">
+								<c:out value="${error_message}" />
+							</div>
 
-					<div class="row">
-
-						<div class="text-danger">
-							<c:out value="${error_message}" />
-						</div>
-
-						<div class="col-4 text-center">
-							<p></p>
-							<table class="table table-bordered table-hover" id="user-datatable">
+							<table class="table table-bordered table-hover"
+								id="user-datatable">
 								<thead>
 									<tr>
 
@@ -98,20 +105,20 @@
 											<td><c:out value="${fn:trim(user.verified)}" /></td>
 											<td><c:out value="${fn:trim(user.deleted)}" /></td>
 											<td>
-												<!-- 	<form action="user-list" method="POST">-->
-												<button type="button" class="btn btn-primary" style="width: 44px"
-													onclick="detail(${user.id})">
+
+												<button type="button" class="btn btn-primary"
+													style="width: 44px" onclick="detail(${user.id})">
 													<i class="far fa-eye"></i>
 												</button>
-												<button type="button" class="btn btn-success" style="width: 44px"
-													onclick="edit(${user.id})">
+												<button type="button" class="btn btn-success"
+													style="width: 44px" onclick="edit(${user.id})">
 													<i class="fas fa-edit"></i>
 												</button>
-												<button type="button" class="btn btn-danger" style="width: 44px"
-													onclick="deleteEntity(${user.id})">
+												<button type="button" class="btn btn-danger"
+													style="width: 44px" onclick="deleteEntity(${user.id})">
 													<i class="far fa-trash-alt"></i>
 												</button>
-												</form>
+
 											</td>
 										</tr>
 									</c:forEach>
@@ -123,9 +130,9 @@
 						</div>
 
 					</div>
+				</main>
+			</div>
 
-				</div>
-			</main>
 		</div>
 
 	</div>
@@ -170,5 +177,5 @@
 		}
 	</script>
 
-</div>
+	</div>
 </pt:page>

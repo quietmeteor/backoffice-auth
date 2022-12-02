@@ -21,6 +21,7 @@ import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.exception.DaoException;
 import it.eforhum.backoffice.exception.ServiceException;
 import it.eforhum.backoffice.service.UserService;
+import it.eforhum.backoffice.util.DaoFactory;
 import it.eforhum.backoffice.util.HibernateUtils;
 
 public class UserServiceImpl implements UserService {
@@ -62,11 +63,14 @@ public class UserServiceImpl implements UserService {
 			user.setEmail(userDTO.getEmail());
 			user.setVerified(userDTO.isVerified());
 			user.setDeleted(userDTO.isDeleted());
-//			user.setUserGroup(userDTO.getGroupName());
-			user.setLastLogin(LocalDateTime.now());
-			user.setCreationTime(LocalDateTime.now());
 			user.setCreationUser("admin");
-
+			user.setCreationTime(LocalDateTime.now());
+			user.setLastLogin(LocalDateTime.now());
+			
+			UserGroups userGroup = (UserGroups) DaoFactory.getUserGroupDao().findById(userDTO.getGroupId());
+			
+			user.setUserGroup(userGroup);
+			
 			this.userDao.save(user);
 
 			log.info("User has been created id: {} ", user.getId());
