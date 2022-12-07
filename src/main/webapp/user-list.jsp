@@ -37,29 +37,27 @@
 </head>
 
 <pt:page>
-	<div class="overflow-scroll" style="height: 96vh">
-		<div class="container-fluid">
-			<div class="row">
+<div class="overflow-scroll" style="height: 96vh">
+	<div class="container-fluid">
+		<div class="row">
 
 
-				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+			
+			<div class="container pb-3">
+				<button type="button" class="btn btn-success" onclick="create()">Create new user</button> 
+			</div>
 
-					<div class="container pb-3">
-						<button type="button" class="btn btn-success" onclick="create()">Create
-							new User</button>
-					</div>
-
-					<div class="container">
-
-
-						<div class="row">
+							
+					<div class="row">
 
 							<div class="text-danger">
 								<c:out value="${error_message}" />
 							</div>
 
-							<table class="table table-bordered table-hover"
-								id="user-datatable">
+
+
+							<table class="table table-bordered table-hover" id="user-datatable">
 								<thead>
 									<tr>
 
@@ -73,12 +71,11 @@
 
 										<th scope="col" class="align-text-top">Username</th>
 
-										<th scope="col" class="align-text-top">Password</</th>
+										<th scope="col" class="align-text-top">Password</th>
 
 										<th scope="col" class="align-text-top">Ultimo acesso</th>
 
-										<th scope="col" class="align-text-top">Data modifica
-											password</th>
+										<th scope="col" class="align-text-top">Data modifica password</th>
 
 										<th scope="col" class="align-text-top">Gruppo</th>
 
@@ -118,7 +115,6 @@
 													style="width: 44px" onclick="deleteEntity(${user.id})">
 													<i class="far fa-trash-alt"></i>
 												</button>
-
 											</td>
 										</tr>
 									</c:forEach>
@@ -127,7 +123,7 @@
 
 								</tbody>
 							</table>
-						</div>
+						
 
 					</div>
 				</main>
@@ -136,6 +132,8 @@
 		</div>
 
 	</div>
+
+
 
 
 	<script type="text/javascript">

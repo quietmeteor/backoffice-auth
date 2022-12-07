@@ -3,6 +3,7 @@ package it.eforhum.backoffice.controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import it.eforhum.backoffice.dto.GroupDTO;
-import it.eforhum.backoffice.entity.UserGroups;
 import it.eforhum.backoffice.enums.Roles;
 import it.eforhum.backoffice.util.ServiceFactory;
 import jakarta.servlet.ServletException;
@@ -38,7 +38,16 @@ public class GroupListController extends HttpServlet {
 
 			GroupDTO group = findGroup(req, resp);
 
+			List<String> rolesList = getRoles(group);
+			log.info("La lista dei ruoli e': {}", rolesList);
+
+			List<String> permList = Arrays.asList(group.getPermissions().split(","));
+			log.info("Lista permessi: {}", permList);
+
 			req.setAttribute("group", group);
+			req.setAttribute("rolesList", rolesList);
+			req.setAttribute("permList", permList);
+
 			req.getRequestDispatcher("group-detail.jsp").forward(req, resp);
 
 		}
@@ -101,16 +110,33 @@ public class GroupListController extends HttpServlet {
 				return;
 			}
 
+			String[] rolesArr = req.getParameterValues("roles");
 			List<Roles> roles = new ArrayList<>();
-			roles.add(Roles.USER);
-			newGroup.setRoles(roles);
+			String role = " ";
 
+			for (int i = 0; i < rolesArr.length; i++) {
+				log.info("Role is: {} ", rolesArr[i]);
+				role = rolesArr[i];
+				roles.add(Roles.valueOf(role));
+
+			}
+			newGroup.setRoles(roles);
 			if (StringUtils.isEmpty(req.getParameter("permissions"))) {
 				log.warn("Permessi nulli");
 				req.setAttribute("errorMessage", "Permessi devono essere valorizzati");
 				req.getRequestDispatcher("group-create.jsp").forward(req, resp);
 				return;
 			}
+
+			String[] permParams = req.getParameterValues("permissions");
+			List<String> permArr = new ArrayList<>();
+			for (int i = 0; i < permParams.length; i++) {
+				log.info("Il permesso e' {} ", permParams[i]);
+				permArr.add(permParams[i]);
+			}
+
+			log.info("Permessi sono: {} ", permArr);
+			newGroup.setPermissions(permArr.toString());
 
 			if (StringUtils.isEmpty(req.getParameter("creationUser"))) {
 				log.warn("User creazione nullo");
@@ -120,9 +146,12 @@ public class GroupListController extends HttpServlet {
 			}
 
 			newGroup.setCreationUser(req.getParameter("creationUser"));
-			newGroup.setPermissions("BASE_PERMISSIONS");
 
-			newGroup.setEnabled(Boolean.parseBoolean(req.getParameter("enabled")));
+			if (req.getParameter("enabled") == null) {
+				newGroup.setEnabled(false);
+			} else if (req.getParameter("enabled").equalsIgnoreCase("on")) {
+				newGroup.setEnabled(true);
+			}
 
 			newGroup.setCreationTime(LocalDateTime.now());
 
@@ -136,7 +165,18 @@ public class GroupListController extends HttpServlet {
 			log.info("Richeiesta edit ricevuta");
 			GroupDTO groupUpd = new GroupDTO();
 			GroupDTO group = findGroup(req, resp);
+
+			List<String> rolesList = getRoles(group);
+			log.info("La lista dei ruoli e': {}", rolesList);
+
+			List<String> permList = Arrays.asList(group.getPermissions().split(","));
+			log.info("Lista permessi: {}", permList);
+			
 			req.setAttribute("group", group);
+			req.setAttribute("rolesList", rolesList);
+			req.setAttribute("permList", permList);
+			
+
 
 			String idPar = req.getParameter("id");
 			log.info("ID e' {} ", idPar);
@@ -177,8 +217,17 @@ public class GroupListController extends HttpServlet {
 				return;
 			}
 
+
+			String[] rolesParams = req.getParameterValues("roles");
 			List<Roles> roles = new ArrayList<>();
-			roles.add(Roles.ROLE_CREATE_RISORSE);
+			String role = "";
+
+			for (int i = 0; i < rolesParams.length; i++) {
+				log.info("Il ruolo: {} ", rolesParams[i]);
+				role = rolesParams[i];
+				roles.add(Roles.valueOf(role));
+			}
+			
 			groupUpd.setRoles(roles);
 
 			if (StringUtils.isEmpty(req.getParameter("permissions"))) {
@@ -187,8 +236,17 @@ public class GroupListController extends HttpServlet {
 				req.getRequestDispatcher("group-edit.jsp").forward(req, resp);
 				return;
 			}
+			
+			
+			String[] permParams = req.getParameterValues("permissions");
+			List<String> permArr = new ArrayList<>();
+			for (int i = 0; i < permParams.length; i++) {
+				log.info("Il permesso e' {} ", permParams[i]);
+				permArr.add(permParams[i]);
+			}
 
-			groupUpd.setPermissions("CREATE RISORSE");
+			log.info("Permessi sono: {} ", permArr);
+			groupUpd.setPermissions(permArr.toString());		
 			log.info("User e' {} ", req.getParameter("creationUser"));
 
 			if (StringUtils.isEmpty(req.getParameter("creationUser"))) {
@@ -210,16 +268,15 @@ public class GroupListController extends HttpServlet {
 
 			groupUpd.setUpdateUser(req.getParameter("updateUser"));
 
-			groupUpd.setEnabled(Boolean.parseBoolean(req.getParameter("enabled")));
+			if (req.getParameter("enabled") == null) {
+				groupUpd.setEnabled(false);
+			} else if (req.getParameter("enabled").equalsIgnoreCase("on")) {
+				groupUpd.setEnabled(true);
+			}
 
 			groupUpd.setCreationTime(LocalDateTime.parse(req.getParameter("creationTime")));
 
 			groupUpd.setUpdateTime(LocalDateTime.now());
-//			
-//			if(groupUpd==null) {
-//				GroupDTO groupToUpdate=findGroup(req, resp);
-//				req.setAttribute("group", groupToUpdate);
-//			}
 
 			ServiceFactory.getGroupService().updateGroup(groupUpd.getId(), groupUpd);
 
@@ -239,7 +296,7 @@ public class GroupListController extends HttpServlet {
 		String idPar = req.getParameter("id");
 		if (idPar == null) {
 			log.warn("Id parameter is null");
-			req.setAttribute("error_message", "Id nullo");
+			req.setAttribute("errorMessage", "Id nullo");
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
 
@@ -249,7 +306,7 @@ public class GroupListController extends HttpServlet {
 			id = Integer.parseInt(idPar);
 		} catch (NumberFormatException e) {
 			log.error("Id parameter must be a number");
-			req.setAttribute("error_message", "Formato id sbagliato");
+			req.setAttribute("errorMessage", "Formato id sbagliato");
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
 
@@ -257,12 +314,18 @@ public class GroupListController extends HttpServlet {
 
 		if (group == null) {
 			log.warn("The group with id {} is null", id);
-			req.setAttribute("error_message", "Gruppo inesistente");
+			req.setAttribute("errorMessage", "Gruppo inesistente");
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
 		log.info("Group {} was succesfully found ", group);
 
 		return group;
+	}
+
+	public List<String> getRoles(GroupDTO group) {
+		List<String> rolesList;
+		rolesList = ServiceFactory.getRolesService().getInstance().getRolesList(group);
+		return rolesList;
 	}
 
 }

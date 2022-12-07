@@ -107,7 +107,7 @@ public class UserDTO {
 	public void setDateModifiedPass(LocalDateTime dateModifiedPass) {
 		this.dateModifiedPass = dateModifiedPass;
 	}
-
+	
 	public long getGroupId() {
 		return groupId;
 	}
@@ -115,6 +115,7 @@ public class UserDTO {
 	public void setGroupId(long groupId) {
 		this.groupId = groupId;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -146,5 +147,7 @@ public class UserDTO {
 				+ ", lastLogin=" + lastLogin + ", dateModifiedPass=" + dateModifiedPass + ", verified=" + verified
 				+ ", deleted=" + deleted + "]";
 	}
+
+
 
 }

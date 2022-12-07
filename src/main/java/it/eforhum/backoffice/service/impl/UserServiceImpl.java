@@ -23,6 +23,7 @@ import it.eforhum.backoffice.exception.ServiceException;
 import it.eforhum.backoffice.service.UserService;
 import it.eforhum.backoffice.util.DaoFactory;
 import it.eforhum.backoffice.util.HibernateUtils;
+import it.eforhum.backoffice.util.ServiceFactory;
 
 public class UserServiceImpl implements UserService {
 	protected static final Logger log = LogManager.getLogger(UserServiceImpl.class);
@@ -67,9 +68,9 @@ public class UserServiceImpl implements UserService {
 			user.setCreationTime(LocalDateTime.now());
 			user.setLastLogin(LocalDateTime.now());
 			
-			UserGroups userGroup = (UserGroups) DaoFactory.getUserGroupDao().findById(userDTO.getGroupId());
-			
-			user.setUserGroup(userGroup);
+			UserGroups userGroups = (UserGroups) DaoFactory.getUserGroupDao().findById(userDTO.getGroupId());
+			user.setUserGroup(userGroups);
+
 			
 			this.userDao.save(user);
 
@@ -167,11 +168,15 @@ public class UserServiceImpl implements UserService {
 			oldUser.setName(updatedUser.getName());
 			oldUser.setLastName(updatedUser.getLastName());
 			oldUser.setPassword(updatedUser.getPassword());
-
+			oldUser.setVerified(updatedUser.isVerified());
+			oldUser.setDeleted(updatedUser.isDeleted());
 			oldUser.setUpdateTime(LocalDateTime.now());
 			oldUser.setUpdateUser("java-app"); // revision
 			oldUser.setUsername(updatedUser.getUsername());
-
+			
+			UserGroups group = (UserGroups) DaoFactory.getUserGroupDao().findById(updatedUser.getGroupId());
+			oldUser.setUserGroup(group);
+			
 			userDao.getInstance().update(oldUser);
 		} catch (DaoException dE) {
 			throw new ServiceException("Something went wrong while updating a user ", dE);

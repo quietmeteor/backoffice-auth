@@ -84,7 +84,11 @@
 										<tr>
 											<td><c:out value="${fn:trim(group.id)}" /></td>
 											<td><c:out value="${fn:trim(group.groupName)}" /></td>
-											<td><c:out value="${fn:trim(group.roles)}" /></td>
+											
+											<td>
+												<c:forEach items="${group.roles}" var="groupRole">${groupRole}</c:forEach>
+											</td>
+											
 											<td><c:out value="${fn:trim(group.permissions)}" /></td>
 											<td><c:out value="${fn:trim(group.enabled)}" /></td>
 											<td><c:out value="${fn:trim(group.creationUser)}" /></td>

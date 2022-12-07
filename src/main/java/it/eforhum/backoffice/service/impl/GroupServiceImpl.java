@@ -118,17 +118,22 @@ public class GroupServiceImpl implements GroupService {
 
 			StringBuilder sb = new StringBuilder();
 			String sep = "";
+			List <Roles> rl = updatedGroup.getRoles();
 			for (Roles r : updatedGroup.getRoles()) {
 				sb.append(sep);
 				sb.append(r.toString());
+				
 				sep = ", ";
 
 			}
-
+			
+			groupToUpdate.setCreationTime(updatedGroup.getCreationTime());
 			groupToUpdate.setRoles(sb.toString());
 			groupToUpdate.setEnabled(updatedGroup.isEnabled());
 			groupToUpdate.setUpdateTime(LocalDateTime.now());
-			groupToUpdate.setUpdateUser("java-app");
+			groupToUpdate.setUpdateUser(updatedGroup.getUpdateUser());
+			groupToUpdate.setCreationUser(updatedGroup.getCreationUser());
+			
 
 			userGroupsDao.update(groupToUpdate);
 			log.info("Group id {} has been updated", id);

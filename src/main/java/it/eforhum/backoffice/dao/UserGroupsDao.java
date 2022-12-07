@@ -44,4 +44,13 @@ public class UserGroupsDao extends BaseDao {
 		}
 
 	}
+	
+//	public UserGroups findByGroupName(String groupName) {
+//		try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+//			Query query = session.createQuery("from UserGroups where group_name=:groupName");
+//			query.setParameter("groupName", groupName);
+//			return (UserGroups) query.uniqueResult();
+//		}
+//
+//	}
 }

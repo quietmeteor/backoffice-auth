@@ -13,7 +13,7 @@
 			<AppenderRef ref="console" />
 		</Root>
 
-		<Logger name="org.hibernate" level="debug">
+		<Logger name="org.hibernate" level="info">
 			<AppenderRef ref="console" />
 		</Logger>
 	</Loggers>

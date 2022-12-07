@@ -231,11 +231,11 @@ public class UserListController extends HttpServlet {
 			}
 			userToUpdate.setLastLogin(LocalDateTime.parse(request.getParameter("lastLogin")));
 
-			if (StringUtils.isEmpty(request.getParameter("dateModifiedPass"))) {
-				log.warn("Data modifica password nulla");
-				fillRequestAndForward(request, response, "dateModifiedPass", "user-edit.jsp");
-				return;
-			}
+//			if (StringUtils.isEmpty(request.getParameter("dateModifiedPass"))) {
+//				log.warn("Data modifica password nulla");
+//				fillRequestAndForward(request, response, "dateModifiedPass", "user-edit.jsp");
+//				return;
+//			}
 			userToUpdate.setDateModifiedPass(LocalDateTime.now());
 
 			if (StringUtils.isEmpty(request.getParameter("groupName"))) {
@@ -245,18 +245,18 @@ public class UserListController extends HttpServlet {
 			}
 			userToUpdate.setGroupId(Integer.parseInt(request.getParameter("groupName")));
 
-			if (StringUtils.isEmpty(request.getParameter("verified"))) {
-				log.warn("Utente verificato nullo");
-				fillRequestAndForward(request, response, "verified", "user-edit.jsp");
-				return;
-			}
+//			if (StringUtils.isEmpty(request.getParameter("verified"))) {
+//				log.warn("Utente verificato nullo");
+//				fillRequestAndForward(request, response, "verified", "user-edit.jsp");
+//				return;
+//			}
 			userToUpdate.setVerified(Boolean.parseBoolean(request.getParameter("verified")));
-
-			if (StringUtils.isEmpty(request.getParameter("deleted"))) {
-				log.warn("Utente eliminato nullo");
-				fillRequestAndForward(request, response, "deleted", "user-edit.jsp");
-				return;
-			}
+//
+//			if (StringUtils.isEmpty(request.getParameter("deleted"))) {
+//				log.warn("Utente eliminato nullo");
+//				fillRequestAndForward(request, response, "deleted", "user-edit.jsp");
+//				return;
+//			}
 			userToUpdate.setDeleted(Boolean.parseBoolean(request.getParameter("deleted")));
 
 			log.info("Utente con id {} e' stato aggiornato ", userToUpdate);
