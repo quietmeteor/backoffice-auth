@@ -94,7 +94,7 @@
 			</select>
 
 		</div>
-		</br>
+		
 
 		<div class="multi-selector">
 
@@ -112,7 +112,7 @@
 			<label for="enabled" class="col-sm-2 col-form-label">Attivo</label>
 			<div class="col-sm-10">
 				<input class="form-check-input" type="checkbox" id="enabled"
-					name="enabled"></br>
+					name="enabled">
 
 			</div>
 		</div>
@@ -122,12 +122,12 @@
 				Creazione </label>
 			<div class="col-sm-10">
 				<input type="text" id="creationUser" name="creationUser"
-					placeholder="User creazione"></br>
+					placeholder="User creazione">
 			</div>
 		</div>
 
-		<input class="btn btn-success" type="submit" value="Crea"
-			onclick="enable()"></br>
+		<input class="btn btn-success" type="submit" value="Crea gruppo"
+			onclick="enable()">
 
 	</form>
 

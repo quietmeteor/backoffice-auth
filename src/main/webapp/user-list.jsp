@@ -37,93 +37,97 @@
 </head>
 
 <pt:page>
-<div class="overflow-scroll" style="height: 96vh">
-	<div class="container-fluid">
-		<div class="row">
+	<div class="overflow-scroll" style="height: 96vh">
+		<div class="container-fluid">
+			<div class="row">
 
 
-			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-			
-			<div class="container pb-3">
-				<button type="button" class="btn btn-success" onclick="create()">Create new user</button> 
-			</div>
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
-							
+					<div class="container pb-3">
+						<button type="button" class="btn btn-success" onclick="create()">Crea nuovo utente</button>
+					</div>
+
+
+					<div class="container">
+
 					<div class="row">
-
-							<div class="text-danger">
-								<c:out value="${error_message}" />
-							</div>
-
+						<div class="text-danger">
+							<c:out value="${error_message}" />
+						</div>
 
 
-							<table class="table table-bordered table-hover" id="user-datatable">
-								<thead>
+
+						<table class="table table-bordered table-hover"
+							id="user-datatable">
+							<thead>
+								<tr>
+
+									<th scope="col" class="align-text-top">ID</th>
+
+									<th scope="col" class="align-text-top">Nome</th>
+
+									<th scope="col" class="align-text-top">Cognome</th>
+
+									<th scope="col" class="align-text-top">Email</th>
+
+									<th scope="col" class="align-text-top">Username</th>
+
+									<th scope="col" class="align-text-top">Password</th>
+
+									<th scope="col" class="align-text-top">Ultimo acesso</th>
+
+									<th scope="col" class="align-text-top">Data modifica
+										password</th>
+
+									<th scope="col" class="align-text-top">Gruppo</th>
+
+									<th scope="col" class="align-text-top">Utente verificato</th>
+
+									<th scope="col" class="align-text-top">Utente eliminato</th>
+
+									<td>&nbsp;</td>
+								</tr>
+							</thead>
+							<tbody>
+
+								<c:forEach items="${userList}" var="user">
 									<tr>
+										<td><c:out value="${fn:trim(user.id)}" /></td>
+										<td><c:out value="${fn:trim(user.name)}" /></td>
+										<td><c:out value="${fn:trim(user.lastName)}" /></td>
+										<td><c:out value="${fn:trim(user.email)}" /></td>
+										<td><c:out value="${fn:trim(user.username)}" /></td>
+										<td><c:out value="${fn:trim(user.password)}" /></td>
+										<td><c:out value="${fn:trim(user.lastLogin)}" /></td>
+										<td><c:out value="${fn:trim(user.dateModifiedPass)}" /></td>
+										<td><c:out value="${fn:trim(user.groupName)}" /></td>
+										<td><c:out value="${fn:trim(user.verified)}" /></td>
+										<td><c:out value="${fn:trim(user.deleted)}" /></td>
+										<td>
 
-										<th scope="col" class="align-text-top">ID</th>
-
-										<th scope="col" class="align-text-top">Nome</th>
-
-										<th scope="col" class="align-text-top">Cognome</th>
-
-										<th scope="col" class="align-text-top">Email</th>
-
-										<th scope="col" class="align-text-top">Username</th>
-
-										<th scope="col" class="align-text-top">Password</th>
-
-										<th scope="col" class="align-text-top">Ultimo acesso</th>
-
-										<th scope="col" class="align-text-top">Data modifica password</th>
-
-										<th scope="col" class="align-text-top">Gruppo</th>
-
-										<th scope="col" class="align-text-top">Utente verificato</th>
-
-										<th scope="col" class="align-text-top">Utente eliminato</th>
-
-										<td>&nbsp;</td>
+											<button type="button" class="btn btn-primary"
+												style="width: 44px" onclick="detail(${user.id})">
+												<i class="far fa-eye"></i>
+											</button>
+											<button type="button" class="btn btn-success"
+												style="width: 44px" onclick="edit(${user.id})">
+												<i class="fas fa-edit"></i>
+											</button>
+											<button type="button" class="btn btn-danger"
+												style="width: 44px" onclick="deleteEntity(${user.id})">
+												<i class="far fa-trash-alt"></i>
+											</button>
+										</td>
 									</tr>
-								</thead>
-								<tbody>
-
-									<c:forEach items="${userList}" var="user">
-										<tr>
-											<td><c:out value="${fn:trim(user.id)}" /></td>
-											<td><c:out value="${fn:trim(user.name)}" /></td>
-											<td><c:out value="${fn:trim(user.lastName)}" /></td>
-											<td><c:out value="${fn:trim(user.email)}" /></td>
-											<td><c:out value="${fn:trim(user.username)}" /></td>
-											<td><c:out value="${fn:trim(user.password)}" /></td>
-											<td><c:out value="${fn:trim(user.lastLogin)}" /></td>
-											<td><c:out value="${fn:trim(user.dateModifiedPass)}" /></td>
-											<td><c:out value="${fn:trim(user.groupName)}" /></td>
-											<td><c:out value="${fn:trim(user.verified)}" /></td>
-											<td><c:out value="${fn:trim(user.deleted)}" /></td>
-											<td>
-
-												<button type="button" class="btn btn-primary"
-													style="width: 44px" onclick="detail(${user.id})">
-													<i class="far fa-eye"></i>
-												</button>
-												<button type="button" class="btn btn-success"
-													style="width: 44px" onclick="edit(${user.id})">
-													<i class="fas fa-edit"></i>
-												</button>
-												<button type="button" class="btn btn-danger"
-													style="width: 44px" onclick="deleteEntity(${user.id})">
-													<i class="far fa-trash-alt"></i>
-												</button>
-											</td>
-										</tr>
-									</c:forEach>
+								</c:forEach>
 
 
 
-								</tbody>
-							</table>
-						
+							</tbody>
+						</table>
+						</div>
+
 
 					</div>
 				</main>

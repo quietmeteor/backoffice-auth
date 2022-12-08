@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -73,8 +74,20 @@ public class GroupListController extends HttpServlet {
 			log.info("Request Recieved, action edit");
 			GroupDTO group = findGroup(req, resp);
 			req.setAttribute("group", group);
+			
+			List<String> rolesList = getRoles(group);
+			log.info("La lista dei ruoli e': {}", rolesList);
+
+			List<String> permList = Arrays.asList(group.getPermissions().split(","));
+			log.info("Lista permessi: {}", permList);
+
+			req.setAttribute("group", group);
+			req.setAttribute("rolesList", rolesList);
+			req.setAttribute("permList", permList);
+			
 			log.info("Richiesta modifica di gruppo id {} ", group.getId());
 			req.setAttribute("action", action);
+
 			req.getRequestDispatcher("group-edit.jsp").forward(req, resp);
 		}
 
@@ -121,6 +134,7 @@ public class GroupListController extends HttpServlet {
 
 			}
 			newGroup.setRoles(roles);
+			
 			if (StringUtils.isEmpty(req.getParameter("permissions"))) {
 				log.warn("Permessi nulli");
 				req.setAttribute("errorMessage", "Permessi devono essere valorizzati");
@@ -136,7 +150,7 @@ public class GroupListController extends HttpServlet {
 			}
 
 			log.info("Permessi sono: {} ", permArr);
-			newGroup.setPermissions(permArr.toString());
+			newGroup.setPermissions(permArr.toString().replace("[", "").replace("]", ""));
 
 			if (StringUtils.isEmpty(req.getParameter("creationUser"))) {
 				log.warn("User creazione nullo");
@@ -165,18 +179,20 @@ public class GroupListController extends HttpServlet {
 			log.info("Richeiesta edit ricevuta");
 			GroupDTO groupUpd = new GroupDTO();
 			GroupDTO group = findGroup(req, resp);
-
+			req.setAttribute("group", group);
+			
 			List<String> rolesList = getRoles(group);
 			log.info("La lista dei ruoli e': {}", rolesList);
 
 			List<String> permList = Arrays.asList(group.getPermissions().split(","));
 			log.info("Lista permessi: {}", permList);
-			
+
 			req.setAttribute("group", group);
 			req.setAttribute("rolesList", rolesList);
 			req.setAttribute("permList", permList);
 			
-
+			log.info("Richiesta modifica di gruppo id {} ", group.getId());
+			req.setAttribute("action", action);
 
 			String idPar = req.getParameter("id");
 			log.info("ID e' {} ", idPar);
@@ -217,17 +233,27 @@ public class GroupListController extends HttpServlet {
 				return;
 			}
 
-
 			String[] rolesParams = req.getParameterValues("roles");
+			
 			List<Roles> roles = new ArrayList<>();
 			String role = "";
 
 			for (int i = 0; i < rolesParams.length; i++) {
 				log.info("Il ruolo: {} ", rolesParams[i]);
 				role = rolesParams[i];
+				if (EnumUtils.isValidEnum(Roles.class, role)) {
+					
 				roles.add(Roles.valueOf(role));
+				
+				}else {
+					log.warn("Il ruolo non e' valido!");
+					req.setAttribute("errorMessage", "Ruolo non valido!");
+					req.getRequestDispatcher("group-edit.jsp").forward(req, resp);
+					return;
+				}
+				
 			}
-			
+
 			groupUpd.setRoles(roles);
 
 			if (StringUtils.isEmpty(req.getParameter("permissions"))) {
@@ -236,17 +262,18 @@ public class GroupListController extends HttpServlet {
 				req.getRequestDispatcher("group-edit.jsp").forward(req, resp);
 				return;
 			}
-			
-			
+
 			String[] permParams = req.getParameterValues("permissions");
 			List<String> permArr = new ArrayList<>();
+			
 			for (int i = 0; i < permParams.length; i++) {
 				log.info("Il permesso e' {} ", permParams[i]);
 				permArr.add(permParams[i]);
 			}
 
 			log.info("Permessi sono: {} ", permArr);
-			groupUpd.setPermissions(permArr.toString());		
+			
+			groupUpd.setPermissions(permArr.toString().replace("[", "").replace("]", ""));
 			log.info("User e' {} ", req.getParameter("creationUser"));
 
 			if (StringUtils.isEmpty(req.getParameter("creationUser"))) {
@@ -273,13 +300,20 @@ public class GroupListController extends HttpServlet {
 			} else if (req.getParameter("enabled").equalsIgnoreCase("on")) {
 				groupUpd.setEnabled(true);
 			}
+			
 
+			if (StringUtils.isEmpty(req.getParameter("creationTime"))) {
+				log.warn("Creation time nullo");
+				req.setAttribute("errorMessage", "Data creazione deve essere valorizzata!");
+				req.getRequestDispatcher("group-edit.jsp").forward(req, resp);
+				return;
+			}
+			
 			groupUpd.setCreationTime(LocalDateTime.parse(req.getParameter("creationTime")));
 
 			groupUpd.setUpdateTime(LocalDateTime.now());
 
 			ServiceFactory.getGroupService().updateGroup(groupUpd.getId(), groupUpd);
-
 			resp.sendRedirect("group-list");
 
 		} else {

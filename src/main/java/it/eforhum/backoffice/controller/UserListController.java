@@ -171,15 +171,16 @@ public class UserListController extends HttpServlet {
 			UserDTO userToUpdate = new UserDTO();
 			
 			Enumeration<String> parameterNames = request.getParameterNames();
-			List<GroupDTO> groupList = ServiceFactory.getGroupService().getAllGroups();
+            List<GroupDTO> groupList = ServiceFactory.getGroupService().getAllGroups();
 
-			request.setAttribute("groupList", groupList);
-			while(parameterNames.hasMoreElements()) {
-				String paramName = parameterNames.nextElement();
-				String parameterValue = request.getParameter(paramName);
-				request.setAttribute(paramName, parameterValue);
-				request.setAttribute("groupList", groupList);
-			}
+            request.setAttribute("groupList", groupList);
+            while(parameterNames.hasMoreElements()) {
+                String paramName = parameterNames.nextElement();
+                String parameterValue = request.getParameter(paramName);
+                request.setAttribute(paramName, parameterValue);
+                request.setAttribute("groupList", groupList);
+                request.setAttribute("user", user);
+            }
 
 			String idPar = request.getParameter("id");
 			if (idPar == null) {
@@ -200,7 +201,7 @@ public class UserListController extends HttpServlet {
 
 			if (StringUtils.isEmpty(request.getParameter("userName"))) {
 				log.warn("Nome utente nullo");
-				fillRequestAndForward(request, response, "userName", "user-edit.jsp");
+				fillRequestAndForward(request, response, "Nome", "user-edit.jsp");
 				return;
 
 			}
@@ -208,44 +209,38 @@ public class UserListController extends HttpServlet {
 
 			if (StringUtils.isEmpty(request.getParameter("lastName"))) {
 				log.warn("Cognome nuovo user nullo");
-				fillRequestAndForward(request, response, "lasName", "user-edit.jsp");
+				fillRequestAndForward(request, response, "Cognome", "user-edit.jsp");
 				return;
 			}
 			userToUpdate.setLastName(request.getParameter("lastName"));
 
 			if (StringUtils.isEmpty(request.getParameter("email"))) {
 				log.warn("Email nullo");
-				fillRequestAndForward(request, response, "email", "user-edit.jsp");
+				fillRequestAndForward(request, response, "Email", "user-edit.jsp");
 				return;
 			}
 			userToUpdate.setEmail(request.getParameter("email"));
 
 			if (StringUtils.isEmpty(request.getParameter("username"))) {
 				log.warn("Username nullo");
-				fillRequestAndForward(request, response, "username", "user-edit.jsp");
+				fillRequestAndForward(request, response, "Username", "user-edit.jsp");
 				return;
 			}
 			userToUpdate.setUsername(request.getParameter("username"));
 
 			if (StringUtils.isEmpty(request.getParameter("password"))) {
 				log.warn("Password nullo");
-				fillRequestAndForward(request, response, "password", "user-edit.jsp");
+				fillRequestAndForward(request, response, "Password", "user-edit.jsp");
 				return;
 			}
 			userToUpdate.setPassword(request.getParameter("password"));
 
 			if (StringUtils.isEmpty(request.getParameter("lastLogin"))) {
 				log.warn("Data ultimo login nulla");
-				fillRequestAndForward(request, response, "lastLogin", "user-edit.jsp");
+				fillRequestAndForward(request, response, "Ultimo accesso", "user-edit.jsp");
 				return;
 			}
 			userToUpdate.setLastLogin(LocalDateTime.parse(request.getParameter("lastLogin")));
-
-//			if (StringUtils.isEmpty(request.getParameter("dateModifiedPass"))) {
-//				log.warn("Data modifica password nulla");
-//				fillRequestAndForward(request, response, "dateModifiedPass", "user-edit.jsp");
-//				return;
-//			}
 			userToUpdate.setDateModifiedPass(LocalDateTime.now());
 
 			if (StringUtils.isEmpty(request.getParameter("groupName"))) {
@@ -254,12 +249,6 @@ public class UserListController extends HttpServlet {
 				return;
 			}
 			userToUpdate.setGroupId(Integer.parseInt(request.getParameter("groupName")));
-
-//			if (StringUtils.isEmpty(request.getParameter("verified"))) {
-//				log.warn("Utente verificato nullo");
-//				fillRequestAndForward(request, response, "verified", "user-edit.jsp");
-//				return;
-//			}
 			
 			if (request.getParameter("verified") == null) {
 				userToUpdate.setVerified(false);
@@ -272,13 +261,6 @@ public class UserListController extends HttpServlet {
 			} else if (request.getParameter("deleted").equalsIgnoreCase("on")) {
 				userToUpdate.setDeleted(true);
 			}
-
-//
-//			if (StringUtils.isEmpty(request.getParameter("deleted"))) {
-//				log.warn("Utente eliminato nullo");
-//				fillRequestAndForward(request, response, "deleted", "user-edit.jsp");
-//				return;
-//			}
 
 			log.info("Utente con id {} e' stato aggiornato ", userToUpdate);
 			ServiceFactory.getUserService().updateUser(userToUpdate);

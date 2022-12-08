@@ -13,47 +13,57 @@
 <base href=".">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="icon" type="image/x-icon" href="http://localhost:8080/favicon.ico">
+<link rel="icon" type="image/x-icon"
+	href="http://localhost:8080/favicon.ico">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-	
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+	integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
 
 </head>
 
 <pt:page>
-<div class="overflow-scroll" style="height: 96vh">
-	<div class="container-fluid">
-		<div class="row">
+	<div class="overflow-scroll" style="height: 96vh">
+		<div class="container-fluid">
+			<div class="row">
 
 
-			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-			
-			<div class="container pb-3">
-				<button type="button" class="btn btn-success" onclick="create()">Create new group</button> 
-			</div>
 
-				<div class="container">
+
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+					<div class="container pb-3">
+						<button type="button" class="btn btn-success" onclick="create()">Crea nuovo gruppo</button>
+					</div>
 					
-			
-					<div class="row">
+					<div class="container">
 
-						<div class="text-danger">
-							<c:out value="${error_message}" />
-						</div>
 
-						
+						<div class="row">
 
-							<table class="table table-bordered table-hover" id="group-datatable">
+							<div class="text-danger">
+								<c:out value="${error_message}" />
+							</div>
+
+
+
+							<table class="table table-bordered table-hover"
+								id="group-datatable">
 								<thead>
 									<tr>
 
@@ -84,11 +94,7 @@
 										<tr>
 											<td><c:out value="${fn:trim(group.id)}" /></td>
 											<td><c:out value="${fn:trim(group.groupName)}" /></td>
-											
-											<td>
-												<c:forEach items="${group.roles}" var="groupRole">${groupRole}</c:forEach>
-											</td>
-											
+											<td><c:out value="${fn:trim(group.roles)}" /></td>
 											<td><c:out value="${fn:trim(group.permissions)}" /></td>
 											<td><c:out value="${fn:trim(group.enabled)}" /></td>
 											<td><c:out value="${fn:trim(group.creationUser)}" /></td>
@@ -97,20 +103,20 @@
 											<td><c:out value="${fn:trim(group.updateTime)}" /></td>
 
 											<td>
-											
-												<button type="button" class="btn btn-primary" style="width: 44px"
-													onclick="detail(${group.id})">
+
+												<button type="button" class="btn btn-primary"
+													style="width: 44px" onclick="detail(${group.id})">
 													<i class="far fa-eye"></i>
 												</button>
-												<button type="button" class="btn btn-success" style="width: 44px"
-													onclick="edit(${group.id})">
+												<button type="button" class="btn btn-success"
+													style="width: 44px" onclick="edit(${group.id})">
 													<i class="fas fa-edit"></i>
 												</button>
-												<button type="button" class="btn btn-danger" style="width: 44px"
-													onclick="deleteEntity(${group.id})">
+												<button type="button" class="btn btn-danger"
+													style="width: 44px" onclick="deleteEntity(${group.id})">
 													<i class="far fa-trash-alt"></i>
 												</button>
-												
+
 											</td>
 										</tr>
 									</c:forEach>
@@ -119,17 +125,17 @@
 
 								</tbody>
 							</table>
-						
+
+
+						</div>
 
 					</div>
+				</main>
+			</div>
 
-				</div>
-			</main>
 		</div>
 
 	</div>
-
-</div>
 	<script type="text/javascript">
 		
 		
@@ -162,8 +168,12 @@
 		}
 	
 		function deleteEntity(id) {
+			var res=confirm("Sei sicuro di voler eliminare il gruppo?");
+			if(res){
 			window.location.href="./group-list?action=deleteEntity&id="+id;
+			}
 		}		
+		
 
 	</script>
 

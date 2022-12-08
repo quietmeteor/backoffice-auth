@@ -61,8 +61,39 @@
 						style="width: 16%">
 
 						<c:forEach items="${rolesList}" var="i">
-							<option selected="selected">"${i}"</option>
+							<option selected="selected">${i}</option>
 						</c:forEach>
+
+						<optgroup label="Shortcut roles">
+							<option value="SUPER_USER">SUPER_USER</option>
+							<option value="ADMIN">ADMIN</option>
+							<option value="MODERATOR">MODERATOR</option>
+							<option value="">USER</option>
+						</optgroup>
+						<optgroup label="Risorse">
+							<option value="ROLE_CREATE_RISORSE">ROLE_CREATE_RISORSE</option>
+							<option value="ROLE_READ_RISORSE">ROLE_READ_RISORSE</option>
+							<option value="ROLE_UPDATE_RISORSE">ROLE_UPDATE_RISORSE</option>
+							<option value="ROLE_DELETE_RISORSE">ROLE_DELETE_RISORSE</option>
+						</optgroup>
+						<optgroup label="Utente">
+							<option value="ROLE_CREATE_USER">ROLE_CREATE_USER</option>
+							<option value="ROLE_READ_USER">ROLE_READ_USER</option>
+							<option value="ROLE_UPDATE_USER">ROLE_UPDATE_USER</option>
+							<option value="ROLE_DELETE_USER">ROLE_DELETE_USER</option>
+						</optgroup>
+						<optgroup label="Slot">
+							<option value="ROLE_CREATE_SLOT">ROLE_CREATE_SLOT</option>
+							<option value="ROLE_READ_SLOT">ROLE_READ_SLOT</option>
+							<option value="ROLE_UPDATE_SLOT">ROLE_UPDATE_SLOT</option>
+							<option value="ROLE_DELETE_SLOT">ROLE_DELETE_SLOT</option>
+						</optgroup>
+						<optgroup label="Gruppo">
+							<option value="ROLE_CREATE_GROUP">ROLE_CREATE_GROUP</option>
+							<option value="ROLE_READ_GROUP">ROLE_READ_GROUP</option>
+							<option value="ROLE_UPDATE_GROUP">ROLE_UPDATE_GROUP</option>
+							<option value="ROLE_DELETE_GROUP">ROLE_DELETE_GROUP</option>
+						</optgroup>
 
 					</select>
 
@@ -75,7 +106,7 @@
 						id="permissions" multiple="multiple" style="width: 16%">
 						<c:forEach items="${permList}" var="i">
 
-							<option selected="selected">"${i}"</option>
+							<option selected="selected">${i}</option>
 
 						</c:forEach>
 
@@ -169,3 +200,4 @@
 
 
 	</pt:page>
+</body>
