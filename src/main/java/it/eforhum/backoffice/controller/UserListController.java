@@ -148,7 +148,17 @@ public class UserListController extends HttpServlet {
 			}
 			newUser.setGroupId(Integer.parseInt(request.getParameter("groupName")));
 
-			newUser.setVerified(false);
+			if (request.getParameter("verified") == null) {
+				newUser.setVerified(false);
+			} else if (request.getParameter("verified").equalsIgnoreCase("on")) {
+				newUser.setVerified(true);
+			}
+
+			if (request.getParameter("deleted") == null) {
+				newUser.setDeleted(false);
+			} else if (request.getParameter("deleted").equalsIgnoreCase("on")) {
+				newUser.setDeleted(true);
+			}
 
 			ServiceFactory.getUserService().createUser(newUser);
 			log.info("User id {} e' stato creato ", newUser);
@@ -250,14 +260,25 @@ public class UserListController extends HttpServlet {
 //				fillRequestAndForward(request, response, "verified", "user-edit.jsp");
 //				return;
 //			}
-			userToUpdate.setVerified(Boolean.parseBoolean(request.getParameter("verified")));
+			
+			if (request.getParameter("verified") == null) {
+				userToUpdate.setVerified(false);
+			} else if (request.getParameter("verified").equalsIgnoreCase("on")) {
+				userToUpdate.setVerified(true);
+			}
+
+			if (request.getParameter("deleted") == null) {
+				userToUpdate.setDeleted(false);
+			} else if (request.getParameter("deleted").equalsIgnoreCase("on")) {
+				userToUpdate.setDeleted(true);
+			}
+
 //
 //			if (StringUtils.isEmpty(request.getParameter("deleted"))) {
 //				log.warn("Utente eliminato nullo");
 //				fillRequestAndForward(request, response, "deleted", "user-edit.jsp");
 //				return;
 //			}
-			userToUpdate.setDeleted(Boolean.parseBoolean(request.getParameter("deleted")));
 
 			log.info("Utente con id {} e' stato aggiornato ", userToUpdate);
 			ServiceFactory.getUserService().updateUser(userToUpdate);

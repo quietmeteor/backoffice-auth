@@ -126,8 +126,10 @@
 		function enabled() {
 
 			var y = document.getElementById("verified").checked;
+			var x = document.getElementById("deleted").checked;
 			console.log(y);
-
+			console.log(x);
+			
 		}
 
 		function verifiedCheck(verified, deleted) {

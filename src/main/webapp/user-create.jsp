@@ -21,7 +21,7 @@
 	<form action="user-list" method="POST">
 		<div class="invisible">
 			<input type="hidden" id="action" name="action" value="create"></input>
-			
+
 		</div>
 		<div class="text-danger">
 			<c:out value="${errorMessage}" />
@@ -30,14 +30,16 @@
 			<label for="Nome Utente" class="col-sm-2 col-form-label">Nome
 				Utente</label>
 			<div class="col-sm-10">
-				<input type="text" id="userName" name="userName" value="${userName}"></input> <br />
+				<input type="text" id="userName" name="userName" value="${userName}"></input>
+				<br />
 			</div>
 		</div>
 
 		<div class="form-user row">
 			<label for="Cognome" class="col-sm-2 col-form-label">Cognome</label>
 			<div class="col-sm-10">
-				<input type="text" id="lastName" name="lastName" value="${lastName}"></input> <br />
+				<input type="text" id="lastName" name="lastName" value="${lastName}"></input>
+				<br />
 			</div>
 		</div>
 
@@ -75,9 +77,28 @@
 			</div>
 		</div>
 
+		<div class="form-user row">
+			<label for="verified" class="col-sm-2 col-form-label">Utente
+				verificato</label>
+			<div class="col-sm-10">
+				<input class="form-check-input" type="checkbox" id="verified"
+					name="verified">
+
+			</div>
+		</div>
+
+		<div class="form-user row">
+			<label for="deleted" class="col-sm-2 col-form-label">Utente
+				eliminato</label>
+			<div class="col-sm-10">
+				<input class="form-check-input" type="checkbox" id="deleted"
+					name="deleted">
+			</div>
+		</div>
+
 
 		<div>
-			<button type="submit" class="btn btn-success">Aggiungi
+			<button type="submit" class="btn btn-success" onclick="enabled()">Aggiungi
 				utente</button>
 		</div>
 	</form>
@@ -89,19 +110,37 @@
 
 
 	<script type="text/javascript">
-		function view(id) {
+		function enabled() {
+
+			var y = document.getElementById("verified").checked;
+			var x = document.getElementById("deleted").checked;
+			console.log(y);
+			console.log(x);
 
 		}
 
-		function edit(id) {
+		function verifiedCheck(verified, deleted) {
+			var x = verified
+			var c = deleted
 
-		}
+			console.log(x)
+			console.log(c)
 
-		function create() {
+			if (x == true) {
+				x = document.getElementById("verified").checked = true;
 
-		}
+			} else {
+				x = document.getElementById("verified").checked = false;
 
-		function deleteEntity() {
+			}
+
+			if (c == true) {
+				c = document.getElementById("deleted").checked = true;
+
+			} else {
+				c = document.getElementById("deleted").checked = false;
+
+			}
 
 		}
 	</script>
