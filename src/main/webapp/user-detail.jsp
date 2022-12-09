@@ -131,21 +131,7 @@
 
 
 					<script type="text/javascript">
-						function view(id) {
 
-						}
-
-						function edit(id) {
-
-						}
-
-						function create() {
-
-						}
-
-						function deleteEntity() {
-
-						}
 					</script>
 
 				</body>

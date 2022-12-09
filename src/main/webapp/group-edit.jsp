@@ -184,7 +184,7 @@
 		$('.update-roles').select2({
 			placeholder:"Modifica i ruoli"
 
-		});;
+		});
 	
 		
 		$(".add-permissions").select2({

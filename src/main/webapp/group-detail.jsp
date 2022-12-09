@@ -22,6 +22,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	
+	<!--- Select 2 links --->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css"
+	rel="stylesheet" />
+<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 
 </head>
 
@@ -31,95 +39,105 @@
 
 
 
-				<div class="container-fluid">
+		<div class="container-fluid">
 
 
 
-							<form action="group-detail" method="GET">
+			<form action="group-detail" method="GET">
 
-								<div class="text-danger">
-									<c:out value="${errorMessage}" />
-								</div>
-								<div class="form-group row">
-									<label for="groupName" class="col-sm-2 col-form-label">Nome
-										Gruppo</label>
-									<div class="col-sm-10">
-										<input type="text" id="groupName" name="groupName"
-											value="${group.groupName}" disabled readonly></br>
-									</div>
-								</div>
+				<div class="text-danger">
+					<c:out value="${errorMessage}" />
+				</div>
+				<div class="form-group row">
+					<label for="groupName" class="col-sm-2 col-form-label">Nome
+						Gruppo</label>
+					<div class="col-sm-10">
+						<input type="text" id="groupName" name="groupName"
+							value="${group.groupName}" disabled readonly></br>
+					</div>
+				</div>
 
-								<div class="form-group row">
-									<label for="roles" class="col-sm-2 col-form-label">Ruoli</label>
-									<div class="col-sm-10">
-										<textarea type="text" id="roles" name="roles"
-											value="${group.roles}" disabled readonly>"${group.roles}"</textarea>
-										</br>
-									</div>
-								</div>
+				<div class="multi-select">
+					<label for="roles" class="col-sm-2 col-form-label">Ruoli </label> <select
+						class="selected-view" name="roles" id="roles" multiple="multiple"
+						style="width: 16%" disabled>
 
-								<div class="form-group row">
-									<label for="permissions" class="col-sm-2 col-form-label">Permessi</label>
-									<div class="col-sm-10">
-										<textarea type="text" id="permission" name="permissions"
-											value="${group.permissions}" disabled readonly>"${group.permissions}"</textarea>
-										</br>
-									</div>
-								</div>
-
-								<div class="form-group row">
-									<label for="enabled" class="col-sm-2 col-form-label">Attivo</label>
-									<div class="col-sm-10">
-										<input type="text" id="enabled" name="enabled"
-											value="${group.enabled}" disabled readonly></br>
-									</div>
-								</div>
-
-								<div class="form-group row">
-									<label for="creationTime" class="col-sm-2 col-form-label">Data
-										Creazione </label>
-									<div class="col-sm-10">
-										<input type="datetime-local" id="creationTime"
-											name="creationTime" value="${group.creationTime}" disabled
-											readonly></br>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="creationUser" class="col-sm-2 col-form-label">User
-										Creazione </label>
-									<div class="col-sm-10">
-										<input type="text" id="creationUser" name="creationUser"
-											value="${group.creationUser}" disabled readonly></br>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="updateTime" class="col-sm-2 col-form-label">Data
-										Aggiornamento </label>
-									<div class="col-sm-10">
-										<input type="datetime-local" id="updateTime" name="updateTime"
-											value="${group.updateTime}" disabled readonly></br>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="updateUser" class="col-sm-2 col-form-label">User
-										Aggiornamento </label>
-									<div class="col-sm-10">
-										<input type="text" id="updateUser" name="updateUser"
-											value="${group.updateUser}" disabled readonly></br>
-									</div>
-								</div>
+						<c:forEach items="${rolesList}" var="i">
+							<option selected="selected">${i}</option>
+						</c:forEach>
 
 
-							</form>
+					</select>
 
+				</div>
 
+				<div class="multi-select">
+					<label for="permissions" class="col-sm-2 col-form-label">Permessi
+					</label> <select class="selected-view" name="permissions"
+						id="permissions" multiple="multiple" style="width: 16%" disabled>
+						<c:forEach items="${permList}" var="i" >
+
+							<option selected="selected" >${i}</option>
+
+						</c:forEach>
+
+					</select>
+				</div>
+
+				<div class="form-group row">
+					<label for="enabled" class="col-sm-2 col-form-label">Attivo</label>
+					<div class="col-sm-10">
+						<input type="text" id="enabled" name="enabled"
+							value="${group.enabled}" disabled readonly></br>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="creationTime" class="col-sm-2 col-form-label">Data
+						Creazione </label>
+					<div class="col-sm-10">
+						<input type="datetime-local" id="creationTime" name="creationTime"
+							value="${group.creationTime}" disabled readonly></br>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="creationUser" class="col-sm-2 col-form-label">User
+						Creazione </label>
+					<div class="col-sm-10">
+						<input type="text" id="creationUser" name="creationUser"
+							value="${group.creationUser}" disabled readonly></br>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="updateTime" class="col-sm-2 col-form-label">Data
+						Aggiornamento </label>
+					<div class="col-sm-10">
+						<input type="datetime-local" id="updateTime" name="updateTime"
+							value="${group.updateTime}" disabled readonly></br>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="updateUser" class="col-sm-2 col-form-label">User
+						Aggiornamento </label>
+					<div class="col-sm-10">
+						<input type="text" id="updateUser" name="updateUser"
+							value="${group.updateUser}" disabled readonly></br>
 					</div>
 				</div>
 
 
-				<script type="text/javascript">
-					
-				</script>
+			</form>
+
+
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+	
+	$('.selected-view').select2();
+		
+	</script>
 
 
 

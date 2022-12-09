@@ -1,0 +1,106 @@
+
+    <div class="invisible">
+        <input type="hidden" id="id" name="id" value="${group.id}">
+        <input type="hidden" id="action" name="action" value="edit">
+    </div>
+    <div class="text-danger">
+       
+    </div>
+    <div class="form-group row">
+        <label for="groupName" class="col-sm-2 col-form-label">Nome
+            Gruppo</label>
+        <div class="col-sm-10">
+            <input type="text" id="groupName" name="groupName"
+                value="ToInsertFromAnItem">
+        </div>
+    </div>
+
+    <div class="multi-select">
+        <label for="roles" class="col-sm-2 col-form-label">Ruoli </label> <select
+            class="update-roles" name="roles" id="roles" multiple="multiple"
+            style="width: 16%">
+
+            <!-- add already selected roles (with a cycle)-->
+
+            <optgroup label="Shortcut roles">
+                <option value="SUPER_USER">SUPER_USER</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="MODERATOR">MODERATOR</option>
+                <option value="">USER</option>
+            </optgroup>
+            <optgroup label="Risorse">
+                <option value="ROLE_CREATE_RISORSE">ROLE_CREATE_RISORSE</option>
+                <option value="ROLE_READ_RISORSE">ROLE_READ_RISORSE</option>
+                <option value="ROLE_UPDATE_RISORSE">ROLE_UPDATE_RISORSE</option>
+                <option value="ROLE_DELETE_RISORSE">ROLE_DELETE_RISORSE</option>
+            </optgroup>
+            <optgroup label="Utente">
+                <option value="ROLE_CREATE_USER">ROLE_CREATE_USER</option>
+                <option value="ROLE_READ_USER">ROLE_READ_USER</option>
+                <option value="ROLE_UPDATE_USER">ROLE_UPDATE_USER</option>
+                <option value="ROLE_DELETE_USER">ROLE_DELETE_USER</option>
+            </optgroup>
+            <optgroup label="Slot">
+                <option value="ROLE_CREATE_SLOT">ROLE_CREATE_SLOT</option>
+                <option value="ROLE_READ_SLOT">ROLE_READ_SLOT</option>
+                <option value="ROLE_UPDATE_SLOT">ROLE_UPDATE_SLOT</option>
+                <option value="ROLE_DELETE_SLOT">ROLE_DELETE_SLOT</option>
+            </optgroup>
+            <optgroup label="Gruppo">
+                <option value="ROLE_CREATE_GROUP">ROLE_CREATE_GROUP</option>
+                <option value="ROLE_READ_GROUP">ROLE_READ_GROUP</option>
+                <option value="ROLE_UPDATE_GROUP">ROLE_UPDATE_GROUP</option>
+                <option value="ROLE_DELETE_GROUP">ROLE_DELETE_GROUP</option>
+            </optgroup>
+
+        </select>
+
+    </div>
+   
+
+    <div class="multi-select">
+        <label for="permissions" class="col-sm-2 col-form-label">Permessi
+        </label> <select class="add-permissions" name="permissions"
+            id="permissions" multiple="multiple" style="width: 16%">
+            <!-- add already selected permissions-->
+
+        </select>
+    </div>
+
+    <div class="form-group row">
+        <label for="enabled" class="col-sm-2 col-form-label">Attivo</label>
+        <div class="col-sm-10">
+            <input class="form-check-input" type="checkbox" id="enabled"
+                name="enabled">
+
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="creationTime" class="col-sm-2 col-form-label">Data
+            Creazione </label>
+        <div class="col-sm-10">
+            <input type="datetime-local" id="creationTime" name="creationTime"
+                value="ToInsertFromAnItem">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="creationUser" class="col-sm-2 col-form-label">User
+            Creazione </label>
+        <div class="col-sm-10">
+            <input type="text" id="creationUser" name="creationUser"
+                value="ToInsertFromAnItem">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="updateUser" class="col-sm-2 col-form-label">User
+            Aggiornamento </label>
+        <div class="col-sm-10">
+            <input type="text" id="updateUser" name="updateUser"
+                value="ToInsertFromAnItem">
+        </div>
+    </div>
+    <input class="btn btn-success" type="submit" value="Modifica"
+        onclick="enable()">
+
