@@ -19,6 +19,4 @@ public interface UserService {
 
 	public void addUserToGroup(GroupDTO group, UserDTO user);
 
-	public UserDTO login(String username, String password, String email);
-	
 }
