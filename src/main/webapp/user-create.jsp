@@ -87,16 +87,6 @@
 			</div>
 		</div>
 
-		<div class="form-user row">
-			<label for="deleted" class="col-sm-2 col-form-label">Utente
-				eliminato</label>
-			<div class="col-sm-10">
-				<input class="form-check-input" type="checkbox" id="deleted"
-					name="deleted">
-			</div>
-		</div>
-
-
 		<div>
 			<button type="submit" class="btn btn-success" onclick="enabled()">Crea
 				utente</button>

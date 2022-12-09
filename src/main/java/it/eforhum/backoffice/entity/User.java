@@ -12,6 +12,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+
 /**
  * Entity that represents information of a user, has an One-to-Many relationship with {@link #UserGroups}
  * 
@@ -37,32 +40,40 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity {
-
+	@NotBlank
 	@ManyToOne
 	@JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "FK_group_id"))
 	private UserGroups userGroup;
-
+	
+	@NotBlank
 	@Column(name = "username", unique = true, nullable = false, length = 32)
 	private String username;
-
+	
+	@NotBlank
 	@Column(name = "password", nullable = false, length = 32)
 	private String password;
-
+	
+	@NotBlank
 	@Column(name = "name", nullable = false)
 	private String name;
-
+	
+	@NotBlank
 	@Column(name = "lastName", nullable = false)
 	private String lastName;
-
+	
+	@NotBlank
 	@Column(name = "email", unique = true)
 	private String email;
 
+	@PastOrPresent
 	@Column(name = "last_login", columnDefinition = "TIMESTAMP NOT NULL")
 	private LocalDateTime lastLogin;
-
+	
+	@PastOrPresent
 	@Column(name = "date_modified_pass", columnDefinition = "TIMESTAMP")
 	private LocalDateTime dateModifiedPass;
-
+	
+	
 	@Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private boolean isDeleted;
 
