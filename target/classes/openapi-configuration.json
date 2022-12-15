@@ -1,6 +1,6 @@
 {
     "resourcePackages": [
-        "it.eforhum.mvc"
+        "it.eforhum.backoffice"
     ],
     "prettyPrint" : true,
     "cacheTTL": 0,

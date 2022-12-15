@@ -18,6 +18,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -41,7 +42,7 @@ public class UserRestController {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserDTO getUser(@PathParam("id") long id) {
+	public UserDTO getUser(@PathParam("id") long id, @QueryParam("id") long userId) {
 
 		log.info("Read user detail for id {}", id);
 		
@@ -53,11 +54,11 @@ public class UserRestController {
 	@GET
 	@Path("/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserDTO getUserByUsername(@PathParam("username") String username) {
+	public UserDTO getUserByUsername(@PathParam("name") String name, @QueryParam("username") String username) {
 
-		log.info("Read user detail for id {}", username);
+		log.info("Read user detail for username {}", username);
 		
-		UserDTO entity = ServiceFactory.getUserService().findByUsername(username);
+		UserDTO entity = ServiceFactory.getUserService().findByUsername(name);
 		
 		return entity;
 	}
