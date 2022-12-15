@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Group } from '../group';
+import { GroupService } from '../group.service';
 @Component({
   selector: 'app-group-list',
   templateUrl: './group-list.component.html',
@@ -7,33 +9,63 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class GroupListComponent implements OnInit {
 
-  actRoute: ActivatedRoute;
-  router: Router;
+  groupList: Array<Group> = new Array();
 
-  constructor(actRoute: ActivatedRoute, router: Router) {
-    this.actRoute = actRoute;
-    this.router = router;
+  constructor(private groupService: GroupService, private actRoute: ActivatedRoute, private router: Router) {
+
   }
 
   ngOnInit(): void {
 
+    this.groupService.getAllGroups().subscribe((response => {
+      console.log(response);
+
+      let responseList = (response as Array<Group>);
+
+      responseList.forEach((g) => {
+
+        console.log(g.id);
+        console.log(g.groupName);
+
+        this.groupList.push({
+          id: g.id,
+          groupName:  g.groupName,
+          permissions: g.permissions,
+          enabled: g.enabled,
+          creationUser: g.creationUser,
+          creationTime: new Date(g.creationTime),
+          updateUser: g.updateUser,
+          updateTime: new Date(g.updateTime),
+          roles: g.roles
+
+        });
+
+      });
+
+    }));
+
   }
+
 
   createGroup() {
-    this.router.navigateByUrl("/api/group-create");
+    this.router.navigateByUrl("api/group-create");
   }
 
 
-  detail(id: Number) {
-    this.router.navigateByUrl("/api/group-detail/" + id);
+  detail(id: number) {
+    this.router.navigateByUrl("api/group-detail/" + id);
   }
 
-  edit(id: Number) {
-    this.router.navigateByUrl("/api/group-edit/" + id);
+  edit(id: number) {
+    this.router.navigateByUrl("api/group-edit/" + id);
 
   }
 
-  deleteGroup() {
+  deleteGroup(id:number) {
+    if(confirm("Sei sicuro di voler eliminare il gruppo?")){
+      this.groupService.deleteGroupById(id);
+      this.ngOnInit();
+    }
 
   }
 

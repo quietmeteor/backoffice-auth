@@ -1,5 +1,3 @@
-
-
 <div class="container pb-3">
     <button type="button" class="btn btn-success" (click)="createGroup()">Crea nuovo gruppo</button>
 </div>
@@ -9,70 +7,70 @@
 
     <div class="row">
 
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
 
-            <th scope="col" class="align-text-top">Id</th>
+                    <th scope="col" class="align-text-top">Id</th>
 
-            <th scope="col" class="align-text-top">Nome Gruppo</th>
+                    <th scope="col" class="align-text-top">Nome Gruppo</th>
 
-            <th scope="col" class="align-text-top">Ruoli</th>
+                    <th scope="col" class="align-text-top">Ruoli</th>
 
-            <th scope="col" class="align-text-top">Permessi</th>
+                    <th scope="col" class="align-text-top">Permessi</th>
 
-            <th scope="col" class="align-text-top">Attivo?</th>
+                    <th scope="col" class="align-text-top">Attivo?</th>
 
-            <th scope="col" class="align-text-top">User creazione</th>
+                    <th scope="col" class="align-text-top">User creazione</th>
 
-            <th scope="col" class="align-text-top">Data creazione</th>
+                    <th scope="col" class="align-text-top">Data creazione</th>
 
-            <th scope="col" class="align-text-top">Aggiornamento user</th>
+                    <th scope="col" class="align-text-top">Aggiornamento user</th>
 
-            <th scope="col" class="align-text-top">Data aggiornamento</th>
+                    <th scope="col" class="align-text-top">Data aggiornamento</th>
 
-        </tr>
-
-
-    </thead>
-
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Test</td>
-            <td>Test</td>
-            <td>Test</td>
-            <td>Test</td>
-            <td>Test</td>
-            <td>Test</td>
-            <td>Test</td>
-            <td>Test</td>
-                        <td>
-                <button type="button" class="btn btn-primary"  style="width: 44px" (click)="detail(1)">
-                    <i class="far fa-eye"></i>
-                </button>
-
-                <button type="button" class="btn btn-success"  style="width: 44px" (click)="edit(1)">
-                    <i class="fas fa-edit"></i>
-                </button>
-                
-                <button type="button" class="btn btn-danger"  style="width: 44px" (click)="deleteGroup()">
-                    <i class="far fa-trash-alt"></i>
-                </button>
-            </td>
-        </tr>
-        <tr>
-            
-
-        </tr>
+                </tr>
 
 
-    </tbody>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let group of groupList">
+                    <td scope="col">{{group.id}}</td>
+                    <td scope="col">{{group.groupName}}</td>
+                    <td scope="col">{{group.roles}}</td>
+                    <td scope="col">{{group.permissions}}</td>
+                    <td scope="col">{{group.enabled}}</td>
+                    <td scope="col">{{group.creationUser}}</td>
+                    <td scope="col">{{group.creationTime}}</td>
+                    <td scope="col">{{group.updateUser}}</td>
+                    <td scope="col">{{group.updateTime}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" style="width: 44px" (click)="detail(group.id)">
+                            <i class="far fa-eye"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-success" style="width: 44px" (click)="edit(group.id)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-danger" style="width: 44px"
+                            (click)="deleteGroup(group.id)">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+
+
+                </tr>
+
+
+            </tbody>
 
 
 
-</table>
+        </table>
 
     </div>
 </div>
-
