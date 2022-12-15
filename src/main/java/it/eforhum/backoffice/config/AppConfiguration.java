@@ -9,7 +9,6 @@ import jakarta.ws.rs.ApplicationPath;
 public class AppConfiguration extends ResourceConfig {
 	
 	public AppConfiguration() {
-		
 		property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 	}
 }

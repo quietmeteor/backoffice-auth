@@ -1,6 +1,6 @@
 {
     "resourcePackages": [
-        "it.eforhum.backoffice"
+        "it.eforhum.mvc"
     ],
     "prettyPrint" : true,
     "cacheTTL": 0,
@@ -19,9 +19,7 @@
             }
         },
         "servers": [{
-
-        	"url": "http://localhost:8080/backoffice-auth/"
-
+        	"url": "http://localhost:8080/Backoffice/"
         }]
     }
 }

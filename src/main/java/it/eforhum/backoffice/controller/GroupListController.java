@@ -130,9 +130,10 @@ public class GroupListController extends HttpServlet {
 			for (int i = 0; i < rolesArr.length; i++) {
 				log.info("Role is: {} ", rolesArr[i]);
 				role = rolesArr[i];
-                if(!StringUtils.isEmpty(role)) {
-                	roles.add(Roles.valueOf(role));
-                }
+        
+        if(!StringUtils.isEmpty(role)) {
+          roles.add(Roles.valueOf(role));
+        }
 
 			}
 			newGroup.setRoles(roles);

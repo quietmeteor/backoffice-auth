@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
 	
 		User user = (User) userDao.findById(id);
 		ModelMapper mp = new ModelMapper();
-		
+
 		UserDTO userDTO = mp.map(user, new TypeToken<UserDTO>() {}.getType());
 		
 		return userDTO;
@@ -154,8 +154,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(UserDTO updatedUser) {
-		User oldUser = (User) userDao.findById(updatedUser.getId());
+	public void updateUser(UserDTO updatedUser, long id) {
+		User oldUser = (User) userDao.findById(id);
 		Objects.requireNonNull(oldUser);
 
 		log.info("Trying to update user with id:{} ", oldUser.getId());
