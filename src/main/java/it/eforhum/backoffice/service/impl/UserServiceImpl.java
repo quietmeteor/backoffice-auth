@@ -214,31 +214,5 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	}
-	
-	@Override
-	public UserDTO login(String username, String password, String email) {
-		UserDTO uDTO = new UserDTO();
-		User user = userDao.findByUsername(username);
-		UserGroups ug = user.getUserGroup();
-		List<Roles> roleList = new ArrayList<>();
-
-		if (user.getPassword().equals(password) && user.getEmail().equals(email)) {
-			uDTO.setEmail(user.getEmail());
-//			uDTO.setGroup(user.getUserGroup());
-			uDTO.setLastName(user.getLastName());
-
-			for (String role : ug.getRoles().split(",")) {
-				roleList.add(Roles.valueOf(role));
-			}
-
-//			uDTO.setListRoles(roleList);
-			uDTO.setName(user.getName());
-
-		} else {
-			log.error("Wrong credentials");
-		}
-
-		return null;
-	}
 
 }
