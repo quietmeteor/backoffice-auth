@@ -15,10 +15,8 @@ public interface UserService {
 	
 	public UserDTO findById(long id);
 
-	public void updateUser(UserDTO updatedUser);
+	public void updateUser(UserDTO updatedUser, long id);
 
 	public void addUserToGroup(GroupDTO group, UserDTO user);
 
-	public UserDTO login(String username, String password, String email);
-	
 }

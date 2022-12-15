@@ -154,11 +154,6 @@ public class UserListController extends HttpServlet {
 				newUser.setVerified(true);
 			}
 
-			if (request.getParameter("deleted") == null) {
-				newUser.setDeleted(false);
-			} else if (request.getParameter("deleted").equalsIgnoreCase("on")) {
-				newUser.setDeleted(true);
-			}
 
 			ServiceFactory.getUserService().createUser(newUser);
 			log.info("User id {} e' stato creato ", newUser);
@@ -263,7 +258,7 @@ public class UserListController extends HttpServlet {
 			}
 
 			log.info("Utente con id {} e' stato aggiornato ", userToUpdate);
-			ServiceFactory.getUserService().updateUser(userToUpdate);
+			ServiceFactory.getUserService().updateUser(userToUpdate, user.getId());
 
 			response.sendRedirect("user-list");
 

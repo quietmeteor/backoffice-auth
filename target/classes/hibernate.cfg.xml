@@ -6,18 +6,21 @@
 
 		<!-- JDBC Database connection settings -->
 		<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://localhost:3336/backoffice?serverTimezone=UTC</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/backoffice?serverTimezone=UTC</property>
 		<property name="connection.username">root</property>
-		<property name="connection.password">mysql</property>
+		<property name="connection.password">root</property>
 
 		<!-- Dialetto SQL del DB a cui ci colleghiamo -->
 		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 
 		<!-- Proprieta' che indica se stampare a console l'SQL generato -->
 		<property name="show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
 
 		<!-- Scelta della modalita' di aggiornamento dello schema -->
 		<property name="hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.import_files">/import.sql</property>
+		
 
 		<!-- mapping entita' -->
 		<mapping class="it.eforhum.backoffice.entity.BaseEntity" />

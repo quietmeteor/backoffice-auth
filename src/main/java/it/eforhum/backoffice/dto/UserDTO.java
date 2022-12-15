@@ -17,8 +17,10 @@ public class UserDTO {
 	private long groupId;
 	private LocalDateTime lastLogin;
 	private LocalDateTime dateModifiedPass;
+	private LocalDateTime creationTime;
 	private boolean verified;
 	private boolean deleted;
+	private String creationUser;
 
 	public long getId() {
 		return id;
@@ -116,11 +118,35 @@ public class UserDTO {
 		this.groupId = groupId;
 	}
 
+	public LocalDateTime getCreationTime() {
+		return creationTime;
+	}
+
+	public void setCreationTime(LocalDateTime creationTime) {
+		this.creationTime = creationTime;
+	}
+
+	public String getCreationUser() {
+		return creationUser;
+	}
+
+	public void setCreationUser(String creationUser) {
+		this.creationUser = creationUser;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", name=" + name + ", lastName=" + lastName + ", groupName=" + groupName + ", groupId=" + groupId
+				+ ", lastLogin=" + lastLogin + ", dateModifiedPass=" + dateModifiedPass + ", creationTime="
+				+ creationTime + ", verified=" + verified + ", deleted=" + deleted + ", creationUser=" + creationUser
+				+ "]";
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateModifiedPass, deleted, email, groupId, groupName, id, lastLogin, lastName, name,
-				password, username, verified);
+		return Objects.hash(creationTime, creationUser, dateModifiedPass, deleted, email, groupId, groupName, id,
+				lastLogin, lastName, name, password, username, verified);
 	}
 
 	@Override
@@ -132,22 +158,13 @@ public class UserDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		UserDTO other = (UserDTO) obj;
-		return Objects.equals(dateModifiedPass, other.dateModifiedPass) && deleted == other.deleted
+		return Objects.equals(creationTime, other.creationTime) && Objects.equals(creationUser, other.creationUser)
+				&& Objects.equals(dateModifiedPass, other.dateModifiedPass) && deleted == other.deleted
 				&& Objects.equals(email, other.email) && groupId == other.groupId
 				&& Objects.equals(groupName, other.groupName) && id == other.id
 				&& Objects.equals(lastLogin, other.lastLogin) && Objects.equals(lastName, other.lastName)
 				&& Objects.equals(name, other.name) && Objects.equals(password, other.password)
 				&& Objects.equals(username, other.username) && verified == other.verified;
 	}
-
-	@Override
-	public String toString() {
-		return "UserDTO [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
-				+ ", name=" + name + ", lastName=" + lastName + ", groupName=" + groupName + ", groupId=" + groupId
-				+ ", lastLogin=" + lastLogin + ", dateModifiedPass=" + dateModifiedPass + ", verified=" + verified
-				+ ", deleted=" + deleted + "]";
-	}
-
-
 
 }

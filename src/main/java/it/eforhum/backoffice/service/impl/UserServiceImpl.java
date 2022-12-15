@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
 	
 		User user = (User) userDao.findById(id);
 		ModelMapper mp = new ModelMapper();
-		
+
 		UserDTO userDTO = mp.map(user, new TypeToken<UserDTO>() {}.getType());
 		
 		return userDTO;
@@ -154,8 +154,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(UserDTO updatedUser) {
-		User oldUser = (User) userDao.findById(updatedUser.getId());
+	public void updateUser(UserDTO updatedUser, long id) {
+		User oldUser = (User) userDao.findById(id);
 		Objects.requireNonNull(oldUser);
 
 		log.info("Trying to update user with id:{} ", oldUser.getId());
@@ -213,32 +213,6 @@ public class UserServiceImpl implements UserService {
 			return mp.map(userList, new TypeToken<List<UserDTO>>(){}.getType());
 		}
 		
-	}
-	
-	@Override
-	public UserDTO login(String username, String password, String email) {
-		UserDTO uDTO = new UserDTO();
-		User user = userDao.findByUsername(username);
-		UserGroups ug = user.getUserGroup();
-		List<Roles> roleList = new ArrayList<>();
-
-		if (user.getPassword().equals(password) && user.getEmail().equals(email)) {
-			uDTO.setEmail(user.getEmail());
-//			uDTO.setGroup(user.getUserGroup());
-			uDTO.setLastName(user.getLastName());
-
-			for (String role : ug.getRoles().split(",")) {
-				roleList.add(Roles.valueOf(role));
-			}
-
-//			uDTO.setListRoles(roleList);
-			uDTO.setName(user.getName());
-
-		} else {
-			log.error("Wrong credentials");
-		}
-
-		return null;
 	}
 
 }
