@@ -43,12 +43,12 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 
 		log.info("Checking if user with id {} exists", userDTO.getId());
-		User userCheck = userDao.findById(userDTO.getId()).orElseThrow(() -> new EntityNotFoundException());
-
-		if (Objects.nonNull(userCheck)) {
-			log.info("User already exists");
-			return;
-		}
+//		User userCheck = userDao.findById(userDTO.getId()).orElseThrow(() -> new EntityNotFoundException());
+//
+//		if (Objects.nonNull(userCheck)) {
+//			log.info("User already exists");
+//			return;
+//		}
 
 		try {
 

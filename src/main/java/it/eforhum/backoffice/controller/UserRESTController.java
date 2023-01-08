@@ -31,11 +31,11 @@ import it.eforhum.backoffice.service.UserService;
 @CrossOrigin
 public class UserRESTController {
 
-	private static Logger log = LogManager.getLogger(UserRESTController.class);	
-	
+	private static Logger log = LogManager.getLogger(UserRESTController.class);
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private GroupService groupService;
 
@@ -43,9 +43,9 @@ public class UserRESTController {
 	public List<UserDTO> findAll() {
 
 		log.info("Read all Users");
-		
+
 		List<UserDTO> list = userService.getAllUsers();
-		
+
 		return list;
 	}
 
@@ -53,25 +53,25 @@ public class UserRESTController {
 	public UserDTO getUser(@PathVariable("id") int id) {
 
 		log.info("Read user detail for id {}", id);
-		
+
 		UserDTO entity = userService.findById(id);
-		
+
 		return entity;
 	}
-	
+
 	@GetMapping(value = "")
 	public ResponseEntity<UserDTO> findByUsername(@RequestParam String username) {
 
 		log.info("Read user detail for username {}", username);
-		
+
 		UserDTO user = userService.findByUsername(username);
-		
-	    if (user == null) {
-	        return ResponseEntity.notFound().build();
-	    }
-	    
-	    return ResponseEntity.ok(user);
-	    
+
+		if (user == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok(user);
+
 	}
 
 	@PostMapping(value = "/")
@@ -88,46 +88,44 @@ public class UserRESTController {
 		user.setLastLogin(LocalDateTime.now());
 		user.setDateModifiedPass(LocalDateTime.now());
 		user.setCreationTime(LocalDateTime.now());
-		user.setCreationUser("admin");
+		user.setCreationUser(dto.getCreationUser());
 		user.setVerified(dto.isVerified());
 		user.setDeleted(dto.isDeleted());
 		user.setGroupId(dto.getGroupId());
-		
+
 		userService.createUser(user);
-		
-		return userService.findByUsername(dto.getUsername());
-	}	
+
+		return user;
+	}
 
 	@PutMapping(value = "/{id}")
 	public UserDTO updateUser(@PathVariable("id") int id, @RequestBody UserDTO dto) {
 
 		log.info("Update user detail for id {}", id);
-		
+
 		userService.updateUser(dto, id);
-		
+
 		return userService.findById(id);
 	}
-	
-	
+
 	@PutMapping(value = "/{idGroup}/{idUser}")
-	public ResponseEntity<UserDTO> addUserToGroup(@PathVariable("idGroup") int idGroup, @PathVariable("idUser") int idUser) {
-		
+	public ResponseEntity<UserDTO> addUserToGroup(@PathVariable("idGroup") int idGroup,
+			@PathVariable("idUser") int idUser) {
+
 		UserDTO uDTO = userService.findById(idUser);
 		GroupDTO gDTO = groupService.findGroupById(idGroup);
 		userService.addUserToGroup(gDTO, uDTO);
-		
+
 		return new ResponseEntity<UserDTO>(userService.findById(idUser), HttpStatus.OK);
 	}
-	
-	
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<String> deleteUser(@PathVariable("id") int id) {
 		log.info("Delete user for id {}", id);
 		long deletedId = id;
 		userService.deleteUserCompletely(id);
-		
+
 		return new ResponseEntity<>("User with id " + deletedId + " succesfully deleted", HttpStatus.OK);
 	}
-	
-	
+
 }
